@@ -1,7 +1,9 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Problem, Stage} = require('../server/db/models')
+const stageData = require('./stageData')
+const problemData = require('./problemData')
 
 async function seed() {
   await db.sync({force: true})
@@ -12,7 +14,17 @@ async function seed() {
     User.create({email: 'murphy@email.com', password: '123'})
   ])
 
+  const stages = await Promise.all([
+    Stage.bulkCreate(stageData, {returning: true})
+  ])
+
+  const problems = await Promise.all([
+    Problem.bulkCreate(problemData, {returning: true})
+  ])
+
   console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${stages.length} stages`)
+  console.log(`seeded ${problems.length} problems`)
   console.log(`seeded successfully`)
 }
 

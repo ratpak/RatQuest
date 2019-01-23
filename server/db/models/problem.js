@@ -17,7 +17,7 @@ const Problem = db.define('problem', {
     }
   },
   url: {
-    type: Sequelize.string,
+    type: Sequelize.STRING,
     allowNull: false,
     validate: {
       notEmpty: true
