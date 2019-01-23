@@ -15,6 +15,13 @@ const Problem = db.define('problem', {
     validate: {
       notEmpty: true
     }
+  },
+  url: {
+    type: Sequelize.string,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   }
 })
 
