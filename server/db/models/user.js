@@ -26,6 +26,9 @@ const User = db.define('user', {
   },
   googleId: {
     type: Sequelize.STRING
+  },
+  problemList: {
+    type: Sequelize.ARRAY(Sequelize.TEXT)
   }
 })
 
