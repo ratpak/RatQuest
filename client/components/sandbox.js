@@ -5,12 +5,14 @@ import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
 import 'brace/theme/monokai'
 import loadFunction from '../../utils/loadFunction'
+import createFunction from '../../utils/createFunction'
+import testFunction from '../../utils/testFunction'
 
 let dummyProblem = {
   desc: 'good luck noob',
   args: ['num1', 'num2'],
   input: [[11, 3], [2, 2], [11, 7]],
-  output: [33, 4, 78],
+  output: [33, 4, 77],
   name: 'yaodi'
 }
 
@@ -18,7 +20,7 @@ class Sandbox extends React.Component {
   constructor() {
     super()
     this.state = {
-      status: '',
+      result: '',
       editor: loadFunction(dummyProblem.name, dummyProblem.args)
     }
     this.handleChange = this.handleChange.bind(this)
@@ -30,38 +32,13 @@ class Sandbox extends React.Component {
   handleClick() {
     // Grab user input from the code editor stored in state.
     let string = this.state.editor
-    let start
+    let result = testFunction(
+      createFunction(dummyProblem.args, string),
+      dummyProblem.input,
+      dummyProblem.output
+    )
 
-    // Find and slice out function body
-    for (let i = 0; i < string.length; i++) {
-      if (string[i] === '/') {
-        if (string.slice(i, i + 6) === '//**//') start = i + 6
-      }
-    }
-    let funcString = string.slice(start, string.length - 2)
-
-    // Construct the function using the function constructor. Argument names come from database (dummy data right now), function body comes from user input.
-    let theirFunc = new Function(dummyProblem.args.join(', '), funcString)
-
-    // Test their function against our input/outputs
-    let status = ''
-    try {
-      for (let i = 0; i < dummyProblem.input.length; i++) {
-        let theirResult = theirFunc(...dummyProblem.input[i])
-        if (theirResult !== dummyProblem.output[i])
-          status += `expected: ${
-            dummyProblem.output[i]
-          } actual: ${theirResult} for inputs: ${dummyProblem.input[i].join(
-            ', '
-          )}\n`
-      }
-    } catch (e) {
-      // While we test their function, if it returns an error the status should be set to the error (this is very flimsy).
-      status = e.toString()
-      console.log('found it')
-    }
-    if (status === '') status = 'success'
-    this.setState({status})
+    this.setState({result})
   }
 
   render() {
@@ -79,7 +56,7 @@ class Sandbox extends React.Component {
           name="UNIQUE_ID_OF_DIV"
           editorProps={{$blockScrolling: true}}
         />{' '}
-        {this.state.status
+        {this.state.result
           .split('\n')
           .map(thing => <h1 key={Math.random()}>{thing}</h1>)}
         <button type="button" onClick={this.handleClick}>

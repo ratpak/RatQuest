@@ -1,9 +1,9 @@
-// This utility function takes in function name and arguments, returns the function in string format for the react-ace code editor! -yh
+// This utility function takes in function name (string) and arguments (array), returns the function in string format for the react-ace code editor! -yh
 
 const loadFunction = (name, args) => {
   return `function ${name}(${args.join(', ')}){
             
-            // Your code below! (please don't edit this comment) //**//
+// Your code below! (please don't edit this comment) //**//
             
             
             
@@ -17,6 +17,6 @@ const loadFunction = (name, args) => {
             
             
             
-        }`
+}`
 }
 export default loadFunction
