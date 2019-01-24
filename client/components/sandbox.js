@@ -11,7 +11,7 @@ let dummyProblem = {
   desc: 'good luck noob',
   args: ['num1', 'num2'],
   input: [[11, 3], [2, 2], [11, 7]],
-  output: [33, 4, 77],
+  output: [33, 4, 78],
   name: 'yaodi'
 }
 
@@ -21,7 +21,7 @@ class Sandbox extends React.Component {
     this.state = {
       status: '',
       editor: `function ${dummyProblem.name}(${dummyProblem.args.join(', ')}){
-
+        
 // Your code below! (please don't edit this comment) //**//
 
 
@@ -56,22 +56,24 @@ class Sandbox extends React.Component {
     let theirFunc = new Function(dummyProblem.args.join(', '), funcString)
 
     // Test their function against our input/outputs
-    let status = 'success'
+    let status = ''
     try {
       for (let i = 0; i < dummyProblem.input.length; i++) {
         let theirResult = theirFunc(...dummyProblem.input[i])
         if (theirResult !== dummyProblem.output[i])
-          status = `expected: ${
+          status += `expected: ${
             dummyProblem.output[i]
-          } ---- actual: ${theirResult}`
+          } actual: ${theirResult} for inputs: ${dummyProblem.input[i].join(
+            ', '
+          )}\n`
       }
     } catch (e) {
       // While we test their function, if it returns an error the status should be set to the error (this is very flimsy).
       status = e.toString()
       console.log('found it')
     }
-
-    this.setState({status: status})
+    if (status === '') status = 'success'
+    this.setState({status})
   }
 
   render() {
@@ -88,7 +90,7 @@ class Sandbox extends React.Component {
           name="UNIQUE_ID_OF_DIV"
           editorProps={{$blockScrolling: true}}
         />{' '}
-        <h1> {this.state.status}</h1>
+        {this.state.status.split('\n').map(thing => <h1>{thing}</h1>)}
         <button type="button" onClick={this.handleClick}>
           submit
         </button>
