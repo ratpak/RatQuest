@@ -12,6 +12,17 @@ const Problem = db.define('problem', {
   },
   funcName: {
     type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  url: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  outputType: {
+    type: Sequelize.STRING,
     allowNull: false
   },
   inputs: {
@@ -26,13 +37,13 @@ const Problem = db.define('problem', {
             case 'num':
               inputs[j][i] = parseInt(inputs[j][i])
               break;
-            case 'arr':
+              case 'arr':
               if (inputs[j][i].includes(',')) {
                 inputs[j][i] = inputs[j][i].split(', ')
               } else {
                 inputs[j][i] = [inputs[j][i]]
-                break;
               }
+              break;
             // case 'obj':
             //   return inputs[j].map((input) => {
             //   })
@@ -46,7 +57,28 @@ const Problem = db.define('problem', {
   },
   outputs: {
     type: Sequelize.ARRAY(Sequelize.STRING),
-    allowNull: false
+    allowNull: false,
+    get: function()  {
+      let type = this.getDataValue('outputType');
+      let outputs = this.getDataValue('outputs');
+      for (let i = 0; i < outputs.length; i++) {
+        switch (type) {
+          case 'number':
+            outputs[i] = parseInt(outputs[i])
+            break;
+          case 'array':
+            if (outputs[i].includes(',')) {
+              outputs[i] = outputs[i].split(', ')
+            } else {
+              outputs[i] = [outputs[i]]
+            }
+            break;
+          default:
+            continue
+        }
+      }
+      return outputs
+    },
   }
 })
 
