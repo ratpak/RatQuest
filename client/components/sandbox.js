@@ -1,11 +1,10 @@
 /* eslint-disable no-new-func */
 /* eslint-disable id-length */
 import React from 'react'
-import brace from 'brace'
 import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
 import 'brace/theme/monokai'
-import {stringify} from 'querystring'
+import loadFunction from '../../utils/loadFunction'
 
 let dummyProblem = {
   desc: 'good luck noob',
@@ -20,18 +19,7 @@ class Sandbox extends React.Component {
     super()
     this.state = {
       status: '',
-      editor: `function ${dummyProblem.name}(${dummyProblem.args.join(', ')}){
-        
-// Your code below! (please don't edit this comment) //**//
-
-
-
-
-
-
-
-
-}`
+      editor: loadFunction(dummyProblem.name, dummyProblem.args)
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
@@ -80,6 +68,7 @@ class Sandbox extends React.Component {
     console.log('state', this.state)
     return (
       <div>
+        <h6>{this.state.test}</h6>
         <h1>{dummyProblem.desc}</h1>
         <AceEditor
           mode="javascript"
@@ -90,7 +79,9 @@ class Sandbox extends React.Component {
           name="UNIQUE_ID_OF_DIV"
           editorProps={{$blockScrolling: true}}
         />{' '}
-        {this.state.status.split('\n').map(thing => <h1>{thing}</h1>)}
+        {this.state.status
+          .split('\n')
+          .map(thing => <h1 key={Math.random()}>{thing}</h1>)}
         <button type="button" onClick={this.handleClick}>
           submit
         </button>
