@@ -48,7 +48,7 @@ const problemData = [
   {
     description:
       'Create a function that returns the factorial of the parameter.',
-    funcName: 'Factorialize',
+    funcName: 'factorialize',
     arguments: ['num'],
     inputs: [['2'], ['6']],
     outputType: 'number',
@@ -60,7 +60,7 @@ const problemData = [
   {
     description:
       'Create a function that accepts a string argument, and return the boolean true if the argument is a palindrome (meaning that the string is the same forward as it is backward). Otherwise, return the boolean false.',
-    funcName: 'Palindrome!',
+    funcName: 'isPalindrome',
     arguments: ['str'],
     inputs: [['moon'], ['racecar']],
     outputType: 'boolean',
