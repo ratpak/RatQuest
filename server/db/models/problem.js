@@ -2,15 +2,29 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Problem = db.define('problem', {
-  question: {
+  description: {
     type: Sequelize.TEXT,
     allowNull: false,
     validate: {
       notEmpty: true
     }
   },
-  answer: {
-    type: Sequelize.TEXT,
+  arguments: {
+    type: Sequelize.ARRAY(Sequelize.TEXT),
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  input: {
+    type: Sequelize.ARRAY(Sequelize.ARRAY(Sequelize.TEXT)),
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  output: {
+    type: Sequelize.ARRAY(Sequelize.TEXT),
     allowNull: false,
     validate: {
       notEmpty: true

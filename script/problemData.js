@@ -1,13 +1,12 @@
 const problemData = [
   {
-    question: 'Sample question 1.',
-    answer: 'blerg',
-    url: 'https://www.w3schools.com/js/js_if_else.asp'
-  },
-  {
-    question: 'Sample question 2',
-    answer: 'meh',
-    url: 'https://www.w3schools.com/js/js_loop_for.asp'
+    description: 'Create a function that add 2 numbers.',
+    arguments: ['num1', 'num2'],
+    input: [['14', '24'], ['7', '13']],
+    output: ['38', '20'],
+    url:
+      'https://writingjavascript.org/posts/introduction-to-functions-numbers-in-javascript',
+    stageId: 1
   }
 ]
 
