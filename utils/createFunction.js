@@ -13,7 +13,7 @@ const createFunction = (args, body) => {
     let createdFunc = new Function(args.join(', '), body)
     return createdFunc
   } catch (e) {
-    console.log('sdlkjf', e.toString().slice(0, 10))
+    console.log('weird error: ', e.toString())
   }
 }
 

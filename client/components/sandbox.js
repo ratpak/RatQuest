@@ -7,9 +7,11 @@ import 'brace/theme/monokai'
 import loadFunction from '../../utils/loadFunction'
 import createFunction from '../../utils/createFunction'
 import testFunction from '../../utils/testFunction'
+import {fetchProblem} from '../store/problem'
+import {connect} from 'react-redux'
 
 let dummyProblem = {
-  desc: 'good luck noob',
+  desc: 'write a function that multiplies 2 numbers',
   args: ['num1', 'num2'],
   input: [[11, 3], [2, 2], [11, 7]],
   output: [33, 4, 77],
@@ -20,32 +22,54 @@ class Sandbox extends React.Component {
   constructor() {
     super()
     this.state = {
-      result: '',
-      editor: loadFunction(dummyProblem.name, dummyProblem.args)
+      editor: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
+    this.handleClear = this.handleClear.bind(this)
+  }
+
+  async componentDidMount() {
+    await this.props.fetchProblem(this.props.match.params.problemId)
+    this.setState({
+      editor: loadFunction(
+        this.props.currentProblem.funcName,
+        this.props.currentProblem.arguments
+      )
+    })
+  }
+  handleClear() {
+    this.setState({
+      editor: loadFunction(
+        this.props.currentProblem.funcName,
+        this.props.currentProblem.arguments
+      )
+    })
   }
   handleChange(e) {
-    this.setState({...this.state, editor: e})
+    this.setState({editor: e})
   }
   handleClick() {
     // Grab user input from the code editor stored in state.
     let string = this.state.editor
     let result = testFunction(
-      createFunction(dummyProblem.args, string),
-      dummyProblem.input,
-      dummyProblem.output
+      createFunction(this.props.currentProblem.arguments, string),
+      this.props.currentProblem.input,
+      this.props.currentProblem.output
     )
 
     this.setState({result})
   }
 
   render() {
-    console.log('state', this.state)
+    // console.log('state', this.state)
+    // console.log(this.props)
     return (
       <div>
-        <h6>{this.state.test}</h6>
+        <h2>
+          Problem #{this.props.match.params.problemId}
+          {this.test}
+        </h2>
         <h1>{dummyProblem.desc}</h1>
         <AceEditor
           mode="javascript"
@@ -56,15 +80,25 @@ class Sandbox extends React.Component {
           name="UNIQUE_ID_OF_DIV"
           editorProps={{$blockScrolling: true}}
         />{' '}
-        {this.state.result
+        {/* {this.state.result
           .split('\n')
-          .map(thing => <h1 key={Math.random()}>{thing}</h1>)}
+          .map(thing => <h1 key={Math.random()}>{thing}</h1>)} */}
         <button type="button" onClick={this.handleClick}>
           submit
+        </button>
+        <button type="button" onClick={this.handleClear}>
+          clear
         </button>
       </div>
     )
   }
 }
 
-export default Sandbox
+const mapState = state => ({
+  currentProblem: state.problem.currentProblem
+})
+const mapDispatch = dispatch => ({
+  fetchProblem: id => dispatch(fetchProblem(id))
+})
+
+export default connect(mapState, mapDispatch)(Sandbox)
