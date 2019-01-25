@@ -22,7 +22,7 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/sandbox" component={Sandbox} />
+        <Route path="/sandbox/:problemId" component={Sandbox} />
 
         {isLoggedIn && (
           <Switch>
