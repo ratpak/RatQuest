@@ -1,17 +1,23 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import HomeStage from './home-stage'
 
 /**
  * COMPONENT
  */
 export const UserHome = props => {
   const {email} = props
-
+  //make sure to pass email props into stage-info
   return (
-    <div>
-      <h3>Welcome, {email}</h3>
-    </div>
+    <Fragment>
+      <div>
+        <h3>Welcome, {email}</h3>
+      </div>
+      <div>
+        <HomeStage />
+      </div>
+    </Fragment>
   )
 }
 
