@@ -9,7 +9,9 @@ import createFunction from '../../utils/createFunction'
 import testFunction from '../../utils/testFunction'
 import {fetchProblem} from '../store/problem'
 import {connect} from 'react-redux'
+import Worker from 'worker-loader'
 
+const worker = new Worker()
 // let dummyProblem = {
 //   desc: 'write a function that multiplies 2 numbers',
 //   args: ['num1', 'num2'],
@@ -31,6 +33,7 @@ class Sandbox extends React.Component {
   }
 
   async componentDidMount() {
+    console.log(worker, 'jhghjg')
     await this.props.fetchProblem(this.props.match.params.problemId)
     this.setState({
       editor: loadFunction(
