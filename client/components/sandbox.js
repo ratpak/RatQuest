@@ -10,18 +10,19 @@ import testFunction from '../../utils/testFunction'
 import {fetchProblem} from '../store/problem'
 import {connect} from 'react-redux'
 
-let dummyProblem = {
-  desc: 'write a function that multiplies 2 numbers',
-  args: ['num1', 'num2'],
-  input: [[11, 3], [2, 2], [11, 7]],
-  output: [33, 4, 77],
-  name: 'yaodi'
-}
+// let dummyProblem = {
+//   desc: 'write a function that multiplies 2 numbers',
+//   args: ['num1', 'num2'],
+//   input: [[11, 3], [2, 2], [11, 7]],
+//   output: [33, 4, 77],
+//   name: 'yaodi'
+// }
 
 class Sandbox extends React.Component {
   constructor() {
     super()
     this.state = {
+      result: '',
       editor: ''
     }
     this.handleChange = this.handleChange.bind(this)
@@ -51,13 +52,13 @@ class Sandbox extends React.Component {
   }
   handleClick() {
     // Grab user input from the code editor stored in state.
-    let string = this.state.editor
+    let body = this.state.editor
     let result = testFunction(
-      createFunction(this.props.currentProblem.arguments, string),
-      this.props.currentProblem.input,
-      this.props.currentProblem.output
+      createFunction(this.props.currentProblem.arguments, body),
+      this.props.currentProblem.inputs,
+      this.props.currentProblem.outputs
     )
-
+    console.log(result)
     this.setState({result})
   }
 
@@ -70,7 +71,7 @@ class Sandbox extends React.Component {
           Problem #{this.props.match.params.problemId}
           {this.test}
         </h2>
-        <h1>{dummyProblem.desc}</h1>
+        <h3>{this.props.currentProblem.description}</h3>
         <AceEditor
           mode="javascript"
           theme="monokai"
@@ -80,9 +81,9 @@ class Sandbox extends React.Component {
           name="UNIQUE_ID_OF_DIV"
           editorProps={{$blockScrolling: true}}
         />{' '}
-        {/* {this.state.result
+        {this.state.result
           .split('\n')
-          .map(thing => <h1 key={Math.random()}>{thing}</h1>)} */}
+          .map(thing => <h1 key={Math.random()}>{thing}</h1>)}
         <button type="button" onClick={this.handleClick}>
           submit
         </button>

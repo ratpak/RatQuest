@@ -1,5 +1,6 @@
 const testFunction = (func, input, output) => {
   let result = ''
+  console.log('arguments', func, input, output)
   try {
     for (let i = 0; i < input.length; i++) {
       let theirResult = func(...input[i])

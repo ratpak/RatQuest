@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // INITIAL STATE
 const initialState = {
-  currentProblem: {yazidi: 'yahoodi'}
+  currentProblem: {}
 }
 
 // ACTION TYPES
