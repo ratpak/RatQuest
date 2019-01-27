@@ -15,15 +15,15 @@ const withStageInfo = WrappedComponent => {
       // }
     }
 
-    componentDidMount() {
-      const userId = this.props.user.id
-      console.log(this.props.user.id, '<<< this.props.user')
-      this.props.fetchStages(userId) // make sure to pass
+    async componentDidMount() {
+      const userId = this.props.userId
+      // console.log(this.props.user.id, '<<< this.props.user')
+      await this.props.fetchStages(userId) // make sure to pass
     }
 
     render() {
       // pass these into wrapped components as stage
-      console.log(this.props, '<<< props in stage-info')
+      // console.log(this.props, '<<< props in stage-info')
       const stage = this.props.stage
       return <WrappedComponent stage={stage} />
     }
@@ -35,7 +35,7 @@ const withStageInfo = WrappedComponent => {
 const mapState = state => {
   return {
     stage: state.stage.stages,
-    user: state.user
+    userId: state.user.id
   }
 }
 

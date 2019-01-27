@@ -8,7 +8,6 @@ const HomeStage = props => {
     height: '200px',
     backgroundColor: '#f48fb1'
   }
-  console.log(props, '<<< props in home-stage')
   return (
     <Fragment>
       <div style={styles}>
