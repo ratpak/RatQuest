@@ -11,7 +11,8 @@ const GameStage = props => {
   return (
     <Fragment>
       <div style={styles}>
-        <h1>{`Stage Number: ${id} ${name}`}</h1>
+        <h1>Testing</h1>
+        <h1>{`Stage ${id}: ${name}`}</h1>
         <h2>{`${progress}/${goal}`}</h2>
       </div>
     </Fragment>
@@ -19,4 +20,3 @@ const GameStage = props => {
 }
 
 export default withStageInfo(GameStage)
-// export default HomeStage

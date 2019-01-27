@@ -8,10 +8,12 @@ const HomeStage = props => {
     height: '200px',
     backgroundColor: '#f48fb1'
   }
+  console.log(props, '<<< props in home-stage')
   return (
     <Fragment>
       <div style={styles}>
-        <h1>{`Stage Number: ${id} ${name}`}</h1>
+        <h1>Test</h1>
+        <h1>{`Stage ${id}: ${name}`}</h1>
         <h2>{`${progress}/${goal}`}</h2>
       </div>
     </Fragment>
@@ -19,4 +21,3 @@ const HomeStage = props => {
 }
 
 export default withStageInfo(HomeStage)
-// export default HomeStage

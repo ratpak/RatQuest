@@ -1,31 +1,30 @@
-import React, {Component, Fragment} from 'react'
+import React, {Component} from 'react'
+import {fetchStages} from '../store/stage'
 import {connect} from 'react-redux'
-import HomeStage from './home-stage'
+import {compose} from 'redux'
 
-// thunk call to grab stage info
-// import {fetchStage} from '../store/stage'
-// import {connect} from 'react-redux'
-
-// change to dumb component when have store set up as don't need this on local state
-const withStageInfo = (WrappedComponent, props) => {
+const withStageInfo = WrappedComponent => {
   class StageInfo extends Component {
-    constructor(props) {
+    constructor() {
       super()
-      this.state = {
-        id: 1,
-        name: 'Stage 1',
-        progress: 5,
-        goal: 10 // we need goal in db to make calc when finished with stage
-      }
+      // this.state = {
+      //   id: 1,
+      //   name: 'Stage 1',
+      //   progress: 5,
+      //   goal: 10 // we need goal in db to make calc when finished with stage
+      // }
     }
 
-    // componentDidMount() {
-    //     this.props.fetchStage(this.props.fetchStage(this.props.email)) // make sure to pass
-    // }
+    componentDidMount() {
+      const userId = this.props.user.id
+      console.log(this.props.user.id, '<<< this.props.user')
+      this.props.fetchStages(userId) // make sure to pass
+    }
 
     render() {
       // pass these into wrapped components as stage
-      const stage = this.state
+      console.log(this.props, '<<< props in stage-info')
+      const stage = this.props.stage
       return <WrappedComponent stage={stage} />
     }
   }
@@ -33,18 +32,23 @@ const withStageInfo = (WrappedComponent, props) => {
 }
 
 // getting stage info from store to pass to wrapped components
-// const mapState = state => {
-//     return {
-//         stage: state.stage
-//     }
-// }
+const mapState = state => {
+  return {
+    stage: state.stage.stages,
+    user: state.user
+  }
+}
 
-// map dispatch for fetchStage - assuming will use user email - better to have id
-// const mapDispatch = dispatch => ({
-//     fetchStage(email) {
-//         return dispatch(fetchStage(email))
-//     }
-// })
+const mapDispatch = dispatch => ({
+  fetchStages(userId) {
+    return dispatch(fetchStages(userId))
+  }
+})
 
-export default withStageInfo
-// export default connect(mapState, mapDispatch)(withStageInfo)
+const composedWithStageInfo = compose(
+  connect(mapState, mapDispatch),
+  withStageInfo
+)
+
+export default composedWithStageInfo
+// export default withStageInfo

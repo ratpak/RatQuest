@@ -8,6 +8,9 @@ const Stage = db.define('stage', {
 
   progress: {
     type: Sequelize.INTEGER
+  },
+  goal: {
+    type: Sequelize.INTEGER
   }
 })
 
