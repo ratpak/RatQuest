@@ -1,9 +1,7 @@
 import axios from 'axios'
 
 // INITIAL STATE
-const initialState = {
-  stages: {}
-}
+const initialStages = {}
 
 // ACTION TYPES
 const GOT_STAGES = 'GOT_STAGES'
@@ -28,10 +26,10 @@ export const fetchStages = userId => {
 }
 
 // REDUCER
-export default function(state = initialState, action) {
+export default function(state = initialStages, action) {
   switch (action.type) {
     case GOT_STAGES:
-      return {...state, stages: action.stages}
+      return action.stages
     default:
       return state
   }

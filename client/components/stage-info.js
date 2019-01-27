@@ -5,27 +5,16 @@ import {compose} from 'redux'
 
 const withStageInfo = WrappedComponent => {
   class StageInfo extends Component {
-    constructor() {
-      super()
-      // this.state = {
-      //   id: 1,
-      //   name: 'Stage 1',
-      //   progress: 5,
-      //   goal: 10 // we need goal in db to make calc when finished with stage
-      // }
-    }
-
     async componentDidMount() {
       const userId = this.props.userId
-      // console.log(this.props.user.id, '<<< this.props.user')
-      await this.props.fetchStages(userId) // make sure to pass
+      await this.props.fetchStages(userId)
     }
 
     render() {
-      // pass these into wrapped components as stage
-      // console.log(this.props, '<<< props in stage-info')
+      // pass stage info into wrapped components as stage
       const stage = this.props.stage
-      return <WrappedComponent stage={stage} />
+      const userId = this.props.userId
+      return userId ? <WrappedComponent stage={stage} /> : <div>loading</div>
     }
   }
   return StageInfo
@@ -34,7 +23,7 @@ const withStageInfo = WrappedComponent => {
 // getting stage info from store to pass to wrapped components
 const mapState = state => {
   return {
-    stage: state.stage.stages,
+    stage: state.stage,
     userId: state.user.id
   }
 }
@@ -45,10 +34,11 @@ const mapDispatch = dispatch => ({
   }
 })
 
+// use redux compose to make sure end export is function rather than class
+// cannot wrap 'wrapped components' with class only with function
 const composedWithStageInfo = compose(
   connect(mapState, mapDispatch),
   withStageInfo
 )
 
 export default composedWithStageInfo
-// export default withStageInfo

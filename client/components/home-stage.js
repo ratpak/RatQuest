@@ -5,13 +5,12 @@ const HomeStage = props => {
   const {id, name, progress, goal} = props.stage
   let styles = {
     width: '400px',
-    height: '200px',
+    height: '100px',
     backgroundColor: '#f48fb1'
   }
   return (
     <Fragment>
       <div style={styles}>
-        <h1>Test</h1>
         <h1>{`Stage ${id}: ${name}`}</h1>
         <h2>{`${progress}/${goal}`}</h2>
       </div>
