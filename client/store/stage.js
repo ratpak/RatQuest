@@ -18,7 +18,7 @@ export const fetchStages = userId => {
     try {
       console.log(userId, '<<< userId in thunk')
       const {data} = await axios.get(`/api/users/stages/${userId}`)
-      dispatch(gotStages(data.stage))
+      dispatch(gotStages(data))
     } catch (err) {
       console.error(err, '<<< fetchStages Thunk')
     }

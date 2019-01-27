@@ -22,7 +22,7 @@ router.get('/stages/:userId', async (req, res, next) => {
     const stages = await User.findById(req.params.userId, {
       include: {all: true}
     })
-    res.json(stages)
+    res.json(stages.stage)
   } catch (err) {
     next(err)
     console.log(err, '<<< users stages error')
