@@ -22,7 +22,7 @@ const store = createStore(reducer, persistedState, middleware)
 // wrapping store.subscribe callback in throttle to ensure only write to HTML5 session storage at most once per second
 store.subscribe(
   throttle(() => {
-    saveState(store.getState())
+    saveState(store.getState().stage)
   }),
   1000
 )
