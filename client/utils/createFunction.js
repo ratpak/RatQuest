@@ -9,11 +9,11 @@ const createFunction = (args, body) => {
       }
     }
     body = body.slice(start, body.length - 2)
-
-    let createdFunc = new Function(args.join(', '), body)
-    return createdFunc
+    console.log(args, 'args')
+    let func = new Function(args.join(', '), body)
+    return func
   } catch (e) {
-    console.log('weird error: ', e.toString())
+    console.log('error from createFunction: ', e.toString())
   }
 }
 

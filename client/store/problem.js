@@ -19,7 +19,6 @@ const gotProblem = data => ({
 export const fetchProblem = id => {
   return async function(dispatch) {
     let {data} = await axios.get(`/api/problems/${id}`)
-    console.log('thunk>>>', data)
     dispatch(gotProblem(data))
   }
 }
