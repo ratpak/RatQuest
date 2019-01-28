@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const {User, Stage} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -13,5 +13,18 @@ router.get('/', async (req, res, next) => {
     res.json(users)
   } catch (err) {
     next(err)
+  }
+})
+
+// endpoint to get stages associated with user
+router.get('/stages/:userId', async (req, res, next) => {
+  try {
+    const stages = await User.findById(req.params.userId, {
+      include: {all: true}
+    })
+    res.json(stages.stage)
+  } catch (err) {
+    next(err)
+    console.log(err, '<<< users stages error')
   }
 })
