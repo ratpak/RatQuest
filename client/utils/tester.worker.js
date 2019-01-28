@@ -6,7 +6,7 @@ import createFunction from './createFunction'
 self.addEventListener('message', event => {
   let {data} = event
   let {args, body, input, output} = data
-  console.log('received from master in utils', data)
   let result = testFunction(createFunction(args, body), input, output)
+  console.log('')
   self.postMessage(result)
 })

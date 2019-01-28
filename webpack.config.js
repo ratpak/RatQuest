@@ -18,9 +18,9 @@ module.exports = {
     rules: [
       {
         test: /\.worker\.js$/,
-        exclude: /node_modules/,
+        loader: 'worker-loader',
         options: {inline: true},
-        loader: 'worker-loader'
+        exclude: /node_modules/
       },
       {
         test: /\.jsx?$/,
