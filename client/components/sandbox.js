@@ -4,12 +4,12 @@ import React from 'react'
 import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
 import 'brace/theme/monokai'
-import loadFunction from '../../utils/loadFunction'
-import createFunction from '../../utils/createFunction'
-import testFunction from '../../utils/testFunction'
+import loadFunction from '../utils/loadFunction'
+import createFunction from '../utils/createFunction'
+import testFunction from '../utils/testFunction'
+import createAndTest from '../utils/createAndTest'
 import {fetchProblem} from '../store/problem'
 import {connect} from 'react-redux'
-import Worker from './test.worker'
 
 class Sandbox extends React.Component {
   constructor() {
@@ -44,15 +44,17 @@ class Sandbox extends React.Component {
   handleChange(e) {
     this.setState({editor: e})
   }
-  handleClick() {
+  async handleClick() {
     // Grab user input from the code editor stored in state.
     let body = this.state.editor
-    let result = testFunction(
-      createFunction(this.props.currentProblem.arguments, body),
+    let result = await createAndTest(
+      this.props.currentProblem.arguments,
+      body,
       this.props.currentProblem.inputs,
       this.props.currentProblem.outputs
     )
-    console.log(result)
+
+    console.log('gotFromCreateAndTest', result)
     this.setState({result})
   }
 

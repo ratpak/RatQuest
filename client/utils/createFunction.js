@@ -9,13 +9,11 @@ const createFunction = (args, body) => {
       }
     }
     body = body.slice(start, body.length - 2)
-    let wrapper = {}
     console.log(args, 'args')
-    wrapper.stuff = thing => `${thing} got printed`
-    wrapper.createdFunc = new Function(args.join(', '), 'arg3=this.stuff', body)
-    return wrapper
+    let func = new Function(args.join(', '), body)
+    return func
   } catch (e) {
-    console.log('weird error: ', e.toString())
+    console.log('error from createFunction: ', e.toString())
   }
 }
 
