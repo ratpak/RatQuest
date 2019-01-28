@@ -14,11 +14,11 @@ module.exports = {
     extensions: ['.js', '.jsx']
   },
   devtool: 'source-map',
-  node: {fs: 'empty', module: 'empty'},
   module: {
     rules: [
       {
         test: /\.worker\.js$/,
+        exclude: /node_modules/,
         loader: 'worker-loader'
       },
       {

@@ -9,9 +9,10 @@ import createFunction from '../../utils/createFunction'
 import testFunction from '../../utils/testFunction'
 import {fetchProblem} from '../store/problem'
 import {connect} from 'react-redux'
-import Worker from 'worker-loader'
+import Worker from './test.worker'
 
 const worker = new Worker()
+worker.addEventListener('message', event => console.log('got message', event))
 // let dummyProblem = {
 //   desc: 'write a function that multiplies 2 numbers',
 //   args: ['num1', 'num2'],
