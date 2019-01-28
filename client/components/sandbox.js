@@ -32,6 +32,7 @@ class Sandbox extends React.Component {
   }
 
   async componentDidMount() {
+    // REVIEW: update path?
     await this.props.fetchProblem(this.props.match.params.problemId)
     this.setState({
       editor: loadFunction(
@@ -51,6 +52,9 @@ class Sandbox extends React.Component {
   handleChange(e) {
     this.setState({editor: e})
   }
+  // REVIEW: name this semantically
+  // executeUserCode() {}
+  // <button onClick={this.executeUserCode}> vs onClick={onClick}
   handleClick() {
     // Grab user input from the code editor stored in state.
     let body = this.state.editor
@@ -83,6 +87,7 @@ class Sandbox extends React.Component {
           name="UNIQUE_ID_OF_DIV"
           editorProps={{$blockScrolling: true}}
         />{' '}
+        {/* REVIEW hmmm, blank string? */}
         {this.state.result
           .split('\n')
           .map(thing => <h1 key={Math.random()}>{thing}</h1>)}

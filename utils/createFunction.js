@@ -18,3 +18,9 @@ const createFunction = (args, body) => {
 }
 
 export default createFunction
+
+
+
+
+function pairSum (numbers, target) {
+}

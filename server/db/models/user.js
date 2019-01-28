@@ -27,6 +27,7 @@ const User = db.define('user', {
   googleId: {
     type: Sequelize.STRING
   },
+  // REVIEW: is this a sneaky foreign key?
   problemList: {
     type: Sequelize.ARRAY(Sequelize.TEXT)
   },

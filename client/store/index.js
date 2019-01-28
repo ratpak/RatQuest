@@ -8,7 +8,27 @@ import problem from './problem'
 import stage from './stage'
 const throttle = require('lodash').throttle
 
-const reducer = combineReducers({user, problem, stage})
+function localStateCache (cacheKey, reducer) {
+  const throttledWrite = throttle((nextState) => {
+    localStorage.setItem(cacheKey, JSON.stringify(nextState))
+  }, 1000)
+
+  return function (state, action) {
+    if (state === undefined) {
+      state = JSON.parse(localStorage.getItem(cacheKey))
+    }
+    const nextState = reducer(state, action)
+    throttledWrite(nextState)
+    return nextState
+  }
+}
+
+const reducer = combineReducers({
+  user,
+  problem,
+  localStateCache('solution', solution),
+  localStateCache('stage', stage),
+})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
@@ -20,12 +40,18 @@ const store = createStore(reducer, persistedState, middleware)
 // saveState saves state to HTML 5 session storage to be retreieved
 // by loadState clientside upon hard browser refresh
 // wrapping store.subscribe callback in throttle to ensure only write to HTML5 session storage at most once per second
+// REVIEW: lets talk about this
+let lestSetState
 store.subscribe(
-  throttle(() => {
-    saveState(store.getState())
-  }),
-  1000
+  () => lastSetStae = store.getState()
 )
+
+setInterval(() => {
+  if (lastSetStae) {
+    saveState(lastSetStae)
+  }
+  lastSetStae = undefined
+}, 1000)
 
 export default store
 export * from './user'

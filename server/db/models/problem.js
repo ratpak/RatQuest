@@ -26,6 +26,8 @@ const Problem = db.define('problem', {
     allowNull: false
   },
   inputs: {
+    // REVIEW: wow? this works?
+    // Sequelize.JSON?
     type: Sequelize.ARRAY(Sequelize.ARRAY(Sequelize.STRING)),
     allowNull: false,
     get: function()  {

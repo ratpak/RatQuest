@@ -41,6 +41,7 @@ describe('User routes', () => {
     let user2Id
 
     beforeEach(async () => {
+      // REVIEW: interesting, why is this association being made here?
       Stage.hasMany(User)
       User.belongsTo(Stage)
 
@@ -60,6 +61,7 @@ describe('User routes', () => {
     })
 
     it('GET /api/users/stages/:userId', async () => {
+      // REVIEW: nice! Testing
       const res = await request(app)
         .get(`/api/users/stages/${user2Id}`)
         .expect(200)

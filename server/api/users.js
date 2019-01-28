@@ -17,9 +17,11 @@ router.get('/', async (req, res, next) => {
 })
 
 // endpoint to get stages associated with user
+// REVIEW: should user be authenticated so othres cant see this?
 router.get('/stages/:userId', async (req, res, next) => {
   try {
     const stages = await User.findById(req.params.userId, {
+      // REVIEW: include all ? danger zone?
       include: {all: true}
     })
     res.json(stages.stage)
