@@ -3,16 +3,23 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import HomeStage from './home-stage'
 
+import {withTheme} from '@material-ui/core/styles'
+
 /**
+ *
  * COMPONENT
  */
 export const UserHome = props => {
-  const {email} = props
+  const {email, theme} = props
+
+  const hStyle = {
+    color: theme.palette.primary.light
+  }
   //make sure to pass email props into stage-info
   return (
     <Fragment>
       <div>
-        <h3>Welcome, {email}</h3>
+        <h3 style={hStyle}>Welcome, {email}</h3>
       </div>
       <div>
         <HomeStage />
@@ -30,7 +37,7 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(UserHome)
+export default connect(mapState)(withTheme()(UserHome))
 
 /**
  * PROP TYPES

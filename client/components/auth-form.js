@@ -2,8 +2,9 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {withTheme} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
-
+import Input from '@material-ui/core/Input'
 /**
  * COMPONENT
  */
@@ -17,7 +18,7 @@ const AuthForm = props => {
           <label htmlFor="email">
             <small>Email</small>
           </label>
-          <input name="email" type="text" />
+          <Input name="email" type="text" />
         </div>
         <div>
           <label htmlFor="password">
@@ -26,7 +27,9 @@ const AuthForm = props => {
           <input name="password" type="password" />
         </div>
         <div>
-          <Button type="submit">{displayName}</Button>
+          <Button type="submit" color="primary">
+            {displayName}
+          </Button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
@@ -70,8 +73,8 @@ const mapDispatch = dispatch => {
   }
 }
 
-export const Login = connect(mapLogin, mapDispatch)(AuthForm)
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
+export const Login = connect(mapLogin, mapDispatch)(withTheme()(AuthForm))
+export const SignUp = connect(mapSignup, mapDispatch)(withTheme()(AuthForm))
 
 /**
  * PROP TYPES
