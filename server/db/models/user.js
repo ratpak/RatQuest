@@ -27,8 +27,10 @@ const User = db.define('user', {
   googleId: {
     type: Sequelize.STRING
   },
-  problemList: {
-    type: Sequelize.ARRAY(Sequelize.TEXT)
+
+  admin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 })
 
@@ -37,6 +39,7 @@ module.exports = User
 /**
  * instanceMethods
  */
+
 User.prototype.correctPassword = function(candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt()) === this.password()
 }

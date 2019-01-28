@@ -10,8 +10,8 @@ async function seed() {
   console.log('db synced!')
 
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({email: 'user@user.com', password: 'user'}),
+    User.create({email: 'admin@admin.com', password: 'admin', admin: true})
   ])
 
   const stages = await Promise.all([
@@ -21,6 +21,14 @@ async function seed() {
   const problems = await Promise.all([
     Problem.bulkCreate(problemData, {returning: true})
   ])
+
+  // creating user association with stage
+  try {
+    const [user1, user2] = users
+    return await Promise.all([user1.setStage(1), user2.setStage(1)])
+  } catch (err) {
+    console.error(err, '<<<failed seeding user stage with Magic Method')
+  }
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${stages.length} stages`)

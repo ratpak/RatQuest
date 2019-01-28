@@ -8,6 +8,7 @@ import loadFunction from '../utils/loadFunction'
 import createAndTest from '../utils/createAndTest'
 import {fetchProblem} from '../store/problem'
 import {connect} from 'react-redux'
+import GameStage from './game-stage'
 
 class Sandbox extends React.Component {
   constructor() {
@@ -57,10 +58,11 @@ class Sandbox extends React.Component {
   }
 
   render() {
-    // console.log('state', this.state)
-    // console.log(this.props)
     return (
       <div>
+        <div>
+          <GameStage />
+        </div>
         <h2>
           Problem #{this.props.match.params.problemId}
           {this.test}
