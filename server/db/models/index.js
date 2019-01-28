@@ -1,3 +1,6 @@
+const Sequelize = require('sequelize')
+const db = require('../db')
+
 const User = require('./user')
 const Stage = require('./stage')
 const Problem = require('./problem')
@@ -13,6 +16,10 @@ User.belongsTo(Stage)
 Stage.hasMany(Problem)
 Problem.belongsTo(Stage)
 
+const UserProblems = db.define('user_problems', {})
+
+User.belongsToMany(Problem, {through: UserProblems})
+Problem.belongsToMany(User, {through: UserProblems})
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
