@@ -11,16 +11,6 @@ import {fetchProblem} from '../store/problem'
 import {connect} from 'react-redux'
 import Worker from './test.worker'
 
-const worker = new Worker()
-worker.addEventListener('message', event => console.log('got message', event))
-// let dummyProblem = {
-//   desc: 'write a function that multiplies 2 numbers',
-//   args: ['num1', 'num2'],
-//   input: [[11, 3], [2, 2], [11, 7]],
-//   output: [33, 4, 77],
-//   name: 'yaodi'
-// }
-
 class Sandbox extends React.Component {
   constructor() {
     super()
@@ -31,10 +21,10 @@ class Sandbox extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.handleClear = this.handleClear.bind(this)
+    this.handleWorker = this.handleWorker.bind(this)
   }
 
   async componentDidMount() {
-    console.log(worker, 'jhghjg')
     await this.props.fetchProblem(this.props.match.params.problemId)
     this.setState({
       editor: loadFunction(
@@ -50,6 +40,15 @@ class Sandbox extends React.Component {
         this.props.currentProblem.arguments
       )
     })
+  }
+  handleWorker() {
+    // func.name = 'ANON'
+    let worker = new Worker()
+    worker.addEventListener('message', event =>
+      console.log('got from worker', event)
+    )
+    worker.postMessage({greeting: 'hello friend', func: 'func'})
+    console.log('async/await?')
   }
   handleChange(e) {
     this.setState({editor: e})
@@ -93,6 +92,9 @@ class Sandbox extends React.Component {
         </button>
         <button type="button" onClick={this.handleClear}>
           clear
+        </button>
+        <button type="button" onClick={this.handleWorker}>
+          Worker
         </button>
       </div>
     )

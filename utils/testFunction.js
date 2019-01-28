@@ -3,7 +3,8 @@ const testFunction = (func, input, output) => {
   console.log('arguments', func, input, output)
   try {
     for (let i = 0; i < input.length; i++) {
-      let theirResult = func(...input[i])
+      console.log('created function wrapper', func)
+      let theirResult = func.createdFunc(...input[i])
       if (theirResult !== output[i])
         result += `expected: ${
           output[i]

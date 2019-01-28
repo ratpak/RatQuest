@@ -9,9 +9,11 @@ const createFunction = (args, body) => {
       }
     }
     body = body.slice(start, body.length - 2)
-
-    let createdFunc = new Function(args.join(', '), body)
-    return createdFunc
+    let wrapper = {}
+    console.log(args, 'args')
+    wrapper.stuff = 'stuff'
+    wrapper.createdFunc = new Function(args.join(', '), 'arg3=this.stuff', body)
+    return wrapper
   } catch (e) {
     console.log('weird error: ', e.toString())
   }

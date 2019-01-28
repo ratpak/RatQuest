@@ -7,8 +7,9 @@
 
 // // Post data to parent thread
 // // Respond to message from parent thread
-// self.addEventListener('message', event => console.log(event))
-
-self.postMessage({foo: 'foo'})
 
 console.log('hello from worker.js')
+self.addEventListener('message', event => {
+  console.log('received from master', event)
+  self.postMessage({foo: 'bar'})
+})
