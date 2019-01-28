@@ -21,7 +21,6 @@ class Sandbox extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.handleClear = this.handleClear.bind(this)
-    this.handleWorker = this.handleWorker.bind(this)
   }
 
   async componentDidMount() {
@@ -41,15 +40,7 @@ class Sandbox extends React.Component {
       )
     })
   }
-  handleWorker() {
-    // func.name = 'ANON'
-    let worker = new Worker()
-    worker.addEventListener('message', event =>
-      console.log('got from worker', event)
-    )
-    worker.postMessage({greeting: 'hello friend', func: 'func'})
-    console.log('async/await?')
-  }
+
   handleChange(e) {
     this.setState({editor: e})
   }
@@ -92,9 +83,6 @@ class Sandbox extends React.Component {
         </button>
         <button type="button" onClick={this.handleClear}>
           clear
-        </button>
-        <button type="button" onClick={this.handleWorker}>
-          Worker
         </button>
       </div>
     )

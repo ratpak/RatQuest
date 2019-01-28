@@ -11,7 +11,7 @@ const createFunction = (args, body) => {
     body = body.slice(start, body.length - 2)
     let wrapper = {}
     console.log(args, 'args')
-    wrapper.stuff = 'stuff'
+    wrapper.stuff = thing => `${thing} got printed`
     wrapper.createdFunc = new Function(args.join(', '), 'arg3=this.stuff', body)
     return wrapper
   } catch (e) {
