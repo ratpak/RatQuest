@@ -1,19 +1,21 @@
+const assert = require('chai').assert
+
 const testFunction = (func, input, output) => {
   if (typeof func === 'string') return func
+  let errorMessages = []
   let result = ''
-  console.log('arguments', func, input, output)
-  console.log('created function wrapper', func)
-  try {
-    for (let i = 0; i < input.length; i++) {
-      let theirResult = func(...input[i])
-      if (theirResult !== output[i])
-        result += `expected: ${
-          output[i]
-        } actual: ${theirResult} for inputs: ${input[i].join(', ')}\n`
+  for (let i = 0; i < input.length; i++) {
+    try {
+      assert.deepEqual(func(...input[i]), output[i])
+    } catch (e) {
+      errorMessages.push(e.message)
     }
-    if (result === '') result = 'success'
-  } catch (e) {
-    result = e.toString()
+  }
+  if (!errorMessages.length) result = 'success'
+  else {
+    for (let i = 0; i < errorMessages.length; i++) {
+      result += errorMessages[i] + ' \n'
+    }
   }
   return result
 }
