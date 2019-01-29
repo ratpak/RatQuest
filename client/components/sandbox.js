@@ -67,7 +67,6 @@ class Sandbox extends React.Component {
   }
 
   render() {
-    console.log('rerender')
     return (
       <div>
         <div>

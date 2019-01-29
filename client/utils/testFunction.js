@@ -1,4 +1,5 @@
 const testFunction = (func, input, output) => {
+  if (typeof func === 'string') return func
   let result = ''
   console.log('arguments', func, input, output)
   console.log('created function wrapper', func)
