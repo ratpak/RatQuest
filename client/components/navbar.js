@@ -4,29 +4,44 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>Rat Race</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
-)
+import {withTheme} from '@material-ui/core/styles'
+
+const Navbar = ({handleClick, isLoggedIn, theme}) => {
+  const hStyle = {
+    color: theme.palette.primary.light,
+    paddingLeft: '10px',
+    paddingTop: '10px'
+  }
+
+  const backColor = {
+    background: theme.palette.secondary.light,
+    borderRadius: '10px'
+  }
+  return (
+    <div style={backColor}>
+      {console.log('theme----------------', theme)}
+      <h1 style={hStyle}>Rat Race</h1>
+      <nav>
+        {isLoggedIn ? (
+          <div>
+            {/* The navbar will show these links after you log in */}
+            <Link to="/home">Home</Link>
+            <a href="#" onClick={handleClick}>
+              Logout
+            </a>
+          </div>
+        ) : (
+          <div>
+            {/* The navbar will show these links before you log in */}
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Sign Up</Link>
+          </div>
+        )}
+      </nav>
+      <hr />
+    </div>
+  )
+}
 
 /**
  * CONTAINER
@@ -45,12 +60,13 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(withTheme()(Navbar))
 
 /**
  * PROP TYPES
  */
 Navbar.propTypes = {
   handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
+  isLoggedIn: PropTypes.bool.isRequired,
+  theme: PropTypes.any
 }

@@ -28,9 +28,13 @@ const User = db.define('user', {
     type: Sequelize.STRING
   },
 
-  admin: {
+  isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  avatarUrl: {
+    type: Sequelize.STRING,
+    defaultValue: 'http://www.cutestpaw.com/images/she-seemed-quite-interested/'
   }
 })
 

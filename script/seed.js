@@ -11,7 +11,19 @@ async function seed() {
 
   const users = await Promise.all([
     User.create({email: 'user@user.com', password: 'user'}),
-    User.create({email: 'admin@admin.com', password: 'admin', admin: true})
+    User.create({
+      email: 'jerry@jerry.com',
+      password: 'jerry',
+      avatarUrl:
+        'https://www.dwerghamster.nl/fotoalbum/fotos/forum/2009/20080309-rat8.jpg'
+    }),
+    User.create({
+      email: 'admin@admin.com',
+      password: 'admin',
+      avatarUrl:
+        'https://wallscover.com/images/pinky-and-the-brain-wallpaper-6.jpg',
+      admin: true
+    })
   ])
 
   const stages = await Promise.all([
