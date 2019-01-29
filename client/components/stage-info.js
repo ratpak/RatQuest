@@ -11,7 +11,6 @@ const withStageInfo = WrappedComponent => {
     }
 
     render() {
-      console.log(this.props.userId, '<<< userID in stage-info')
       // pass stage info into wrapped components as stage
       const stage = this.props.stage
       const userId = this.props.userId

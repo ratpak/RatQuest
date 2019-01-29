@@ -6,23 +6,27 @@ import {loadState, saveState} from './sessionStorage'
 import user from './user'
 import problem from './problem'
 import stage from './stage'
-const throttle = require('lodash').throttle
+const debounce = require('lodash').debounce
 
 const reducer = combineReducers({user, problem, stage})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
-// persisted state loads serialize verison of store state to HTML5 session storage
+// persisted state loads serialize verison of store state to client session storage
 // allows data to remain client side upon hard browser refresh
 const persistedState = loadState()
 const store = createStore(reducer, persistedState, middleware)
 
-// saveState saves state to HTML 5 session storage to be retreieved
+// saveState saves state to client session storage to be retreieved
 // by loadState clientside upon hard browser refresh
-// wrapping store.subscribe callback in throttle to ensure only write to HTML5 session storage at most once per second
+// wrapping store.subscribe callback in debounce to ensure only write to session storage at most once per second
+// debounce will save only the last update within that second so latest changes captured
 store.subscribe(
-  throttle(() => {
-    saveState(store.getState().stage)
+  debounce(() => {
+    saveState({
+      problem: store.getState().problem,
+      stage: store.getState().stage
+    })
   }),
   1000
 )
