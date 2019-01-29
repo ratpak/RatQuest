@@ -4,20 +4,11 @@ import React from 'react'
 import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
 import 'brace/theme/monokai'
-import loadFunction from '../../utils/loadFunction'
-import createFunction from '../../utils/createFunction'
-import testFunction from '../../utils/testFunction'
+import loadFunction from '../utils/loadFunction'
+import createAndTest from '../utils/createAndTest'
 import {fetchProblem} from '../store/problem'
 import {connect} from 'react-redux'
 import GameStage from './game-stage'
-
-// let dummyProblem = {
-//   desc: 'write a function that multiplies 2 numbers',
-//   args: ['num1', 'num2'],
-//   input: [[11, 3], [2, 2], [11, 7]],
-//   output: [33, 4, 77],
-//   name: 'yaodi'
-// }
 
 class Sandbox extends React.Component {
   constructor() {
@@ -48,18 +39,21 @@ class Sandbox extends React.Component {
       )
     })
   }
+
   handleChange(e) {
     this.setState({editor: e})
   }
-  handleClick() {
+  async handleClick() {
     // Grab user input from the code editor stored in state.
     let body = this.state.editor
-    let result = testFunction(
-      createFunction(this.props.currentProblem.arguments, body),
+    let result = await createAndTest(
+      this.props.currentProblem.arguments,
+      body,
       this.props.currentProblem.inputs,
       this.props.currentProblem.outputs
     )
-    console.log(result)
+
+    console.log('gotFromCreateAndTest', result)
     this.setState({result})
   }
 
