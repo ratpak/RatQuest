@@ -41,6 +41,8 @@ export const fetchSolvedProblems = userId => {
 export const addSolvedProblem = (userId, problemId) => {
   return async function(dispatch) {
     await axios.post(`/api/problems/solved/${userId}/${problemId}`)
+    let {data} = await axios.get(`/api/problems/solved/${userId}`)
+    dispatch(gotProblems(data))
   }
 }
 

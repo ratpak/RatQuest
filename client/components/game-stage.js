@@ -9,11 +9,16 @@ const GameStage = props => {
     height: '100px',
     backgroundColor: '#bbdefb'
   }
+  console.log(solvedProblems)
   return (
     <Fragment>
       <div style={styles}>
         <h1>{`Stage ${id}: ${name}`}</h1>
-        <h2>{`${solvedProblems[id].length}/${goal}`}</h2>
+        {solvedProblems[id] ? (
+          <h2>{`${solvedProblems[id].problems.length}/${goal}`}</h2>
+        ) : (
+          <h2>{`0/${goal}`}</h2>
+        )}
       </div>
     </Fragment>
   )

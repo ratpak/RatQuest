@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Problem, UserProblems} = require('../db/models')
+const {Problem, UserProblems, User, Stage} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -23,11 +23,18 @@ router.get('/solved/:userId', async (req, res, next) => {
       let problem = solvedProblems[i]
       let prob = await Problem.findById(problem.problemId)
       if (sortedSolvedProblems[prob.stageId]) {
-        sortedSolvedProblems[prob.stageId].push(problem)
+        sortedSolvedProblems[prob.stageId].problems.push(problem)
       } else {
-        sortedSolvedProblems[prob.stageId] = [problem]
+        sortedSolvedProblems[prob.stageId] = {problems: [problem]}
       }
     }
+    // const user = await User.findById(req.params.userId)
+    // const stage = await Stage.findById(user.stageId)
+    // if (stage.goal === sortedSolvedProblems[user.stageId].problems.length) {
+    //   sortedSolvedProblems[user.stageId].complete = true
+    // } else {
+    //   sortedSolvedProblems[user.stageId].complete = false
+    // }
     res.json(sortedSolvedProblems)
   } catch (err) {
     next(err)
