@@ -10,7 +10,7 @@ import Input from '@material-ui/core/Input'
  * COMPONENT
  */
 const AuthForm = props => {
-  const {name, displayName, handleSubmit, error, theme} = props
+  const {name, displayName, handleSubmit, error} = props
 
   return (
     <div>

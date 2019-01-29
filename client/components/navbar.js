@@ -6,7 +6,7 @@ import {logout} from '../store'
 
 import {withTheme} from '@material-ui/core/styles'
 
-const Navbar = ({handleClick, isLoggedIn, theme}) => {
+const Navbar = ({handleClick, isLoggedIn, theme, user}) => {
   const hStyle = {
     color: theme.palette.primary.light,
     paddingLeft: '10px',
@@ -19,7 +19,6 @@ const Navbar = ({handleClick, isLoggedIn, theme}) => {
   }
   return (
     <div style={backColor}>
-      {console.log('theme----------------', theme)}
       <h1 style={hStyle}>Rat Race</h1>
       <nav>
         {isLoggedIn ? (
@@ -34,7 +33,12 @@ const Navbar = ({handleClick, isLoggedIn, theme}) => {
           <div>
             {/* The navbar will show these links before you log in */}
             <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
+            <Link to="/signup">Sign Up</Link>dz
+            {user.isAdmin && (
+              <Link className="nav-button " to="/admin">
+                Admin
+              </Link>
+            )}
           </div>
         )}
       </nav>
@@ -48,7 +52,8 @@ const Navbar = ({handleClick, isLoggedIn, theme}) => {
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    user: state.user
   }
 }
 

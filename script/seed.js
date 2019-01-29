@@ -22,7 +22,7 @@ async function seed() {
       password: 'admin',
       avatarUrl:
         'https://wallscover.com/images/pinky-and-the-brain-wallpaper-6.jpg',
-      admin: true
+      isAdmin: true
     })
   ])
 
