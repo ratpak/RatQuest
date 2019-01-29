@@ -1,9 +1,8 @@
 import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import HomeStage from './home-stage'
-
 import {withTheme} from '@material-ui/core/styles'
+import BoardStage from './board-stage'
 
 /**
  *
@@ -22,7 +21,7 @@ export const UserHome = props => {
         <h3 style={hStyle}>Welcome, {email}</h3>
       </div>
       <div>
-        <HomeStage />
+        <BoardStage />
       </div>
     </Fragment>
   )

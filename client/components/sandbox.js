@@ -7,9 +7,15 @@ import 'brace/theme/monokai'
 import loadFunction from '../../utils/loadFunction'
 import createFunction from '../../utils/createFunction'
 import testFunction from '../../utils/testFunction'
-import {fetchProblem} from '../store/problem'
+import {fetchProblem, addSolvedProblem} from '../store/problem'
 import {connect} from 'react-redux'
 import GameStage from './game-stage'
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import Slide from '@material-ui/core/Slide'
+import {Link} from 'react-router-dom'
 
 // let dummyProblem = {
 //   desc: 'write a function that multiplies 2 numbers',
@@ -19,16 +25,22 @@ import GameStage from './game-stage'
 //   name: 'yaodi'
 // }
 
+function Transition(props) {
+  return <Slide direction="up" {...props} />
+}
+
 class Sandbox extends React.Component {
   constructor() {
     super()
     this.state = {
       result: '',
-      editor: ''
+      editor: '',
+      open: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.handleClear = this.handleClear.bind(this)
+    this.handleClose = this.handleClose.bind(this)
   }
 
   async componentDidMount() {
@@ -60,7 +72,18 @@ class Sandbox extends React.Component {
       this.props.currentProblem.outputs
     )
     console.log(result)
+    if (result === 'success') {
+      this.props.addSolvedProblem(
+        this.props.user.id,
+        this.props.currentProblem.id
+      )
+      this.setState({open: true})
+    }
     this.setState({result})
+  }
+
+  handleClose() {
+    this.setState({open: false, result: ''})
   }
 
   render() {
@@ -86,9 +109,31 @@ class Sandbox extends React.Component {
         {this.state.result
           .split('\n')
           .map(thing => <h1 key={Math.random()}>{thing}</h1>)}
-        <button type="button" onClick={this.handleClick}>
-          submit
-        </button>
+        <div>
+          <button type="button" onClick={this.handleClick}>
+            submit
+          </button>
+          <Dialog
+            open={this.state.open}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={this.handleClose}
+            aria-labelledby="alert-dialog-slide-title"
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle id="alert-dialog-slide-title">Great Job!!</DialogTitle>
+            <DialogActions>
+              <Button onClick={this.handleClose} color="primary">
+                <Link to="/home">Home</Link>
+              </Button>
+              <Button onClick={this.handleClose} color="primary">
+                <Link to={`/sandbox/${this.props.currentProblem.id + 1}`}>
+                  Next Problem
+                </Link>
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
         <button type="button" onClick={this.handleClear}>
           clear
         </button>
@@ -98,10 +143,13 @@ class Sandbox extends React.Component {
 }
 
 const mapState = state => ({
-  currentProblem: state.problem.currentProblem
+  currentProblem: state.problem.currentProblem,
+  user: state.user
 })
 const mapDispatch = dispatch => ({
-  fetchProblem: id => dispatch(fetchProblem(id))
+  fetchProblem: id => dispatch(fetchProblem(id)),
+  addSolvedProblem: (userId, problemId) =>
+    dispatch(addSolvedProblem(userId, problemId))
 })
 
 export default connect(mapState, mapDispatch)(Sandbox)

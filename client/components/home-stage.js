@@ -2,7 +2,8 @@ import React, {Fragment} from 'react'
 import withStageInfo from './stage-info'
 
 const HomeStage = props => {
-  const {id, name, progress, goal} = props.stage
+  const {id, name, goal} = props.stage
+  const {solvedProblems} = props.problem
   let styles = {
     width: '400px',
     height: '100px',
@@ -12,7 +13,7 @@ const HomeStage = props => {
     <Fragment>
       <div style={styles}>
         <h1>{`Stage ${id}: ${name}`}</h1>
-        <h2>{`${progress}/${goal}`}</h2>
+        <h2>{`${solvedProblems[id].length}/${goal}`}</h2>
       </div>
     </Fragment>
   )
