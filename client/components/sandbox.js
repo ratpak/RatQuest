@@ -25,6 +25,8 @@ class Sandbox extends React.Component {
     this.handleClick = this.handleClick.bind(this)
     this.handleClear = this.handleClear.bind(this)
     this.handleThemeChange = this.handleThemeChange.bind(this)
+    this.handleSelectionChange = this.handleSelectionChange.bind(this)
+    this.handleCursorChange = this.handleCursorChange.bind(this)
   }
 
   async componentDidMount() {
@@ -65,8 +67,27 @@ class Sandbox extends React.Component {
 
     this.setState({result})
   }
+  handleSelectionChange(e) {
+    if (
+      e.selectionLead.row <= 1 ||
+      e.selectionAnchor.row <= 1 ||
+      e.selectionAnchor.row === e.doc.$lines.length - 1 ||
+      e.selectionLead.row === e.doc.$lines.length - 1
+    ) {
+      if (!this.state.readOnly) this.setState({readOnly: true})
+    } else if (this.state.readOnly) this.setState({readOnly: false})
+  }
+  handleCursorChange(e) {
+    if (
+      e.selectionLead.row > 1 &&
+      e.selectionLead.row !== e.doc.$lines.length - 1
+    ) {
+      if (this.state.readOnly) this.setState({readOnly: false})
+    } else if (!this.state.readOnly) this.setState({readOnly: true})
+  }
 
   render() {
+    console.log('moved')
     return (
       <div>
         <div>
@@ -104,24 +125,8 @@ class Sandbox extends React.Component {
           cursorStart={12}
           fontSize={14}
           focus={true}
-          onSelectionChange={e => {
-            if (
-              e.selectionLead.row <= 1 ||
-              e.selectionAnchor.row <= 1 ||
-              e.selectionAnchor.row === e.doc.$lines.length - 1 ||
-              e.selectionLead.row === e.doc.$lines.length - 1
-            ) {
-              if (!this.state.readOnly) this.setState({readOnly: true})
-            } else if (this.state.readOnly) this.setState({readOnly: false})
-          }}
-          onCursorChange={e => {
-            if (
-              e.selectionLead.row > 1 &&
-              e.selectionLead.row !== e.doc.$lines.length - 1
-            ) {
-              if (this.state.readOnly) this.setState({readOnly: false})
-            } else if (!this.state.readOnly) this.setState({readOnly: true})
-          }}
+          onSelectionChange={this.handleSelectionChange}
+          onCursorChange={this.handleCursorChange}
           wrapEnabled={true}
           readOnly={this.state.readOnly}
         />
