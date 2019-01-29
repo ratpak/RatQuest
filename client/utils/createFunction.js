@@ -1,6 +1,7 @@
 /* eslint-disable no-new-func */
 const createFunction = (args, body) => {
   // Find and slice out function body
+  let func
   try {
     let start
     for (let i = 0; i < body.length; i++) {
@@ -9,12 +10,12 @@ const createFunction = (args, body) => {
       }
     }
     body = body.slice(start, body.length - 2)
-    console.log(args, 'args')
-    let func = new Function(args.join(', '), body)
-    return func
+    func = new Function(args.join(', '), body)
   } catch (e) {
     console.log('error from createFunction: ', e.toString())
+    func = e.toString()
   }
+  return func
 }
 
 export default createFunction
