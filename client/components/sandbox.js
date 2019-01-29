@@ -1,25 +1,30 @@
 /* eslint-disable no-new-func */
 /* eslint-disable id-length */
+
 import React from 'react'
 import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
-import 'brace/theme/monokai'
 import loadFunction from '../utils/loadFunction'
 import createAndTest from '../utils/createAndTest'
 import {fetchProblem} from '../store/problem'
 import {connect} from 'react-redux'
 import GameStage from './game-stage'
+import editorThemes from '../utils/editorThemes'
+editorThemes.forEach(theme => require(`brace/theme/${theme}`))
 
 class Sandbox extends React.Component {
   constructor() {
     super()
     this.state = {
       result: '',
-      editor: ''
+      editor: '',
+      theme: 'dracula',
+      readOnly: true
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.handleClear = this.handleClear.bind(this)
+    this.handleThemeChange = this.handleThemeChange.bind(this)
   }
 
   async componentDidMount() {
@@ -39,6 +44,11 @@ class Sandbox extends React.Component {
       )
     })
   }
+  handleThemeChange(e) {
+    this.setState({
+      theme: e.target.value
+    })
+  }
 
   handleChange(e) {
     this.setState({editor: e})
@@ -53,11 +63,11 @@ class Sandbox extends React.Component {
       this.props.currentProblem.outputs
     )
 
-    console.log('gotFromCreateAndTest', result)
     this.setState({result})
   }
 
   render() {
+    console.log('rerender')
     return (
       <div>
         <div>
@@ -68,15 +78,54 @@ class Sandbox extends React.Component {
           {this.test}
         </h2>
         <h3>{this.props.currentProblem.description}</h3>
+        <select onChange={this.handleThemeChange}>
+          {editorThemes.map(theme => {
+            return (
+              <option
+                key={Math.random()}
+                value={theme}
+                selected={theme === this.state.theme}
+              >
+                {theme}
+              </option>
+            )
+          })}
+        </select>
+        <br />
         <AceEditor
           mode="javascript"
-          theme="monokai"
+          theme={this.state.theme}
           value={this.state.editor}
           onPaste={this.handlePaste}
           onChange={this.handleChange}
-          name="UNIQUE_ID_OF_DIV"
-          editorProps={{$blockScrolling: true}}
-        />{' '}
+          name="myEditor"
+          height="500px"
+          width="500px"
+          editorProps={{$blockScrolling: Infinity}}
+          cursorStart={12}
+          fontSize={14}
+          focus={true}
+          onSelectionChange={e => {
+            if (
+              e.selectionLead.row <= 1 ||
+              e.selectionAnchor.row <= 1 ||
+              e.selectionAnchor.row === e.doc.$lines.length - 1 ||
+              e.selectionLead.row === e.doc.$lines.length - 1
+            ) {
+              if (!this.state.readOnly) this.setState({readOnly: true})
+            } else if (this.state.readOnly) this.setState({readOnly: false})
+          }}
+          onCursorChange={e => {
+            if (
+              e.selectionLead.row > 1 &&
+              e.selectionLead.row !== e.doc.$lines.length - 1
+            ) {
+              if (this.state.readOnly) this.setState({readOnly: false})
+            } else if (!this.state.readOnly) this.setState({readOnly: true})
+          }}
+          wrapEnabled={true}
+          readOnly={this.state.readOnly}
+        />
         {this.state.result
           .split('\n')
           .map(thing => <h1 key={Math.random()}>{thing}</h1>)}
