@@ -2,7 +2,7 @@
 
 const loadFunction = (name, args) => {
   return `function ${name}(${args.join(', ')}){        
-// Your code below! (please don't edit this comment) //**//
+// Your code below!//**//
 
 
 

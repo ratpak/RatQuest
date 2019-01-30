@@ -1,6 +1,5 @@
 /* eslint-disable no-new-func */
 /* eslint-disable id-length */
-
 import React from 'react'
 import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
@@ -10,6 +9,18 @@ import {fetchProblem} from '../store/problem'
 import {connect} from 'react-redux'
 import GameStage from './game-stage'
 import editorThemes from '../utils/editorThemes'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import Button from '@material-ui/core/Button'
+import DoneIcon from '@material-ui/icons/Done'
+import Fab from '@material-ui/core/Fab'
+import Tooltip from '@material-ui/core/Tooltip'
+import ClearIcon from '@material-ui/icons/Clear'
+import HomeIcon from '@material-ui/icons/HomeSharp'
+import ThemeIcon from '@material-ui/icons/ColorLensSharp'
+import Dialog from '@material-ui/core/Dialog'
+import {DialogContent, DialogTitle} from '@material-ui/core'
+
 editorThemes.forEach(theme => require(`brace/theme/${theme}`))
 
 class Sandbox extends React.Component {
@@ -19,7 +30,8 @@ class Sandbox extends React.Component {
       result: '',
       editor: '',
       theme: 'dracula',
-      readOnly: true
+      readOnly: true,
+      showThemes: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
@@ -27,6 +39,7 @@ class Sandbox extends React.Component {
     this.handleThemeChange = this.handleThemeChange.bind(this)
     this.handleSelectionChange = this.handleSelectionChange.bind(this)
     this.handleCursorChange = this.handleCursorChange.bind(this)
+    this.handleHome = this.handleHome.bind(this)
   }
 
   async componentDidMount() {
@@ -37,6 +50,9 @@ class Sandbox extends React.Component {
         this.props.currentProblem.arguments
       )
     })
+  }
+  handleHome() {
+    this.props.history.push('/home')
   }
   handleClear() {
     this.setState({
@@ -67,6 +83,7 @@ class Sandbox extends React.Component {
 
     this.setState({result})
   }
+
   handleSelectionChange(e) {
     if (
       e.selectionLead.row <= 1 ||
@@ -87,7 +104,7 @@ class Sandbox extends React.Component {
   }
 
   render() {
-    console.log('moved')
+    // console.log('moved')
     return (
       <div>
         <div>
@@ -98,19 +115,108 @@ class Sandbox extends React.Component {
           {this.test}
         </h2>
         <h3>{this.props.currentProblem.description}</h3>
-        <select onChange={this.handleThemeChange}>
-          {editorThemes.map(theme => {
-            return (
-              <option
-                key={Math.random()}
-                value={theme}
-                selected={theme === this.state.theme}
+        <div>
+          <Tooltip title="Clear">
+            <Fab
+              type="Fab"
+              style={{
+                backgroundColor: '#bbdefb',
+                color: 'black',
+                fontWeight: 550
+              }}
+              onClick={this.handleClear}
+            >
+              <ClearIcon />
+            </Fab>
+          </Tooltip>
+          <Tooltip title="Submit">
+            <Fab
+              type="Fab"
+              // onMouseOver={() => console.log('hovered doneicon')}
+              style={{
+                backgroundColor: '#bbdefb',
+                color: 'black',
+                fontWeight: 550
+              }}
+              onClick={this.handleClick}
+            >
+              <DoneIcon />
+            </Fab>
+          </Tooltip>
+          <Tooltip title="Home">
+            <Fab
+              type="Fab"
+              style={{
+                backgroundColor: '#bbdefb',
+                color: 'black',
+                fontWeight: 550
+              }}
+              onClick={this.handleHome}
+            >
+              <HomeIcon />
+            </Fab>
+          </Tooltip>
+          <Tooltip title="Change Theme">
+            <Fab
+              type="Fab"
+              style={{
+                backgroundColor: '#bbdefb',
+                color: 'black',
+                fontWeight: 550
+              }}
+              onClick={() => {
+                this.setState({showThemes: !this.state.showThemes})
+              }}
+            >
+              <ThemeIcon />
+            </Fab>
+          </Tooltip>
+          <Dialog
+            // disableBackdropClick
+            // disableEscapeKeyDown
+            open={this.state.showThemes}
+            // onClose={this.handleClose}
+          >
+            <DialogTitle>Select a theme</DialogTitle>
+            <DialogContent>
+              <Select
+                value={this.state.theme}
+                onChange={this.handleThemeChange}
               >
-                {theme}
-              </option>
-            )
-          })}
-        </select>
+                {editorThemes.map(theme => {
+                  return (
+                    <MenuItem key={Math.random()} value={theme}>
+                      {theme}
+                    </MenuItem>
+                  )
+                })}
+              </Select>{' '}
+              <Tooltip title="Close">
+                <Fab
+                  size="small"
+                  onClick={() => {
+                    this.setState({showThemes: !this.state.showThemes})
+                  }}
+                >
+                  <ClearIcon />
+                </Fab>
+              </Tooltip>
+            </DialogContent>
+          </Dialog>
+
+          {/* {this.state.showThemes && (
+            <Select value={this.state.theme} onChange={this.handleThemeChange}>
+              {editorThemes.map(theme => {
+                return (
+                  <MenuItem key={Math.random()} value={theme}>
+                    {theme}
+                  </MenuItem>
+                )
+              })}
+            </Select>
+          )} */}
+          <br />
+        </div>
         <br />
         <AceEditor
           mode="javascript"
@@ -118,10 +224,10 @@ class Sandbox extends React.Component {
           value={this.state.editor}
           onPaste={this.handlePaste}
           onChange={this.handleChange}
-          name="myEditor"
-          height="500px"
-          width="500px"
-          editorProps={{$blockScrolling: Infinity}}
+          // name="myEditor"
+          // height="400px"
+          // width="500px"
+          // editorProps={{$blockScrolling: Infinity}}
           cursorStart={12}
           fontSize={14}
           focus={true}
@@ -129,16 +235,12 @@ class Sandbox extends React.Component {
           onCursorChange={this.handleCursorChange}
           wrapEnabled={true}
           readOnly={this.state.readOnly}
+          editorProps={{$blockScrolling: true}}
         />
+
         {this.state.result
           .split('\n')
           .map(thing => <h1 key={Math.random()}>{thing}</h1>)}
-        <button type="button" onClick={this.handleClick}>
-          submit
-        </button>
-        <button type="button" onClick={this.handleClear}>
-          clear
-        </button>
       </div>
     )
   }
