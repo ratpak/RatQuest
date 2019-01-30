@@ -25,7 +25,7 @@ async function seed() {
   // creating user association with stage
   try {
     const [user1, user2] = users
-    return await Promise.all([user1.setStage(1), user2.setStage(1)])
+    return await Promise.all([user1.setStage(1), user2.setStage(2)])
   } catch (err) {
     console.error(err, '<<<failed seeding user stage with Magic Method')
   }

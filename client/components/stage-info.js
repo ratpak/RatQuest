@@ -11,9 +11,10 @@ const withStageInfo = WrappedComponent => {
     }
 
     render() {
-      const stageInHome = this.props.stageInHome
       // pass stage info into wrapped components as displayInfo if match stageInHome (integer of stage level box in home)
-      // else pass stageInHome integer
+      // else pass stageInHomeInfo with integer (stageId) for current user stage and stage element's own number (stageInHome)
+      // compare stageId vs. stageInHome to determine if display as COMPLETE vs LOCKED
+      const stageInHome = this.props.stageInHome
       const stage = this.props.stage
       const stageId = stage.id
       const stageInHomeInfo = {stageInHome, stageId}
