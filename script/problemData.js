@@ -1,6 +1,7 @@
 const problemData = [
   {
-    description: 'Create a function that adds two numbers together and returns the sum of those numbers.',
+    description:
+      'Create a function that adds two numbers together and returns the sum of those numbers.',
     arguments: ['num1', 'num2'],
     funcName: 'addNums',
     inputs: [['1', '2'], ['3', '5'], ['10', '20']],
@@ -67,7 +68,7 @@ const problemData = [
     outputs: ['false', 'true'],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
-    stageId: 1
+    stageId: 2
   }
 ]
 
