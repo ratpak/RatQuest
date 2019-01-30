@@ -40,7 +40,7 @@ export const UserHome = props => {
   //make sure to pass email props into stage-info
   return (
     <Fragment>
-      <Dialog
+      {/* <Dialog
         open={open}
         TransitionComponent={Transition}
         keepMounted
@@ -56,12 +56,12 @@ export const UserHome = props => {
             Yayyy
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
       <div>
         <h3 style={hStyle}>Welcome, {user.email}</h3>
       </div>
       <div>
-        <BoardStage />
+        <BoardStage problem={props.problem} />
       </div>
     </Fragment>
   )
