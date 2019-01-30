@@ -39,14 +39,14 @@ form div {
 /* style for putting board elements in as pure svg in comoponents */
 /* user-home - board */
 #board-wrapper {
-  text-align: center;
+  /* text-align: center; */
 }
 
 /* testing using absolute positioning */
 #board-01 {
   position: absolute;
-  left: 570px;
-  top: 205px;
+  /* left: 570px;
+  top: 205px; */
 }
 
 #stage-01 {
@@ -67,6 +67,7 @@ form div {
   border-style: solid;
   border-width: 4px;
   border-color: #4b4b4b;
+  text-align: center;
 }
 
 .stage-info h3 {
