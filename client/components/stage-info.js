@@ -11,10 +11,19 @@ const withStageInfo = WrappedComponent => {
     }
 
     render() {
-      // pass stage info into wrapped components as stage
+      const stageInHome = this.props.stageInHome
+      // pass stage info into wrapped components as displayInfo if match stageInHome (integer of stage level box in home)
+      // else pass stageInHome integer
       const stage = this.props.stage
+      const stageId = stage.id
+      const stageInHomeInfo = {stageInHome, stageId}
       const userId = this.props.userId
-      return userId ? <WrappedComponent stage={stage} /> : <div>loading</div>
+      const displayInfo = stageInHome === stage.id ? stage : stageInHomeInfo
+      return userId ? (
+        <WrappedComponent stage={stage} displayInfo={displayInfo} />
+      ) : (
+        <div>loading</div>
+      )
     }
   }
   return StageInfo

@@ -1,7 +1,8 @@
 import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-// import HomeStage from './home-stage'
+import Navbar from './navbar'
+import HomeStage from './home-stage'
 import Board from './board'
 
 import {withTheme} from '@material-ui/core/styles'
@@ -13,20 +14,26 @@ import {withTheme} from '@material-ui/core/styles'
 export const UserHome = props => {
   const {email, theme} = props
 
-  const hStyle = {
-    color: theme.palette.primary.light
-  }
+  // const hStyle = {
+  //   color: theme.palette.primary.light
+  // }
   return (
     <Fragment>
-      <div>
-        <h3 style={hStyle}>Welcome, {email}</h3>
-      </div>
+      <Navbar email={email} />
       <div id="board-wrapper">
-        <Board />
+        <div id="board-01">
+          <Board />
+        </div>
+        <div className="stage" id="stage-box-01">
+          <HomeStage stageInHome={1} />
+        </div>
+        <div className="stage" id="stage-box-02">
+          <HomeStage stageInHome={2} />
+        </div>
+        <div className="stage" id="stage-box-03">
+          <HomeStage stageInHome={3} />
+        </div>
       </div>
-      {/* <div>
-        <HomeStage />
-      </div> */}
     </Fragment>
   )
 }
@@ -37,6 +44,7 @@ export const UserHome = props => {
 const mapState = state => {
   return {
     email: state.user.email
+    // stage: state.stage,
   }
 }
 
