@@ -44,7 +44,7 @@ const problemData = [
     outputType: 'array',
     url:
       'https://medium.freecodecamp.org/how-to-reverse-a-string-in-javascript-in-3-different-ways-75e4763c68cb',
-    stageId: 1
+    stageId: 2
   },
   {
     description:
@@ -56,7 +56,7 @@ const problemData = [
     outputs: ['2', '720'],
     url:
       'https://medium.freecodecamp.org/how-to-factorialize-a-number-in-javascript-9263c89a4b38',
-    stageId: 1
+    stageId: 2
   },
   {
     description:
