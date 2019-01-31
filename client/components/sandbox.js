@@ -3,11 +3,18 @@
 import React from 'react'
 import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
+import 'brace/theme/monokai'
 import loadFunction from '../utils/loadFunction'
-import createAndTest from '../utils/createAndTest'
-import {fetchProblem} from '../store/problem'
+import {fetchProblem, addSolvedProblem} from '../store/problem'
 import {connect} from 'react-redux'
 import GameStage from './game-stage'
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import Slide from '@material-ui/core/Slide'
+import {Link} from 'react-router-dom'
+import createAndTest from '../utils/createAndTest'
 import editorThemes from '../utils/editorThemes'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -23,12 +30,26 @@ import {DialogContent, DialogTitle} from '@material-ui/core'
 
 editorThemes.forEach(theme => require(`brace/theme/${theme}`))
 
+// let dummyProblem = {
+//   desc: 'write a function that multiplies 2 numbers',
+//   args: ['num1', 'num2'],
+//   input: [[11, 3], [2, 2], [11, 7]],
+//   output: [33, 4, 77],
+//   name: 'yaodi'
+// }
+
+function Transition(props) {
+  return <Slide direction="up" {...props} />
+}
+
 class Sandbox extends React.Component {
   constructor() {
     super()
     this.state = {
       result: '',
       editor: '',
+      open: false,
+      stageComplete: false,
       theme: 'dracula',
       readOnly: true,
       showThemes: false
@@ -36,6 +57,7 @@ class Sandbox extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.handleClear = this.handleClear.bind(this)
+    this.handleClose = this.handleClose.bind(this)
     this.handleThemeChange = this.handleThemeChange.bind(this)
     this.handleSelectionChange = this.handleSelectionChange.bind(this)
     this.handleCursorChange = this.handleCursorChange.bind(this)
@@ -80,7 +102,21 @@ class Sandbox extends React.Component {
       this.props.currentProblem.inputs,
       this.props.currentProblem.outputs
     )
-
+    console.log(result)
+    if (result === 'success') {
+      this.props.addSolvedProblem(
+        this.props.user.id,
+        this.props.currentProblem.id
+      )
+      if (
+        this.props.solvedProblems[this.props.user.id].problems.length + 1 ===
+        this.props.stage.goal
+      ) {
+        this.setState({stageComplete: true})
+      } else {
+        this.setState({open: true})
+      }
+    }
     this.setState({result})
   }
 
@@ -242,10 +278,15 @@ class Sandbox extends React.Component {
 }
 
 const mapState = state => ({
-  currentProblem: state.problem.currentProblem
+  currentProblem: state.problem.currentProblem,
+  solvedProblems: state.problem.solvedProblems,
+  user: state.user,
+  stage: state.stage
 })
 const mapDispatch = dispatch => ({
-  fetchProblem: id => dispatch(fetchProblem(id))
+  fetchProblem: id => dispatch(fetchProblem(id)),
+  addSolvedProblem: (userId, problemId) =>
+    dispatch(addSolvedProblem(userId, problemId))
 })
 
 export default connect(mapState, mapDispatch)(Sandbox)
