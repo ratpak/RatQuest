@@ -14,7 +14,7 @@ const BoardStage = props => {
     <Fragment>
       <div style={styles}>
         <HomeStage />
-        <button>
+        <button type="button">
           <Link to={`/sandbox/${problem.currentProblem.id}`}>Play</Link>
         </button>
       </div>
