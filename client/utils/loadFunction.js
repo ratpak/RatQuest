@@ -11,28 +11,6 @@ const loadFunction = (name, args) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }`
 }
 export default loadFunction

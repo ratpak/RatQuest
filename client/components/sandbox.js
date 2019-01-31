@@ -19,31 +19,40 @@ import MenuItem from '@material-ui/core/MenuItem'
 import DoneIcon from '@material-ui/icons/Done'
 import Fab from '@material-ui/core/Fab'
 import Tooltip from '@material-ui/core/Tooltip'
-import ClearIcon from '@material-ui/icons/Clear'
+import ClearIcon from '@material-ui/icons/RefreshSharp'
 import HomeIcon from '@material-ui/icons/HomeSharp'
 import ThemeIcon from '@material-ui/icons/ColorLensSharp'
 import SkipIcon from '@material-ui/icons/FastForwardSharp'
-import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
+import XIcon from '@material-ui/icons/CloseSharp'
 import {withStyles} from '@material-ui/core/styles'
 
 editorThemes.forEach(theme => require(`brace/theme/${theme}`))
 
-// function Transition(props) {
-//   return <Slide direction="up" {...props} />
-// }
+function Transition(props) {
+  return <Slide direction="up" {...props} />
+}
 
 const styles = theme => ({
-  root: {
-    flexGrow: 1
-  },
-  paper: {
-    height: 140,
-    width: 100
-  },
-  control: {
-    // padding: theme.spacing.unit * 2
-    padding: '10px'
-  }
+  // root: {
+  //   flexGrow: 1
+  // },
+  // paper: {
+  //   // padding: 0,
+  //   textAlign: 'center',
+  //   backgroundColor: 'skyblue'
+  //   // color: theme.palette.text.secondary,
+  // },
+  // ace: {
+  //   textAlign: 'left',
+  //   height: '50vw',
+  //   width: '50vw'
+  //   // border: '5px'
+  // }
+  // // control: {
+  // //   // padding: theme.spacing.unit * 2
+  // //   padding: '10px'
+  // // }
 })
 
 class Sandbox extends React.Component {
@@ -61,7 +70,6 @@ class Sandbox extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.handleClear = this.handleClear.bind(this)
-    // this.handleClose = this.handleClose.bind(this)
     this.handleThemeChange = this.handleThemeChange.bind(this)
     this.handleSelectionChange = this.handleSelectionChange.bind(this)
     this.handleCursorChange = this.handleCursorChange.bind(this)
@@ -145,95 +153,120 @@ class Sandbox extends React.Component {
   }
 
   render() {
-    console.log(this.props, 'props')
+    let {classes} = this.props
     return (
-      <Grid container className={styles.root} spacing={16}>
-        <div>
-          <div>
-            <Grid item xs={12} name="top right">
-              <GameStage />
-            </Grid>
+      <div className="editorContainerLol">
+        <div className="biggerWrapper">
+          <div className="editorStage">
+            <GameStage />
           </div>
-          <h2>
-            Problem #{this.props.match.params.problemId}
-            {this.test}
-          </h2>
-
-          <Grid item xs={12} name="top left">
-            <h3>{this.props.currentProblem.description}</h3>
-          </Grid>
-
-          <Grid item xs={12} name="bottom left">
-            <div>
-              <Tooltip title="Clear">
-                <Fab
-                  type="Fab"
-                  style={{
-                    backgroundColor: '#bbdefb',
-                    color: 'black',
-                    fontWeight: 550
-                  }}
-                  onClick={this.handleClear}
-                >
-                  <ClearIcon />
-                </Fab>
-              </Tooltip>
-              <Tooltip title="Submit">
-                <Fab
-                  type="Fab"
-                  style={{
-                    backgroundColor: '#bbdefb',
-                    color: 'black',
-                    fontWeight: 550
-                  }}
-                  onClick={this.handleClick}
-                >
-                  <DoneIcon />
-                </Fab>
-              </Tooltip>
-              <Tooltip title="Home">
-                <Fab
-                  type="Fab"
-                  style={{
-                    backgroundColor: '#bbdefb',
-                    color: 'black',
-                    fontWeight: 550
-                  }}
-                  onClick={this.handleHome}
-                >
-                  <HomeIcon />
-                </Fab>
-              </Tooltip>
-              <Tooltip title="Change Theme">
-                <Fab
-                  type="Fab"
-                  style={{
-                    backgroundColor: '#bbdefb',
-                    color: 'black',
-                    fontWeight: 550
-                  }}
-                  onClick={() => {
-                    this.setState({showThemes: !this.state.showThemes})
-                  }}
-                >
-                  <ThemeIcon />
-                </Fab>
-              </Tooltip>
-              <Tooltip title="Skip Problem">
-                <Fab
-                  type="Fab"
-                  style={{
-                    backgroundColor: '#bbdefb',
-                    color: 'black',
-                    fontWeight: 550
-                  }}
-                  onClick={() => {
-                    console.log('add skip thunk here')
-                  }}
-                >
-                  <SkipIcon />
-                </Fab>
-              </Tooltip>
+          <div className="editor">
+            <div className="editorLeftHalf">
+              <div className="editorBox">
+                <AceEditor
+                  mode="javascript"
+                  theme={this.state.theme}
+                  value={this.state.editor}
+                  onPaste={this.handlePaste}
+                  onChange={this.handleChange}
+                  name="ace"
+                  className="editorBox"
+                  height="99%"
+                  width="100%"
+                  editorProps={{$blockScrolling: false}}
+                  fontSize={14}
+                  onSelectionChange={this.handleSelectionChange}
+                  onCursorChange={this.handleCursorChange}
+                  showPrintMargin={false}
+                  wrapEnabled={true}
+                  readOnly={this.state.readOnly}
+                />
+              </div>
+              <div className="editorTools">
+                <Tooltip title="Reset">
+                  <Fab
+                    type="Fab"
+                    style={{
+                      backgroundColor: '#bbdefb',
+                      color: 'black',
+                      fontWeight: 550
+                    }}
+                    onClick={this.handleClear}
+                  >
+                    <ClearIcon />
+                  </Fab>
+                </Tooltip>
+                <Tooltip title="Submit">
+                  <Fab
+                    type="Fab"
+                    style={{
+                      backgroundColor: '#bbdefb',
+                      color: 'black',
+                      fontWeight: 550
+                    }}
+                    onClick={this.handleClick}
+                  >
+                    <DoneIcon />
+                  </Fab>
+                </Tooltip>
+                <Tooltip title="Home">
+                  <Fab
+                    type="Fab"
+                    style={{
+                      backgroundColor: '#bbdefb',
+                      color: 'black',
+                      fontWeight: 550
+                    }}
+                    onClick={this.handleHome}
+                  >
+                    <HomeIcon />
+                  </Fab>
+                </Tooltip>
+                <Tooltip title="Change Theme">
+                  <Fab
+                    type="Fab"
+                    style={{
+                      backgroundColor: '#bbdefb',
+                      color: 'black',
+                      fontWeight: 550
+                    }}
+                    onClick={() => {
+                      this.setState({showThemes: !this.state.showThemes})
+                    }}
+                  >
+                    <ThemeIcon />
+                  </Fab>
+                </Tooltip>
+                <Tooltip title="Skip Problem">
+                  <Fab
+                    type="Fab"
+                    style={{
+                      backgroundColor: '#bbdefb',
+                      color: 'black',
+                      fontWeight: 550
+                    }}
+                    onClick={() => {
+                      console.log('add skip thunk here')
+                    }}
+                  >
+                    <SkipIcon />
+                  </Fab>
+                </Tooltip>
+              </div>
+            </div>
+            <div className="editorRightHalf">
+              <Paper className="editorDescription">
+                <h3>Problem description</h3>
+                <p>
+                  {this.props.currentProblem.description} lorem ipsum dolor
+                  lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem
+                  ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum
+                  dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor
+                  lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem
+                  ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum
+                  dolor
+                </p>
+              </Paper>
 
               <Dialog open={this.state.showThemes}>
                 <DialogTitle>Select a theme</DialogTitle>
@@ -257,42 +290,22 @@ class Sandbox extends React.Component {
                         this.setState({showThemes: !this.state.showThemes})
                       }}
                     >
-                      <ClearIcon />
+                      <XIcon />
                     </Fab>
                   </Tooltip>
                 </DialogContent>
               </Dialog>
-              <br />
+
+              <Paper className="editorResult">
+                <h3>Test Results</h3>
+                {this.state.result
+                  .split('\n')
+                  .map(thing => <p key={Math.random()}>{thing}</p>)}
+              </Paper>
             </div>
-            <br />
-
-            <AceEditor
-              mode="javascript"
-              theme={this.state.theme}
-              value={this.state.editor}
-              onPaste={this.handlePaste}
-              onChange={this.handleChange}
-              // name="myEditor"
-              // height="400px"
-              // width="500px"
-              cursorStart={12}
-              fontSize={14}
-              focus={true}
-              onSelectionChange={this.handleSelectionChange}
-              onCursorChange={this.handleCursorChange}
-              wrapEnabled={true}
-              readOnly={this.state.readOnly}
-              editorProps={{$blockScrolling: true}}
-            />
-          </Grid>
-
-          <Grid item xs={12} name="bottom right">
-            {this.state.result
-              .split('\n')
-              .map(thing => <h1 key={Math.random()}>{thing}</h1>)}
-          </Grid>
+          </div>
         </div>
-      </Grid>
+      </div>
     )
   }
 }

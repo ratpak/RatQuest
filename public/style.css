@@ -46,6 +46,61 @@ form div {
   width: 75vw;
 } */
 
+/* editor page styling */
+.editorContainerLol {
+  height: 100%;
+  min-height: 100%;
+}
+.biggerWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+.editor {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: space-around;
+  flex-basis: 80%;
+}
+
+/* class that the react-ace editor is tied to */
+.editorBox {
+  flex-basis: 90%;
+}
+.editorTools {
+  display: flex;
+  flex-basis: 10%;
+  justify-content: flex-end;
+  flex-direction: row;
+}
+.editorLeftHalf {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 45%;
+}
+.editorStage {
+  /* flex-basis: 45%; */
+  display: flex;
+  justify-content: center;
+  flex-basis: 20%;
+  /* text-align: center; */
+}
+.editorDescription {
+  flex-basis: 45%;
+  font-size: 20pt;
+}
+.editorResult {
+  flex-basis: 45%;
+  font-size: 20pt;
+}
+.editorRightHalf {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-basis: 45%;
+}
+
 /* user-home navbar styles */
 .navbar {
   display: flex;
