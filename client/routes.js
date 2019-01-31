@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import {me} from './store'
 import Sandbox from './components/sandbox'
+import Admin from './components/Admin'
 
 /**
  * COMPONENT
@@ -21,16 +22,19 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/" component={Login} />
+        <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route exact path="/home" component={UserHome} />
             <Route exact path="/sandbox/:problemId" component={Sandbox} />
+            <Route exact path="/admin" component={Admin} />
+            <Route component={UserHome} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        {/* <Route component={Login} /> */}
+        <Route component={Login} />
       </Switch>
     )
   }
