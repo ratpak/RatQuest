@@ -52,10 +52,31 @@ router.post('/solved/:userId/:problemId', async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:userId', async (req, res, next) => {
   try {
-    const singleProblem = await Problem.findById(req.params.id)
-    res.json(singleProblem)
+    // const singleProblem = await Problem.findById(req.params.id)
+    // res.json(singleProblem)
+
+    const user = await User.findById(req.params.userId)
+    const solvedProblems = await UserProblems.findAll({
+      where: {
+        userId: req.params.userId
+      }
+    })
+    const problems = await Problem.findAll().filter(problem => {
+      let notSolved = true
+      for (let i = 0; i < solvedProblems.length; i++) {
+        if (
+          solvedProblems[i].problemId === problem.id ||
+          user.stageId !== problem.stageId ||
+          problem.deleted
+        ) {
+          notSolved = false
+        }
+      }
+      return notSolved
+    })
+    res.json(problems[Math.round(Math.random() * (problems.length - 1))])
   } catch (e) {
     next(e)
   }
