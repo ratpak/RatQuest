@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button'
 
 const HomeStage = props => {
   const {displayInfo, problem} = props
+
   return (
     <Fragment>
       <div className="stage-info">

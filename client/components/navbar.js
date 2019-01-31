@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn, email, isAdmin}) => (
+const Navbar = ({handleClick, isLoggedIn, email, is}) => (
   <div className="navbar">
     {/* <nav> */}
     <div className="simple-flex">
@@ -14,9 +14,10 @@ const Navbar = ({handleClick, isLoggedIn, email, isAdmin}) => (
         <h4>Welcome, {email}</h4>
       </div>
     </div>
-    {isAdmin && (
+
+    {is && (
       <div>
-        <Link to="/admin">Admin</Link>
+        <Link to="/" />
       </div>
     )}
     {isLoggedIn && (
@@ -37,7 +38,8 @@ const Navbar = ({handleClick, isLoggedIn, email, isAdmin}) => (
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
-    isAdmin: state.user.admin
+    user: state.user,
+    isAdmin: state.user.isAdmin
   }
 }
 

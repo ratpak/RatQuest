@@ -11,7 +11,19 @@ async function seed() {
 
   const users = await Promise.all([
     User.create({email: 'user@user.com', password: 'user'}),
-    User.create({email: 'admin@admin.com', password: 'admin', admin: true})
+    User.create({
+      email: 'jerry@jerry.com',
+      password: 'jerry',
+      avatarUrl:
+        'https://www.dwerghamster.nl/fotoalbum/fotos/forum/2009/20080309-rat8.jpg'
+    }),
+    User.create({
+      email: 'admin@admin.com',
+      password: 'admin',
+      avatarUrl:
+        'https://wallscover.com/images/pinky-and-the-brain-wallpaper-6.jpg',
+      isAdmin: true
+    })
   ])
 
   const stages = await Promise.all([
@@ -31,8 +43,12 @@ async function seed() {
 
   // creating user association with stage
   try {
-    const [user1, user2] = users
-    return await Promise.all([user1.setStage(1), user2.setStage(2)])
+    const [user1, user2, user3] = users
+    return await Promise.all([
+      user1.setStage(1),
+      user2.setStage(1),
+      user3.setStage(1)
+    ])
   } catch (err) {
     console.error(err, '<<<failed seeding user stage with Magic Method')
   }
