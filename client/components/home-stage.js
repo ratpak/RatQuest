@@ -16,8 +16,7 @@ const HomeStage = props => {
             <div className="flex">
               <h2>{`${displayInfo.progress} /${displayInfo.goal}`}</h2>
               <Button>
-                Play
-                {/* <Link to={`/sandbox/${problem.currentProblem.id}`}>Play</Link>   */}
+                <Link to={`/sandbox/${displayInfo.userId}`}>Play</Link>
               </Button>
             </div>
           </Fragment>
