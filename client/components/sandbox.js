@@ -22,26 +22,34 @@ import Tooltip from '@material-ui/core/Tooltip'
 import ClearIcon from '@material-ui/icons/Clear'
 import HomeIcon from '@material-ui/icons/HomeSharp'
 import ThemeIcon from '@material-ui/icons/ColorLensSharp'
+import SkipIcon from '@material-ui/icons/FastForwardSharp'
+import Grid from '@material-ui/core/Grid'
+import {withStyles} from '@material-ui/core/styles'
 
 editorThemes.forEach(theme => require(`brace/theme/${theme}`))
 
-// let dummyProblem = {
-//   desc: 'write a function that multiplies 2 numbers',
-//   args: ['num1', 'num2'],
-//   input: [[11, 3], [2, 2], [11, 7]],
-//   output: [33, 4, 77],
-//   name: 'yaodi'
+// function Transition(props) {
+//   return <Slide direction="up" {...props} />
 // }
 
-function Transition(props) {
-  return <Slide direction="up" {...props} />
-}
+const styles = theme => ({
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    height: 140,
+    width: 100
+  },
+  control: {
+    padding: theme.spacing.unit * 2
+  }
+})
 
 class Sandbox extends React.Component {
   constructor() {
     super()
     this.state = {
-      result: '',
+      result: 'lorem ipsum dolor \n lorem ipsum dolor \n lorem ipsum dolor',
       editor: '',
       open: false,
       stageComplete: false,
@@ -61,6 +69,7 @@ class Sandbox extends React.Component {
 
   async componentDidMount() {
     await this.props.fetchProblem(this.props.match.params.problemId)
+    // await this.props.fetchProblem(this.props.user.id)
     this.setState({
       editor: loadFunction(
         this.props.currentProblem.funcName,
@@ -135,126 +144,154 @@ class Sandbox extends React.Component {
   }
 
   render() {
-    // console.log('moved')
+    console.log(this.props, 'props')
     return (
-      <div>
+      <Grid container className={styles.root} spacing={16}>
         <div>
-          <GameStage />
-        </div>
-        <h2>
-          Problem #{this.props.match.params.problemId}
-          {this.test}
-        </h2>
-        <h3>{this.props.currentProblem.description}</h3>
-        <div>
-          <Tooltip title="Clear">
-            <Fab
-              type="Fab"
-              style={{
-                backgroundColor: '#bbdefb',
-                color: 'black',
-                fontWeight: 550
-              }}
-              onClick={this.handleClear}
-            >
-              <ClearIcon />
-            </Fab>
-          </Tooltip>
-          <Tooltip title="Submit">
-            <Fab
-              type="Fab"
-              // onMouseOver={() => console.log('hovered doneicon')}
-              style={{
-                backgroundColor: '#bbdefb',
-                color: 'black',
-                fontWeight: 550
-              }}
-              onClick={this.handleClick}
-            >
-              <DoneIcon />
-            </Fab>
-          </Tooltip>
-          <Tooltip title="Home">
-            <Fab
-              type="Fab"
-              style={{
-                backgroundColor: '#bbdefb',
-                color: 'black',
-                fontWeight: 550
-              }}
-              onClick={this.handleHome}
-            >
-              <HomeIcon />
-            </Fab>
-          </Tooltip>
-          <Tooltip title="Change Theme">
-            <Fab
-              type="Fab"
-              style={{
-                backgroundColor: '#bbdefb',
-                color: 'black',
-                fontWeight: 550
-              }}
-              onClick={() => {
-                this.setState({showThemes: !this.state.showThemes})
-              }}
-            >
-              <ThemeIcon />
-            </Fab>
-          </Tooltip>
-          <Dialog open={this.state.showThemes}>
-            <DialogTitle>Select a theme</DialogTitle>
-            <DialogContent>
-              <Select
-                value={this.state.theme}
-                onChange={this.handleThemeChange}
-              >
-                {editorThemes.map(theme => {
-                  return (
-                    <MenuItem key={Math.random()} value={theme}>
-                      {theme}
-                    </MenuItem>
-                  )
-                })}
-              </Select>{' '}
-              <Tooltip title="Close">
+          <div>
+            <Grid item xs={12} name="top right">
+              <GameStage />
+            </Grid>
+          </div>
+          <h2>
+            Problem #{this.props.match.params.problemId}
+            {this.test}
+          </h2>
+
+          <Grid item xs={12} name="top left">
+            <h3>{this.props.currentProblem.description}</h3>
+          </Grid>
+
+          <Grid item xs={12} name="bottom left">
+            <div>
+              <Tooltip title="Clear">
                 <Fab
-                  size="small"
-                  onClick={() => {
-                    this.setState({showThemes: !this.state.showThemes})
+                  type="Fab"
+                  style={{
+                    backgroundColor: '#bbdefb',
+                    color: 'black',
+                    fontWeight: 550
                   }}
+                  onClick={this.handleClear}
                 >
                   <ClearIcon />
                 </Fab>
               </Tooltip>
-            </DialogContent>
-          </Dialog>
-          <br />
-        </div>
-        <br />
-        <AceEditor
-          mode="javascript"
-          theme={this.state.theme}
-          value={this.state.editor}
-          onPaste={this.handlePaste}
-          onChange={this.handleChange}
-          // name="myEditor"
-          // height="400px"
-          // width="500px"
-          cursorStart={12}
-          fontSize={14}
-          focus={true}
-          onSelectionChange={this.handleSelectionChange}
-          onCursorChange={this.handleCursorChange}
-          wrapEnabled={true}
-          readOnly={this.state.readOnly}
-          editorProps={{$blockScrolling: true}}
-        />
+              <Tooltip title="Submit">
+                <Fab
+                  type="Fab"
+                  style={{
+                    backgroundColor: '#bbdefb',
+                    color: 'black',
+                    fontWeight: 550
+                  }}
+                  onClick={this.handleClick}
+                >
+                  <DoneIcon />
+                </Fab>
+              </Tooltip>
+              <Tooltip title="Home">
+                <Fab
+                  type="Fab"
+                  style={{
+                    backgroundColor: '#bbdefb',
+                    color: 'black',
+                    fontWeight: 550
+                  }}
+                  onClick={this.handleHome}
+                >
+                  <HomeIcon />
+                </Fab>
+              </Tooltip>
+              <Tooltip title="Change Theme">
+                <Fab
+                  type="Fab"
+                  style={{
+                    backgroundColor: '#bbdefb',
+                    color: 'black',
+                    fontWeight: 550
+                  }}
+                  onClick={() => {
+                    this.setState({showThemes: !this.state.showThemes})
+                  }}
+                >
+                  <ThemeIcon />
+                </Fab>
+              </Tooltip>
+              <Tooltip title="Skip Problem">
+                <Fab
+                  type="Fab"
+                  style={{
+                    backgroundColor: '#bbdefb',
+                    color: 'black',
+                    fontWeight: 550
+                  }}
+                  onClick={() => {
+                    console.log('add skip thunk here')
+                  }}
+                >
+                  <SkipIcon />
+                </Fab>
+              </Tooltip>
 
-        {this.state.result
-          .split('\n')
-          .map(thing => <h1 key={Math.random()}>{thing}</h1>)}
-      </div>
+              <Dialog open={this.state.showThemes}>
+                <DialogTitle>Select a theme</DialogTitle>
+                <DialogContent>
+                  <Select
+                    value={this.state.theme}
+                    onChange={this.handleThemeChange}
+                  >
+                    {editorThemes.map(theme => {
+                      return (
+                        <MenuItem key={Math.random()} value={theme}>
+                          {theme}
+                        </MenuItem>
+                      )
+                    })}
+                  </Select>{' '}
+                  <Tooltip title="Close">
+                    <Fab
+                      size="small"
+                      onClick={() => {
+                        this.setState({showThemes: !this.state.showThemes})
+                      }}
+                    >
+                      <ClearIcon />
+                    </Fab>
+                  </Tooltip>
+                </DialogContent>
+              </Dialog>
+              <br />
+            </div>
+            <br />
+
+            <AceEditor
+              mode="javascript"
+              theme={this.state.theme}
+              value={this.state.editor}
+              onPaste={this.handlePaste}
+              onChange={this.handleChange}
+              // name="myEditor"
+              // height="400px"
+              // width="500px"
+              cursorStart={12}
+              fontSize={14}
+              focus={true}
+              onSelectionChange={this.handleSelectionChange}
+              onCursorChange={this.handleCursorChange}
+              wrapEnabled={true}
+              readOnly={this.state.readOnly}
+              editorProps={{$blockScrolling: true}}
+            />
+          </Grid>
+
+          <Grid item xs={12} name="bottom right">
+            {this.state.result
+              .split('\n')
+              .map(thing => <h1 key={Math.random()}>{thing}</h1>)}
+          </Grid>
+        </div>
+      </Grid>
     )
   }
 }
@@ -270,5 +307,4 @@ const mapDispatch = dispatch => ({
   addSolvedProblem: (userId, problemId) =>
     dispatch(addSolvedProblem(userId, problemId))
 })
-
-export default connect(mapState, mapDispatch)(Sandbox)
+export default connect(mapState, mapDispatch)(withStyles(styles)(Sandbox))
