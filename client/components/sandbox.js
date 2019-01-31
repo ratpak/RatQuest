@@ -41,7 +41,8 @@ const styles = theme => ({
     width: 100
   },
   control: {
-    padding: theme.spacing.unit * 2
+    // padding: theme.spacing.unit * 2
+    padding: '10px'
   }
 })
 
