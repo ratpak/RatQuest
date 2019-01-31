@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-// import {Link} from 'react-router-dom' // keep for possible Single Player | Rat Race links
+import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn, email}) => (
+const Navbar = ({handleClick, isLoggedIn, email, isAdmin}) => (
   <div className="navbar">
+    {/* <nav> */}
     <div className="simple-flex">
       <div id="avatar" />
       <div id="nav-info">
@@ -13,16 +14,20 @@ const Navbar = ({handleClick, isLoggedIn, email}) => (
         <h4>Welcome, {email}</h4>
       </div>
     </div>
-    <nav>
-      {isLoggedIn && (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      )}
-    </nav>
+    {isAdmin && (
+      <div>
+        <Link to="/admin">Admin</Link>
+      </div>
+    )}
+    {isLoggedIn && (
+      <div>
+        {/* The navbar will show these links after you log in */}
+        <a href="#" onClick={handleClick}>
+          Logout
+        </a>
+      </div>
+    )}
+    {/* </nav> */}
   </div>
 )
 
@@ -31,7 +36,8 @@ const Navbar = ({handleClick, isLoggedIn, email}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: state.user.admin
   }
 }
 
