@@ -3,12 +3,14 @@ import axios from 'axios'
 // INITIAL STATE
 const initialState = {
   currentProblem: {},
-  solvedProblems: {}
+  solvedProblems: {},
+  allProblems: {}
 }
 
 // ACTION TYPES
 const GOT_PROBLEM = 'GOT_PROBLEM'
 const GOT_PROBLEMS = 'GOT_PROBLEMS'
+const ALL_PROBLEMS = 'ALL_PROBLEMS'
 
 // ACTION CREATORS
 const gotProblem = data => ({
@@ -18,6 +20,11 @@ const gotProblem = data => ({
 
 const gotProblems = data => ({
   type: GOT_PROBLEMS,
+  data
+})
+
+const allProblems = data => ({
+  type: ALL_PROBLEMS,
   data
 })
 
@@ -37,6 +44,13 @@ export const fetchSolvedProblems = userId => {
   }
 }
 
+export const fetchAllProblems = () => {
+  return async function(dispatch) {
+    let {data} = await axios.get('/api/problems')
+    dispatch(allProblems(data))
+  }
+}
+
 export const addSolvedProblem = (userId, problemId) => {
   return async function(dispatch) {
     await axios.post(`/api/problems/solved/${userId}/${problemId}`)
@@ -53,6 +67,8 @@ export default function(state = initialState, action) {
       return {...state, currentProblem: action.data}
     case GOT_PROBLEMS:
       return {...state, solvedProblems: action.data}
+    case ALL_PROBLEMS:
+      return {...state, allProblems: action.data}
     default:
       return state
   }

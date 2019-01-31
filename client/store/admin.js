@@ -33,7 +33,7 @@ export const deleteUser = userId => {
   }
 }
 
-export const toggleisAdmin = userId => {
+export const toggleis = userId => {
   return async dispatch => {
     await axios.put(`/api/users/${userId}`)
     dispatch(fetchUsers())

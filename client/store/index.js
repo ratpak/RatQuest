@@ -39,3 +39,4 @@ export default store
 export * from './user'
 export * from './stage'
 export * from './admin'
+export * from './problem'
