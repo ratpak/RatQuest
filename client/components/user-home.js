@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import Navbar from './navbar'
 import HomeStage from './home-stage'
 import Board from './board'
+import Rat from './rat'
 import {withTheme} from '@material-ui/core/styles'
 
 // commenting out - looks like not using for pop-up anymore?
@@ -47,6 +48,7 @@ export const UserHome = props => {
     <Fragment>
       <Navbar email={email} />
       <div id="board-wrapper">
+        <Rat />
         <div id="board-01">
           <Board />
         </div>
