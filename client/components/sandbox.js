@@ -8,7 +8,6 @@ import loadFunction from '../utils/loadFunction'
 import {fetchProblem, addSolvedProblem} from '../store/problem'
 import {connect} from 'react-redux'
 import GameStage from './game-stage'
-import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogTitle from '@material-ui/core/DialogTitle'
@@ -25,8 +24,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import ClearIcon from '@material-ui/icons/Clear'
 import HomeIcon from '@material-ui/icons/HomeSharp'
 import ThemeIcon from '@material-ui/icons/ColorLensSharp'
-import Dialog from '@material-ui/core/Dialog'
-import {DialogContent, DialogTitle} from '@material-ui/core'
+import DialogContent from '@material-ui/core'
 
 editorThemes.forEach(theme => require(`brace/theme/${theme}`))
 
