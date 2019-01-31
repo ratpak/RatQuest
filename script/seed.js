@@ -24,7 +24,6 @@ async function seed() {
 
   const userProblems = await Promise.all([
     UserProblems.create({userId: 1, problemId: 5}),
-    UserProblems.create({userId: 1, problemId: 2}),
     UserProblems.create({userId: 1, problemId: 3}),
     UserProblems.create({userId: 1, problemId: 4})
   ])
