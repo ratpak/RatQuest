@@ -171,12 +171,7 @@ class Sandbox extends React.Component {
               <ThemeIcon />
             </Fab>
           </Tooltip>
-          <Dialog
-            // disableBackdropClick
-            // disableEscapeKeyDown
-            open={this.state.showThemes}
-            // onClose={this.handleClose}
-          >
+          <Dialog open={this.state.showThemes}>
             <DialogTitle>Select a theme</DialogTitle>
             <DialogContent>
               <Select
