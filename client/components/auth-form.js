@@ -6,6 +6,7 @@ import {auth} from '../store'
 import {withTheme} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Input from '@material-ui/core/Input'
+
 /**
  * COMPONENT
  */
@@ -19,13 +20,13 @@ const AuthForm = props => {
           <label htmlFor="email">
             <small>Email</small>
           </label>
-          <Input name="email" type="text" />
+          <Input name="email" type="text" color="secondary" />
         </div>
         <div>
           <label htmlFor="password">
             <small>Password</small>
           </label>
-          <input name="password" type="password" />
+          <Input name="password" type="password" />
         </div>
         <div>
           <Button type="submit" color="primary">
@@ -76,7 +77,7 @@ const mapDispatch = dispatch => {
 }
 
 export const Login = connect(mapLogin, mapDispatch)(withTheme()(AuthForm))
-export const SignUp = connect(mapSignup, mapDispatch)(withTheme()(AuthForm))
+export const Signup = connect(mapSignup, mapDispatch)(withTheme()(AuthForm))
 
 /**
  * PROP TYPES

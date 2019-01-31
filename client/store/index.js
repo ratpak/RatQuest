@@ -6,9 +6,13 @@ import {loadState, saveState} from './sessionStorage'
 import user from './user'
 import problem from './problem'
 import stage from './stage'
+
+import users from './admin'
+const throttle = require('lodash').throttle
+
 const debounce = require('lodash').debounce
 
-const reducer = combineReducers({user, problem, stage})
+const reducer = combineReducers({user, problem, stage, users})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
@@ -34,3 +38,5 @@ store.subscribe(
 export default store
 export * from './user'
 export * from './stage'
+export * from './admin'
+export * from './problem'
