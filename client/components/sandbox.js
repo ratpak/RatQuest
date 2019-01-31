@@ -9,22 +9,19 @@ import {fetchProblem, addSolvedProblem} from '../store/problem'
 import {connect} from 'react-redux'
 import GameStage from './game-stage'
 import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
 import Slide from '@material-ui/core/Slide'
-import {Link} from 'react-router-dom'
 import createAndTest from '../utils/createAndTest'
 import editorThemes from '../utils/editorThemes'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
-import Button from '@material-ui/core/Button'
 import DoneIcon from '@material-ui/icons/Done'
 import Fab from '@material-ui/core/Fab'
 import Tooltip from '@material-ui/core/Tooltip'
 import ClearIcon from '@material-ui/icons/Clear'
 import HomeIcon from '@material-ui/icons/HomeSharp'
 import ThemeIcon from '@material-ui/icons/ColorLensSharp'
-import DialogContent from '@material-ui/core'
 
 editorThemes.forEach(theme => require(`brace/theme/${theme}`))
 
@@ -55,7 +52,7 @@ class Sandbox extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.handleClear = this.handleClear.bind(this)
-    this.handleClose = this.handleClose.bind(this)
+    // this.handleClose = this.handleClose.bind(this)
     this.handleThemeChange = this.handleThemeChange.bind(this)
     this.handleSelectionChange = this.handleSelectionChange.bind(this)
     this.handleCursorChange = this.handleCursorChange.bind(this)
@@ -232,18 +229,6 @@ class Sandbox extends React.Component {
               </Tooltip>
             </DialogContent>
           </Dialog>
-
-          {/* {this.state.showThemes && (
-            <Select value={this.state.theme} onChange={this.handleThemeChange}>
-              {editorThemes.map(theme => {
-                return (
-                  <MenuItem key={Math.random()} value={theme}>
-                    {theme}
-                  </MenuItem>
-                )
-              })}
-            </Select>
-          )} */}
           <br />
         </div>
         <br />
@@ -256,7 +241,6 @@ class Sandbox extends React.Component {
           // name="myEditor"
           // height="400px"
           // width="500px"
-          // editorProps={{$blockScrolling: Infinity}}
           cursorStart={12}
           fontSize={14}
           focus={true}

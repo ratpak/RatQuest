@@ -20,7 +20,7 @@ const Navbar = ({handleClick, isLoggedIn, email}) => (
           <a href="#" onClick={handleClick}>
             Logout
           </a>
-          <Link to="/sandbox/1">tempPlay</Link>
+          {/* <Link to="/sandbox/1">tempPlay</Link> */}
         </div>
       )}
     </nav>
