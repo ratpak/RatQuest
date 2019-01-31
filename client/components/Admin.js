@@ -16,6 +16,12 @@ class Admin extends React.Component {
   render() {
     const users = this.props.users.users
     console.log('users--------', users)
+    const imgStyle = {
+      maxWidth: '100px',
+      maxHeight: '100px',
+      borderRadius: '10px',
+      marginRight: '20px'
+    }
     return (
       <div>
         <h1>Admin page</h1>
@@ -25,7 +31,9 @@ class Admin extends React.Component {
         ) : (
           users.map(user => (
             <div key={user.id}>
-              {user.email}{' '}
+              <img src={user.avatarUrl} style={imgStyle} />
+              {user.email}
+              {' -  '}
               <button
                 type="button"
                 onClick={() => this.handleUserDelete(user.id)}

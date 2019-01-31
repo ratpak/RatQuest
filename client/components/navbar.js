@@ -17,6 +17,7 @@ const Navbar = ({handleClick, isLoggedIn, theme, user}) => {
     background: theme.palette.secondary.light,
     borderRadius: '10px'
   }
+  console.log('navbar user isAdmin++++++++++++++', user)
   return (
     <div style={backColor}>
       <h1 style={hStyle}>Rat Race</h1>
@@ -28,17 +29,13 @@ const Navbar = ({handleClick, isLoggedIn, theme, user}) => {
             <a href="#" onClick={handleClick}>
               Logout
             </a>
+            {user.isAdmin && <Link to="/admin">Admin</Link>}
           </div>
         ) : (
           <div>
             {/* The navbar will show these links before you log in */}
             <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>dz
-            {user.isAdmin && (
-              <Link className="nav-button " to="/admin">
-                Admin
-              </Link>
-            )}
+            <Link to="/signup">Sign Up</Link>
           </div>
         )}
       </nav>
