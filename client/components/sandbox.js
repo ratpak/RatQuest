@@ -49,8 +49,8 @@ class Sandbox extends React.Component {
     this.handleThemeChange = this.handleThemeChange.bind(this)
   }
 
-  async componentDidMount() {
-    await this.props.fetchProblem(this.props.match.params.problemId)
+  componentDidMount() {
+    this.props.fetchProblem(this.props.user.id)
     this.setState({
       editor: loadFunction(
         this.props.currentProblem.funcName,

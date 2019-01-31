@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {fetchStages} from '../store/stage'
-import {fetchSolvedProblems} from '../store/problem'
+import {fetchSolvedProblems, fetchProblem} from '../store/problem'
 import {connect} from 'react-redux'
 import {compose} from 'redux'
 
@@ -10,6 +10,7 @@ const withStageInfo = WrappedComponent => {
       const userId = this.props.user.id
       this.props.fetchStages(userId)
       this.props.fetchSolvedProblems(userId)
+      this.props.fetchProblem(userId)
     }
 
     render() {
@@ -25,6 +26,7 @@ const withStageInfo = WrappedComponent => {
           : stageInHomeInfo
       // if for stage box (home-stage) for current stage || for game-stage give stage
       // else its for stage box (home-stage) for non-current stage on user-home and give stageInHomeInfo to set COMPLETE vs LOCKED display
+      displayInfo.userId = this.props.user.id
       return <WrappedComponent displayInfo={displayInfo} />
     }
   }
@@ -46,6 +48,9 @@ const mapDispatch = dispatch => ({
   },
   fetchSolvedProblems(userId) {
     return dispatch(fetchSolvedProblems(userId))
+  },
+  fetchProblem(userId) {
+    return dispatch(fetchProblem(userId))
   }
 })
 
