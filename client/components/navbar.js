@@ -1,48 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom' // keep for possible Single Player | Rat Race links
 import {logout} from '../store'
 
-import {withTheme} from '@material-ui/core/styles'
-
-const Navbar = ({handleClick, isLoggedIn, theme, user}) => {
-  const hStyle = {
-    color: theme.palette.primary.light,
-    paddingLeft: '10px',
-    paddingTop: '10px'
-  }
-
-  const backColor = {
-    background: theme.palette.secondary.light,
-    borderRadius: '10px'
-  }
-  console.log('navbar user isAdmin++++++++++++++', user)
-  return (
-    <div style={backColor}>
-      <h1 style={hStyle}>Rat Race</h1>
-      <nav>
-        {isLoggedIn ? (
-          <div>
-            {/* The navbar will show these links after you log in */}
-            <Link to="/home">Home</Link>
-            <a href="#" onClick={handleClick}>
-              Logout
-            </a>
-            {user.isAdmin && <Link to="/admin">Admin</Link>}
-          </div>
-        ) : (
-          <div>
-            {/* The navbar will show these links before you log in */}
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
-          </div>
-        )}
-      </nav>
-      <hr />
+const Navbar = ({handleClick, isLoggedIn, email}) => (
+  <div className="navbar">
+    <div className="simple-flex">
+      <div id="avatar" />
+      <div id="nav-info">
+        <h1>Rat Quest</h1>
+        <h4>Welcome, {email}</h4>
+      </div>
     </div>
-  )
-}
+    <nav>
+      {isLoggedIn && (
+        <div>
+          {/* The navbar will show these links after you log in */}
+          <a href="#" onClick={handleClick}>
+            Logout
+          </a>
+        </div>
+      )}
+    </nav>
+  </div>
+)
 
 /**
  * CONTAINER

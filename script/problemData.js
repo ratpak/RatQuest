@@ -1,6 +1,7 @@
 const problemData = [
   {
-    description: 'Create a function that adds two numbers together and returns the sum of those numbers.',
+    description:
+      'Create a function that adds two numbers together and returns the sum of those numbers.',
     arguments: ['num1', 'num2'],
     funcName: 'addNums',
     inputs: [['1', '2'], ['3', '5'], ['10', '20']],
@@ -43,7 +44,7 @@ const problemData = [
     outputType: 'array',
     url:
       'https://medium.freecodecamp.org/how-to-reverse-a-string-in-javascript-in-3-different-ways-75e4763c68cb',
-    stageId: 1
+    stageId: 2
   },
   {
     description:
@@ -55,7 +56,7 @@ const problemData = [
     outputs: ['2', '720'],
     url:
       'https://medium.freecodecamp.org/how-to-factorialize-a-number-in-javascript-9263c89a4b38',
-    stageId: 1
+    stageId: 2
   },
   {
     description:
@@ -67,7 +68,7 @@ const problemData = [
     outputs: ['false', 'true'],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
-    stageId: 1
+    stageId: 2
   }
 ]
 

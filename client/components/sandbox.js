@@ -1,15 +1,23 @@
 /* eslint-disable no-new-func */
 /* eslint-disable id-length */
+
 import React from 'react'
 import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
 import 'brace/theme/monokai'
-import loadFunction from '../../utils/loadFunction'
-import createFunction from '../../utils/createFunction'
-import testFunction from '../../utils/testFunction'
-import {fetchProblem} from '../store/problem'
+import loadFunction from '../utils/loadFunction'
+import {fetchProblem, addSolvedProblem} from '../store/problem'
 import {connect} from 'react-redux'
 import GameStage from './game-stage'
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import Slide from '@material-ui/core/Slide'
+import {Link} from 'react-router-dom'
+import createAndTest from '../utils/createAndTest'
+import editorThemes from '../utils/editorThemes'
+editorThemes.forEach(theme => require(`brace/theme/${theme}`))
 
 // let dummyProblem = {
 //   desc: 'write a function that multiplies 2 numbers',
@@ -19,16 +27,26 @@ import GameStage from './game-stage'
 //   name: 'yaodi'
 // }
 
+function Transition(props) {
+  return <Slide direction="up" {...props} />
+}
+
 class Sandbox extends React.Component {
   constructor() {
     super()
     this.state = {
       result: '',
-      editor: ''
+      editor: '',
+      open: false,
+      stageComplete: false,
+      theme: 'dracula',
+      readOnly: true
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.handleClear = this.handleClear.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+    this.handleThemeChange = this.handleThemeChange.bind(this)
   }
 
   async componentDidMount() {
@@ -48,19 +66,44 @@ class Sandbox extends React.Component {
       )
     })
   }
+  handleThemeChange(e) {
+    this.setState({
+      theme: e.target.value
+    })
+  }
+
   handleChange(e) {
     this.setState({editor: e})
   }
-  handleClick() {
+  async handleClick() {
     // Grab user input from the code editor stored in state.
     let body = this.state.editor
-    let result = testFunction(
-      createFunction(this.props.currentProblem.arguments, body),
+    let result = await createAndTest(
+      this.props.currentProblem.arguments,
+      body,
       this.props.currentProblem.inputs,
       this.props.currentProblem.outputs
     )
     console.log(result)
+    if (result === 'success') {
+      this.props.addSolvedProblem(
+        this.props.user.id,
+        this.props.currentProblem.id
+      )
+      if (
+        this.props.solvedProblems[this.props.user.id].problems.length + 1 ===
+        this.props.stage.goal
+      ) {
+        this.setState({stageComplete: true})
+      } else {
+        this.setState({open: true})
+      }
+    }
     this.setState({result})
+  }
+
+  handleClose() {
+    this.setState({open: false, result: ''})
   }
 
   render() {
@@ -74,21 +117,99 @@ class Sandbox extends React.Component {
           {this.test}
         </h2>
         <h3>{this.props.currentProblem.description}</h3>
+        <select onChange={this.handleThemeChange}>
+          {editorThemes.map(theme => {
+            return (
+              <option
+                key={Math.random()}
+                value={theme}
+                selected={theme === this.state.theme}
+              >
+                {theme}
+              </option>
+            )
+          })}
+        </select>
+        <br />
         <AceEditor
           mode="javascript"
-          theme="monokai"
+          theme={this.state.theme}
           value={this.state.editor}
           onPaste={this.handlePaste}
           onChange={this.handleChange}
-          name="UNIQUE_ID_OF_DIV"
-          editorProps={{$blockScrolling: true}}
-        />{' '}
+          name="myEditor"
+          height="500px"
+          width="500px"
+          editorProps={{$blockScrolling: Infinity}}
+          cursorStart={12}
+          fontSize={14}
+          focus={true}
+          onSelectionChange={e => {
+            if (
+              e.selectionLead.row <= 1 ||
+              e.selectionAnchor.row <= 1 ||
+              e.selectionAnchor.row === e.doc.$lines.length - 1 ||
+              e.selectionLead.row === e.doc.$lines.length - 1
+            ) {
+              if (!this.state.readOnly) this.setState({readOnly: true})
+            } else if (this.state.readOnly) this.setState({readOnly: false})
+          }}
+          onCursorChange={e => {
+            if (
+              e.selectionLead.row > 1 &&
+              e.selectionLead.row !== e.doc.$lines.length - 1
+            ) {
+              if (this.state.readOnly) this.setState({readOnly: false})
+            } else if (!this.state.readOnly) this.setState({readOnly: true})
+          }}
+          wrapEnabled={true}
+          readOnly={this.state.readOnly}
+        />
         {this.state.result
           .split('\n')
           .map(thing => <h1 key={Math.random()}>{thing}</h1>)}
-        <button type="button" onClick={this.handleClick}>
-          submit
-        </button>
+        <div>
+          <button type="button" onClick={this.handleClick}>
+            submit
+          </button>
+          <Dialog
+            open={this.state.open}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={this.handleClose}
+            aria-labelledby="alert-dialog-slide-title"
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle id="alert-dialog-slide-title">Great Job!!</DialogTitle>
+            <DialogActions>
+              <Button onClick={this.handleClose} color="primary">
+                <Link to="/home">Home</Link>
+              </Button>
+              <Button onClick={this.handleClose} color="primary">
+                <Link to={`/sandbox/${this.props.currentProblem.id + 1}`}>
+                  Next Problem
+                </Link>
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+            open={this.state.stageComplete}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={this.handleClose}
+            aria-labelledby="alert-dialog-slide-title"
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle id="alert-dialog-slide-title">
+              Awesome Job! Stage {this.props.user.stageId} Complete!!
+            </DialogTitle>
+            <DialogActions>
+              <Button onClick={this.handleClose} color="primary">
+                <Link to="/home">Home</Link>
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
         <button type="button" onClick={this.handleClear}>
           clear
         </button>
@@ -98,10 +219,15 @@ class Sandbox extends React.Component {
 }
 
 const mapState = state => ({
-  currentProblem: state.problem.currentProblem
+  currentProblem: state.problem.currentProblem,
+  solvedProblems: state.problem.solvedProblems,
+  user: state.user,
+  stage: state.stage
 })
 const mapDispatch = dispatch => ({
-  fetchProblem: id => dispatch(fetchProblem(id))
+  fetchProblem: id => dispatch(fetchProblem(id)),
+  addSolvedProblem: (userId, problemId) =>
+    dispatch(addSolvedProblem(userId, problemId))
 })
 
 export default connect(mapState, mapDispatch)(Sandbox)

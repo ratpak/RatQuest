@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
 import {withTheme} from '@material-ui/core/styles'
@@ -35,6 +36,7 @@ const AuthForm = props => {
         {error && error.response && <div> {error.response.data} </div>}
       </form>
       <a href="/auth/google">{displayName} with Google</a>
+      <Link to="/signup">Sign Up</Link>
     </div>
   )
 }

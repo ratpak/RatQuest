@@ -41,9 +41,6 @@ describe('User routes', () => {
     let user2Id
 
     beforeEach(async () => {
-      Stage.hasMany(User)
-      User.belongsTo(Stage)
-
       const newStage = await Stage.create({
         name: stageName,
         progress: stageProgress,

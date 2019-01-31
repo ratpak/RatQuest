@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Problem, Stage} = require('../server/db/models')
+const {User, Problem, Stage, UserProblems} = require('../server/db/models')
 const stageData = require('./stageData')
 const problemData = require('./problemData')
 
@@ -34,6 +34,13 @@ async function seed() {
     Problem.bulkCreate(problemData, {returning: true})
   ])
 
+  const userProblems = await Promise.all([
+    UserProblems.create({userId: 1, problemId: 5}),
+    UserProblems.create({userId: 1, problemId: 2}),
+    UserProblems.create({userId: 1, problemId: 3}),
+    UserProblems.create({userId: 1, problemId: 4})
+  ])
+
   // creating user association with stage
   try {
     const [user1, user2, user3] = users
@@ -49,6 +56,7 @@ async function seed() {
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${stages.length} stages`)
   console.log(`seeded ${problems.length} problems`)
+  console.log(`seeded ${userProblems.length} userProblems`)
   console.log(`seeded successfully`)
 }
 
