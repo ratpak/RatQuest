@@ -1,30 +1,31 @@
 import React, {Component} from 'react'
 import {fetchStages} from '../store/stage'
+import {fetchSolvedProblems} from '../store/problem'
 import {connect} from 'react-redux'
 import {compose} from 'redux'
 
 const withStageInfo = WrappedComponent => {
   class StageInfo extends Component {
-    async componentDidMount() {
-      const userId = this.props.userId
-      await this.props.fetchStages(userId)
+    componentDidMount() {
+      const userId = this.props.user.id
+      this.props.fetchStages(userId)
+      this.props.fetchSolvedProblems(userId)
     }
 
     render() {
-      // pass stage info into wrapped components as displayInfo if match stageInHome (integer of stage level box in home)
-      // else pass stageInHomeInfo with integer (stageId) for current user stage and stage element's own number (stageInHome)
-      // compare stageId vs. stageInHome to determine if display as COMPLETE vs LOCKED
-      const stageInHome = this.props.stageInHome
-      const stage = this.props.stage
-      const stageId = stage.id
-      const stageInHomeInfo = {stageInHome, stageId}
-      const userId = this.props.userId
-      const displayInfo = stageInHome === stage.id ? stage : stageInHomeInfo
-      return userId ? (
-        <WrappedComponent stage={stage} displayInfo={displayInfo} />
-      ) : (
-        <div>loading</div>
-      )
+      const stageInHome = this.props.stageInHome // info for which stage box (home-stage) is being rendered (1, 2, or 3) on user-home
+      const stage = this.props.stage // stage info from db
+      stage.progress = this.props.problem[stage.id]
+        ? this.props.problem[stage.id].problems.length
+        : 0 // add progress property to stage
+      const stageInHomeInfo = {stageInHome, stageId: stage.id} // for stage boxes for non-current levels in home-stage components displayed in user-home
+      const displayInfo =
+        stageInHome === stage.id || !this.props.stageInHome
+          ? stage
+          : stageInHomeInfo
+      // if for stage box (home-stage) for current stage || for game-stage give stage
+      // else its for stage box (home-stage) for non-current stage on user-home and give stageInHomeInfo to set COMPLETE vs LOCKED display
+      return <WrappedComponent displayInfo={displayInfo} />
     }
   }
   return StageInfo
@@ -34,13 +35,17 @@ const withStageInfo = WrappedComponent => {
 const mapState = state => {
   return {
     stage: state.stage,
-    userId: state.user.id
+    user: state.user,
+    problem: state.problem.solvedProblems //object with keys for stage levels
   }
 }
 
 const mapDispatch = dispatch => ({
   fetchStages(userId) {
     return dispatch(fetchStages(userId))
+  },
+  fetchSolvedProblems(userId) {
+    return dispatch(fetchSolvedProblems(userId))
   }
 })
 

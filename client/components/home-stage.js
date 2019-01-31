@@ -1,9 +1,10 @@
 import React, {Fragment} from 'react'
+import {Link} from 'react-router-dom'
 import withStageInfo from './stage-info'
 import Button from '@material-ui/core/Button'
 
 const HomeStage = props => {
-  const displayInfo = props.displayInfo
+  const {displayInfo, problem} = props
   return (
     <Fragment>
       <div className="stage-info">
@@ -14,7 +15,10 @@ const HomeStage = props => {
             <p>{displayInfo.name}</p>
             <div className="flex">
               <h2>{`${displayInfo.progress} /${displayInfo.goal}`}</h2>
-              <Button>Play</Button>
+              <Button>
+                Play
+                {/* <Link to={`/sandbox/${problem.currentProblem.id}`}>Play</Link>   */}
+              </Button>
             </div>
           </Fragment>
         ) : (

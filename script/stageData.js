@@ -1,7 +1,7 @@
 const stageData = [
-  {name: 'Escape the Cage', progress: 2, goal: 3},
-  {name: 'Evade the Scientist', progress: 0, goal: 3},
-  {name: 'Hide in Box', progress: 2, goal: 3}
+  {name: 'Escape the Cage', goal: 5},
+  {name: 'Evade the Scientist', goal: 5},
+  {name: 'Run to the Rat Hole', goal: 5}
 ]
 
 module.exports = stageData

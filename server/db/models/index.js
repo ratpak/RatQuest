@@ -28,5 +28,6 @@ Problem.belongsToMany(User, {through: UserProblems})
 module.exports = {
   User,
   Stage,
-  Problem
+  Problem,
+  UserProblems
 }
