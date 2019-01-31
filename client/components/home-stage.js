@@ -4,13 +4,6 @@ import withStageInfo from './stage-info'
 import Button from '@material-ui/core/Button'
 
 const HomeStage = props => {
-  const {id, name, progress, goal} = props.stage
-  let styles = {
-    width: '400px',
-    height: '100px',
-    backgroundColor: '#f48fb1'
-  }
-
   const {displayInfo, problem} = props
 
   return (

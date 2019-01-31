@@ -20,6 +20,7 @@ const Navbar = ({handleClick, isLoggedIn, email}) => (
           <a href="#" onClick={handleClick}>
             Logout
           </a>
+          <a href="/admin">Admin</a>
         </div>
       )}
     </nav>
@@ -44,13 +45,12 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(withTheme()(Navbar))
+export default connect(mapState, mapDispatch)(Navbar)
 
 /**
  * PROP TYPES
  */
 Navbar.propTypes = {
   handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
-  theme: PropTypes.any
+  isLoggedIn: PropTypes.bool.isRequired
 }
