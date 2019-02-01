@@ -77,8 +77,7 @@ class Sandbox extends React.Component {
   }
 
   async componentDidMount() {
-    await this.props.fetchProblem(this.props.match.params.problemId)
-    // await this.props.fetchProblem(this.props.user.id)
+    await this.props.fetchProblem(this.props.user.id)
     this.setState({
       editor: loadFunction(
         this.props.currentProblem.funcName,

@@ -53,7 +53,7 @@ class Admin extends React.Component {
           ))
         )}
         <h3> Edit/Disable Problems</h3>
-        {!problems ? (
+        {!problems || !problems.length ? (
           <div>There are no problems</div>
         ) : (
           problems.map(problem => (
@@ -77,6 +77,13 @@ class Admin extends React.Component {
                       <span key={input + item}> {item}, </span>
                     ))}],{' '}
                   </span>
+                ))}
+              </p>
+              <p>
+                Outputs:
+                {/* {problem.outputs} */}
+                {problem.outputs.map(output => (
+                  <span key={output}> {output}, </span>
                 ))}
               </p>
             </div>
