@@ -26,6 +26,9 @@ import SkipIcon from '@material-ui/icons/FastForwardSharp'
 import Paper from '@material-ui/core/Paper'
 import XIcon from '@material-ui/icons/CloseSharp'
 import {withStyles} from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import DialogActions from '@material-ui/core/DialogActions'
+import {Link} from 'react-router-dom'
 
 editorThemes.forEach(theme => require(`brace/theme/${theme}`))
 
@@ -69,6 +72,7 @@ class Sandbox extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
+    this.handleClose = this.handleClose.bind(this)
     this.handleClear = this.handleClear.bind(this)
     this.handleThemeChange = this.handleThemeChange.bind(this)
     this.handleSelectionChange = this.handleSelectionChange.bind(this)
@@ -102,6 +106,9 @@ class Sandbox extends React.Component {
     })
   }
 
+  handleClose() {
+    this.setState({open: false, result: ''})
+  }
   handleChange(e) {
     this.setState({editor: e})
   }
@@ -293,6 +300,45 @@ class Sandbox extends React.Component {
                     </Fab>
                   </Tooltip>
                 </DialogContent>
+              </Dialog>
+              <Dialog
+                open={this.state.open}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={this.handleClose}
+                aria-labelledby="alert-dialog-slide-title"
+                aria-describedby="alert-dialog-slide-description"
+              >
+                <DialogTitle id="alert-dialog-slide-title">
+                  Great Job!!
+                </DialogTitle>
+                <DialogActions>
+                  <Button onClick={this.handleClose} color="primary">
+                    <Link to="/home">Home</Link>
+                  </Button>
+                  <Button onClick={this.handleClose} color="primary">
+                    <Link to={`/sandbox/${this.props.currentProblem.id + 1}`}>
+                      Next Problem
+                    </Link>
+                  </Button>
+                </DialogActions>
+              </Dialog>
+              <Dialog
+                open={this.state.stageComplete}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={this.handleClose}
+                aria-labelledby="alert-dialog-slide-title"
+                aria-describedby="alert-dialog-slide-description"
+              >
+                <DialogTitle id="alert-dialog-slide-title">
+                  Awesome Job! Stage {this.props.user.stageId} Complete!!
+                </DialogTitle>
+                <DialogActions>
+                  <Button onClick={this.handleClose} color="primary">
+                    <Link to="/home">Home</Link>
+                  </Button>
+                </DialogActions>
               </Dialog>
 
               <Paper className="editorResult">
