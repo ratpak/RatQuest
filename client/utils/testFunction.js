@@ -19,5 +19,4 @@ const testFunction = (func, input, output) => {
   }
   return result
 }
-
 export default testFunction
