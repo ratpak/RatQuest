@@ -6,7 +6,6 @@ import {logout} from '../store'
 
 const Navbar = props => {
   const {handleClick, isLoggedIn, email, isAdmin} = props
-  console.log(props, '<<<navbar')
   return (
     <div className="navbar">
       <div className="simple-flex">
