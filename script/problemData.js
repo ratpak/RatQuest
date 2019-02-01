@@ -113,7 +113,7 @@ const problemData = [
     funcName: 'isPalindrome',
     arguments: ['str'],
     inputs: [['moon'], ['racecar']],
-    outputType: 'boolean',
+    outputType: 'bool',
     outputs: ['false', 'true'],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
@@ -129,7 +129,55 @@ const problemData = [
     outputs: ['olleh', 'tseuqtar'],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
-    stageId: 2
+    stageId: 3
+  },
+  {
+    description:
+      'There exist two zeroes: +0 (or just 0) and -0. Write a function that returns true if the input number is -0 and false otherwise.',
+    funcName: 'isItNegativeZero',
+    arguments: ['num'],
+    inputs: [[-0], [0]],
+    outputType: 'bool',
+    outputs: ['true', 'false'],
+    url:
+      'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
+    stageId: 3
+  },
+  {
+    description:
+      'My friend wants a new band name for her band. She like bands that use the formula: "The" + a noun with the first letter capitalized, for example: "dolphin" -> "The Dolphin" However, when a noun STARTS and ENDS with the same letter, she likes to repeat the noun twice and connect them together with the first and last letter, combined into one word (WITHOUT "The" in front), like this: "alaska" -> "Alaskalaska" Complete the function that takes a noun as a string, and returns her preferred band name written as a string.',
+    funcName: 'bandNameGenerator',
+    arguments: ['str'],
+    inputs: [['camel'], ['eagle']],
+    outputType: 'bool',
+    outputs: ['The Camel', 'Eagleagle'],
+    url:
+      'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
+    stageId: 3
+  },
+  {
+    description:
+      'Create a function that takes in an array of numbers and returns a numerial average of those scores.',
+    funcName: 'averageScores',
+    arguments: ['arr1'],
+    inputs: [[80, 77, 54, 91]],
+    outputType: ['num'],
+    outputs: [75.5],
+    url:
+      'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
+    stageId: 3
+  },
+  {
+    description:
+      'Create a function that reverses the uppercase/lowercase for each letter in a string. Any numbers are unaffected.',
+    funcName: 'alternateCase',
+    arguments: ['str'],
+    inputs: [['NumBeR'], ['l3ETter']],
+    outputType: ['str'],
+    outputs: [['nUMbEr'], ['L3etTER']],
+    url:
+      'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
+    stageId: 3
   }
 ]
 
