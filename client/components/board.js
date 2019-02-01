@@ -1,12 +1,19 @@
 import React, {Fragment, Component} from 'react'
 
 class Board extends Component {
+  constructor() {
+    super()
+    this.step01 = null
+    this.step02 = null
+  }
+
   componentDidUpdate() {
     const boardPosition = document.getElementById(
       `step-${this.props.boardPosition}`
     )
-    console.log(boardPosition, '<<< position in board')
-    boardPosition.style.fill = 'yellow'
+    boardPosition.style.fill = '#ffff99'
+    boardPosition.style.stroke = '#fff250'
+    boardPosition.style.strokeWidth = '2'
   }
 
   render() {
@@ -29,6 +36,12 @@ class Board extends Component {
                 ry="13.83"
                 fill="#8d8d8d"
               />
+              <div
+                id="divstep-01"
+                ref={div => {
+                  this.step01 = div
+                }}
+              />
               <ellipse
                 id="step-02"
                 cx="299.84"
@@ -36,6 +49,12 @@ class Board extends Component {
                 rx="50.87"
                 ry="13.83"
                 fill="#8d8d8d"
+              />
+              <div
+                id="divstep-02"
+                ref={div => {
+                  this.step02 = div
+                }}
               />
               <ellipse
                 id="step-03"

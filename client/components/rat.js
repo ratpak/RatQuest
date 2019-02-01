@@ -18,7 +18,6 @@ class Rat extends Component {
   }
 
   render() {
-    // console.log(this.props, '<<< rat props')
     return (
       <Fragment>
         <div

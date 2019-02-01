@@ -5,25 +5,27 @@ import Navbar from './navbar'
 import HomeStage from './home-stage'
 import Board from './board'
 import Rat from './rat'
+import ratPositionFunc from '../utils/ratPosition'
 // import {TweenLite} from 'gsap/all'
 import {withTheme} from '@material-ui/core/styles'
 
 class UserHome extends Component {
   constructor() {
     super()
-    this.ratDiv = null
-    this.ratDivTween = null
-
-    // keep current board position in store??? need to test how  this work on refresh... or after solve problem
     this.state = {
-      boardPosition: '00'
+      boardPosition: '00',
+      ratPosition: {
+        x: '0px',
+        y: '0px',
+        opacity: 0
+      }
     }
   }
 
   componentDidMount() {
     // setup current stage and number of solved problems for rat
     const currentStage = this.props.stage.id
-    const ratPosition = this.props.problem.solvedProblems[currentStage]
+    const currStageProgress = this.props.problem.solvedProblems[currentStage]
       ? this.props.problem.solvedProblems[currentStage].problems.length
       : 0
 
@@ -32,24 +34,24 @@ class UserHome extends Component {
       const progress = progressWithinStage + (curStage - 1) * 5
       return progress < 10 ? '0' + progress.toString() : progress.toString()
     }
-    const result = playerProgressFunc(currentStage, ratPosition)
-    this.setState({boardPosition: result})
+    const boardPosition = playerProgressFunc(currentStage, currStageProgress)
+    const ratPosition = ratPositionFunc(boardPosition)
+    // console.log(ratPosition, '<<< ratPosition')
+    this.setState({boardPosition, ratPosition})
+    document.getElementById('rat-board-state').style.left = ratPosition.x
+    document.getElementById('rat-board-state').style.top = ratPosition.y
+    document.getElementById('rat-board-state').style.opacity =
+      ratPosition.opacity
   }
 
   render() {
-    console.log(this.state, '<<< state in user-home')
     // props
     const {email, problem, theme} = this.props
     return (
       <Fragment>
         <Navbar email={email} />
         <div id="board-wrapper">
-          <div
-            id="rat-board-state"
-            ref={div => {
-              this.ratDiv = div
-            }}
-          >
+          <div id="rat-board-state">
             <Rat />
           </div>
           <div id="board-01">

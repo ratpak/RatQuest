@@ -220,7 +220,7 @@ form div {
 #rat-board-state {
   position: absolute;
   /* opacity: 0; */
-  left: 100px;
-  top: 245px;
+  /* left: 100px;
+  top: 245px; */
   z-index: 4;
 }
