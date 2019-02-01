@@ -30,10 +30,11 @@ const allProblems = data => ({
 
 // THUNK CREATOR
 
-export const fetchProblem = userId => {
+export const fetchProblem = (userId, problemId) => {
   return async function(dispatch) {
-    let {data} = await axios.get(`/api/problems/${userId}`)
-    console.log(data, 'DATAAAA')
+    let {data} = await axios.get(`/api/problems/${userId}`, {
+      params: {problemId} || ''
+    })
     dispatch(gotProblem(data))
   }
 }
