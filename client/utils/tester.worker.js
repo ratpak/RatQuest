@@ -7,6 +7,5 @@ self.addEventListener('message', event => {
   let {data} = event
   let {args, body, input, output} = data
   let result = testFunction(createFunction(args, body), input, output)
-  console.log('1234')
   self.postMessage(result)
 })
