@@ -34,8 +34,7 @@ const User = db.define('user', {
   },
   avatarUrl: {
     type: Sequelize.STRING,
-    defaultValue:
-      'http://www.strangehistory.net/blog/wp-content/uploads/2015/03/rat.jpg'
+    defaultValue: 'https://robohash.org/1'
   }
 })
 
