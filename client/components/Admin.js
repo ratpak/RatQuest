@@ -29,6 +29,12 @@ class Admin extends React.Component {
       <div>
         <h1>Admin page</h1>
         <h3>Edit/Delete Users</h3>
+        <div>
+          <span>Avatar</span>
+          <span>E-Mail</span>
+          <span>Delete</span>
+          <span>Admin</span>
+        </div>
         {!users ? (
           <div>There are no users</div>
         ) : (
@@ -41,7 +47,7 @@ class Admin extends React.Component {
                 type="button"
                 onClick={() => this.handleUserDelete(user.id)}
               >
-                &times;
+                Delete
               </button>
               <button
                 type="button"
