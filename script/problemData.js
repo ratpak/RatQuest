@@ -6,19 +6,19 @@ const problemData = [
     funcName: 'addNums',
     inputs: [['1', '2'], ['3', '5'], ['10', '20']],
     outputs: ['3', '8', '30'],
-    outputType: 'number',
+    outputType: 'num',
     url:
       'https://writingjavascript.org/posts/introduction-to-functions-numbers-in-javascript',
     stageId: 1
   },
   {
     description:
-      'Create a function that accepts a string argument (a name, ex: "Oliver"), and returns the personalized greeting "Hi Oliver." Of a name is present.',
+      'Create a function that accepts a string argument (a name, ex: "Oliver"), and returns the personalized greeting "Hi Oliver" Of a name is present.',
     funcName: 'sayHi',
     arguments: ['str'],
     inputs: [['Yaodi'], ['Jay'], ['Chris'], ['MJ']],
     outputs: ['Hi Yaodi', 'Hi Jay', 'Hi Chris', 'Hi MJ'],
-    outputType: 'string',
+    outputType: 'str',
     url:
       'https://writingjavascript.org/posts/introduction-to-functions-numbers-in-javascript',
     stageId: 1
@@ -30,7 +30,7 @@ const problemData = [
     arguments: ['num1', 'num2', 'num3'],
     inputs: [['8', '2', '1'], ['4', '78', '2']],
     outputs: ['8', '78'],
-    outputType: 'number',
+    outputType: 'num',
     url:
       'https://medium.freecodecamp.org/three-ways-to-repeat-a-string-in-javascript-2a9053b93a2d',
     stageId: 1
@@ -78,7 +78,7 @@ const problemData = [
     arguments: ['arr1', 'arr2'],
     inputs: [['1', '2'], ['hello', 'world'], ['1, 2', '3, 4']],
     outputs: ['1, 2', 'hello, world', '1, 2, 3, 4'],
-    outputType: 'array',
+    outputType: 'arr',
     url:
       'https://medium.freecodecamp.org/how-to-reverse-a-string-in-javascript-in-3-different-ways-75e4763c68cb',
     stageId: 2
@@ -89,7 +89,7 @@ const problemData = [
     funcName: 'factorialize',
     arguments: ['num'],
     inputs: [['2'], ['6']],
-    outputType: 'number',
+    outputType: 'num',
     outputs: ['2', '720'],
     url:
       'https://medium.freecodecamp.org/how-to-factorialize-a-number-in-javascript-9263c89a4b38',
@@ -161,7 +161,7 @@ const problemData = [
     funcName: 'averageScores',
     arguments: ['arr1'],
     inputs: [[80, 77, 54, 91]],
-    outputType: ['num'],
+    outputType: 'num',
     outputs: [75.5],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
@@ -173,7 +173,7 @@ const problemData = [
     funcName: 'alternateCase',
     arguments: ['str'],
     inputs: [['NumBeR'], ['l3ETter']],
-    outputType: ['str'],
+    outputType: 'str',
     outputs: [['nUMbEr'], ['L3etTER']],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
