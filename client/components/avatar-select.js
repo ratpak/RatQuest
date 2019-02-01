@@ -29,8 +29,12 @@ class AvatarSelect extends Component {
         {dummyData.map(imgURL => {
           return (
             <Fragment key={imgURL}>
-              <button onClick={e => this.handleClick(e, imgURL)}>HI</button>
-              <img src={imgURL} />
+              {/* <button onClick={e => this.handleClick(e, imgURL)}>HI</button> */}
+              <img
+                src={imgURL}
+                style={{cursor: 'crosshair'}}
+                onClick={e => this.handleClick(e, imgURL)}
+              />
             </Fragment>
           )
         })}
