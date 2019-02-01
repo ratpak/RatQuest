@@ -42,6 +42,8 @@ class UserHome extends Component {
     document.getElementById('rat-board-state').style.top = ratPosition.y
     document.getElementById('rat-board-state').style.opacity =
       ratPosition.opacity
+    document.getElementById('rat-board-state').style.transform =
+      ratPosition.transform
   }
 
   render() {
