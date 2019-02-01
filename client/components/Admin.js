@@ -17,8 +17,7 @@ class Admin extends React.Component {
   render() {
     const users = this.props.users.users
     const problems = this.props.problems
-    console.log('users--------', users)
-    console.log('problem---------', problems)
+
     const imgStyle = {
       maxWidth: '100px',
       maxHeight: '100px',

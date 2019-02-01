@@ -35,7 +35,6 @@ export const fetchProblem = (userId, problemId) => {
     let {data} = await axios.get(`/api/problems/${userId}`, {
       params: {problemId} || ''
     })
-    console.log(data, 'DATAAAA')
     dispatch(gotProblem(data))
   }
 }

@@ -151,7 +151,6 @@ class Sandbox extends React.Component {
       this.props.currentProblem.inputs,
       this.props.currentProblem.outputs
     )
-    console.log(result)
     if (result === 'success') {
       this.props.addSolvedProblem(
         this.props.user.id,
@@ -189,7 +188,6 @@ class Sandbox extends React.Component {
   }
 
   render() {
-    console.log('props', this.props)
     let {classes} = this.props
     return (
       <div className="editorContainerLol">
