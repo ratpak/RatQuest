@@ -88,6 +88,7 @@ class Sandbox extends React.Component {
   }
 
   async componentDidMount() {
+    await this.props.fetchSolvedProblems(this.props.user.id)
     await this.props.fetchProblem(this.props.user.id)
     this.setState({
       editor: loadFunction(
@@ -158,8 +159,9 @@ class Sandbox extends React.Component {
     )
     if (result === 'success') {
       this.props.addSolvedProblem(userId, currentProblem.id)
+      console.log(this.props.solvedProblems, 'SOLVED PROBLEMS')
       if (
-        this.props.solvedProblems[userId].problems.length + 1 ===
+        this.props.solvedProblems[this.props.stage.id].problems.length + 1 ===
         this.props.stage.goal
       ) {
         this.props.nextStage(userId)
