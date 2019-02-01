@@ -125,7 +125,6 @@ class Sandbox extends React.Component {
       theme: e.target.value
     })
   }
-
   handleClose() {
     this.setState({open: false, stageComplete: false, result: ''})
   }
@@ -170,7 +169,6 @@ class Sandbox extends React.Component {
     }
     this.setState({result})
   }
-
   handleSelectionChange(e) {
     if (
       e.selectionLead.row <= 1 ||
@@ -189,7 +187,6 @@ class Sandbox extends React.Component {
       if (this.state.readOnly) this.setState({readOnly: false})
     } else if (!this.state.readOnly) this.setState({readOnly: true})
   }
-
   render() {
     let {classes} = this.props
     return (
@@ -211,7 +208,7 @@ class Sandbox extends React.Component {
                   className="editorBox"
                   height="99%"
                   width="100%"
-                  editorProps={{$blockScrolling: false}}
+                  editorProps={{$blockScrolling: Infinity}}
                   fontSize={14}
                   onSelectionChange={this.handleSelectionChange}
                   onCursorChange={this.handleCursorChange}

@@ -40,15 +40,18 @@ export const setAvatar = (imgUrl, userId) => {
 
 export const auth = (email, password, method) => async dispatch => {
   let res
+  let page = 'home'
   try {
     res = await axios.post(`/auth/${method}`, {email, password})
+    if (method === 'signup') page = 'avatar'
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
 
   try {
     dispatch(getUser(res.data))
-    history.push('/home')
+
+    history.push(`/${page}`)
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }

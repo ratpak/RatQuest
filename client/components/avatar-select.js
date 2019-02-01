@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 import {setAvatar} from '../store'
+import {Button} from '@material-ui/core'
 
 let dummyData = [
   'https://robohash.org/1',
@@ -10,8 +11,7 @@ let dummyData = [
   'https://robohash.org/5',
   'https://robohash.org/6',
   'https://robohash.org/7',
-  'https://robohash.org/8',
-  'http://www.strangehistory.net/blog/wp-content/uploads/2015/03/rat.jpg'
+  'https://robohash.org/8'
 ]
 
 class AvatarSelect extends Component {
@@ -25,6 +25,14 @@ class AvatarSelect extends Component {
       <Fragment>
         <h2>current avatar </h2>
         <img src={this.props.user.avatarUrl} />
+        <Button
+          style={{backgroundColor: 'blue'}}
+          onClick={() => {
+            this.props.history.push('/home')
+          }}
+        >
+          Confirm
+        </Button>
         <h1>select an avatar</h1>
         {dummyData.map(imgURL => {
           return (
