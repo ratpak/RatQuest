@@ -35,7 +35,7 @@ const User = db.define('user', {
   avatarUrl: {
     type: Sequelize.STRING,
     defaultValue:
-      'https://3c1703fe8d.site.internapcdn.net/newman/csz/news/800/2018/3-rat.jpg'
+      'http://www.strangehistory.net/blog/wp-content/uploads/2015/03/rat.jpg'
   }
 })
 

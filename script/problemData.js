@@ -42,7 +42,7 @@ const problemData = [
     arguments: ['str'],
     inputs: [['May I borrow your pencil?'], ['I am the rat king.']],
     outputs: ['May I borrow your pencil please?', 'I am the rat king.'],
-    outputType: 'str',
+    outputType: 'string',
     url:
       'https://medium.freecodecamp.org/how-to-reverse-a-string-in-javascript-in-3-different-ways-75e4763c68cb',
     stageId: 1
@@ -54,7 +54,7 @@ const problemData = [
     arguments: ['num1', 'num2'],
     inputs: [['22', '32'], ['77', '999']],
     outputs: ['true', 'false'],
-    outputType: 'bool',
+    outputType: 'boolean',
     url:
       'https://medium.freecodecamp.org/how-to-reverse-a-string-in-javascript-in-3-different-ways-75e4763c68cb',
     stageId: 1
@@ -66,7 +66,7 @@ const problemData = [
     arguments: ['str'],
     inputs: [['Yaodi'], ['Jay'], ['Chris'], ['MJ']],
     outputs: ['3', '1', '1', '0'],
-    outputType: 'num',
+    outputType: 'number',
     url:
       'https://medium.freecodecamp.org/how-to-reverse-a-string-in-javascript-in-3-different-ways-75e4763c68cb',
     stageId: 2
@@ -101,7 +101,7 @@ const problemData = [
     funcName: 'repeatYourself',
     arguments: ['str', 'num'],
     inputs: [['rat', '3'], ['quest', '6'], ['loose', '0']],
-    outputType: 'str',
+    outputType: 'string',
     outputs: ['ratratrat', 'questquestquestquestquestquest', ''],
     url:
       'https://medium.freecodecamp.org/how-to-factorialize-a-number-in-javascript-9263c89a4b38',
@@ -113,7 +113,7 @@ const problemData = [
     funcName: 'isPalindrome',
     arguments: ['str'],
     inputs: [['moon'], ['racecar']],
-    outputType: 'bool',
+    outputType: 'boolean',
     outputs: ['false', 'true'],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
@@ -125,7 +125,7 @@ const problemData = [
     funcName: 'revseredString',
     arguments: ['str'],
     inputs: [['hello'], ['ratquest']],
-    outputType: 'str',
+    outputType: 'string',
     outputs: ['olleh', 'tseuqtar'],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
@@ -136,8 +136,8 @@ const problemData = [
       'There exist two zeroes: +0 (or just 0) and -0. Write a function that returns true if the input number is -0 and false otherwise.',
     funcName: 'isItNegativeZero',
     arguments: ['num'],
-    inputs: [[-0], [0]],
-    outputType: 'bool',
+    inputs: [['-0'], ['0']],
+    outputType: 'boolean',
     outputs: ['true', 'false'],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
@@ -145,11 +145,11 @@ const problemData = [
   },
   {
     description:
-      'My friend wants a new band name for her band. She like bands that use the formula: "The" + a noun with the first letter capitalized, for example: "dolphin" -> "The Dolphin" However, when a noun STARTS and ENDS with the same letter, she likes to repeat the noun twice and connect them together with the first and last letter, combined into one word (WITHOUT "The" in front), like this: "alaska" -> "Alaskalaska" Complete the function that takes a noun as a string, and returns her preferred band name written as a string.',
+      'My friend wants a new band name for her band. She likes bands that use the formula: "The" + a noun with the first letter capitalized, for example: "dolphin" -> "The Dolphin" However, when a noun STARTS and ENDS with the same letter, she likes to repeat the noun twice and connect them together with the first and last letter, combined into one word (WITHOUT "The" in front), like this: "alaska" -> "Alaskalaska" Complete the function that takes a noun as a string, and returns her preferred band name written as a string.',
     funcName: 'bandNameGenerator',
     arguments: ['str'],
     inputs: [['camel'], ['eagle']],
-    outputType: 'bool',
+    outputType: 'string',
     outputs: ['The Camel', 'Eagleagle'],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
@@ -160,9 +160,9 @@ const problemData = [
       'Create a function that takes in an array of numbers and returns a numerial average of those scores.',
     funcName: 'averageScores',
     arguments: ['arr1'],
-    inputs: [[80, 77, 54, 91]],
-    outputType: 'num',
-    outputs: [75.5],
+    inputs: [['80', '77', '54', '91']],
+    outputType: 'number',
+    outputs: ['75.5'],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
     stageId: 3
@@ -173,7 +173,7 @@ const problemData = [
     funcName: 'alternateCase',
     arguments: ['str'],
     inputs: [['NumBeR'], ['l3ETter']],
-    outputType: 'str',
+    outputType: 'string',
     outputs: [['nUMbEr'], ['L3etTER']],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',

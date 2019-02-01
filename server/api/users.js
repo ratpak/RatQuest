@@ -17,6 +17,19 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+// route to edit avatar
+
+router.put('/avatar/:id', async (req, res, next) => {
+  try {
+    let {imgUrl: avatarUrl} = req.body
+    let user = await User.findById(req.params.id)
+    await user.update({avatarUrl})
+    res.json(user)
+  } catch (e) {
+    next(e)
+  }
+})
+
 //route to toggle the user is admin
 router.put('/:id', async function(req, res, next) {
   try {
