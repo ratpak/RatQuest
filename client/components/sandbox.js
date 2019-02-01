@@ -66,7 +66,7 @@ class Sandbox extends React.Component {
   constructor() {
     super()
     this.state = {
-      result: 'lorem ipsum dolor \n lorem ipsum dolor \n lorem ipsum dolor',
+      result: '',
       editor: '',
       open: false,
       stageComplete: false,
@@ -104,7 +104,8 @@ class Sandbox extends React.Component {
       editor: loadFunction(
         this.props.currentProblem.funcName,
         this.props.currentProblem.arguments
-      )
+      ),
+      result: ''
     })
   }
   handleHome() {
@@ -290,15 +291,7 @@ class Sandbox extends React.Component {
             <div className="editorRightHalf">
               <Paper className="editorDescription">
                 <h3>Problem description</h3>
-                <p>
-                  {this.props.currentProblem.description} lorem ipsum dolor
-                  lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem
-                  ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum
-                  dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor
-                  lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem
-                  ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum
-                  dolor
-                </p>
+                <p>{this.props.currentProblem.description}</p>
               </Paper>
 
               <Dialog open={this.state.showThemes}>
