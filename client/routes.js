@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, Admin} from './components'
 import {me} from './store'
 import Sandbox from './components/sandbox'
+import AvatarSelect from './components/avatar-select'
 
 /**
  * COMPONENT
@@ -26,6 +27,7 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
+            <Route exact path="/avatar" component={AvatarSelect} />
             <Route exact path="/home" component={UserHome} />
             <Route exact path="/sandbox/:problemId" component={Sandbox} />
             <Route exact path="/admin" component={Admin} />
