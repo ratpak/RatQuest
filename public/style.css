@@ -217,12 +217,10 @@ form div {
   height: 220px;
 }
 
-#rat-div {
-  position: absolute;
-  /* margin-left: 600; */
-}
-
 #rat-board-state {
   position: absolute;
-  left: 600px;
+  /* opacity: 0; */
+  left: 100px;
+  top: 245px;
+  z-index: 4;
 }

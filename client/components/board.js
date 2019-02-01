@@ -1,13 +1,18 @@
 import React, {Fragment, Component} from 'react'
-// import HomeStage from './home-stage'
-// import BoardGraphics from './board-graphics'
 
 class Board extends Component {
+  componentDidUpdate() {
+    const boardPosition = document.getElementById(
+      `step-${this.props.boardPosition}`
+    )
+    console.log(boardPosition, '<<< position in board')
+    boardPosition.style.fill = 'yellow'
+  }
+
   render() {
     return (
       <Fragment>
         <svg
-          // id="board-01"
           xmlns="http://www.w3.org/2000/svg"
           width="819.76"
           height="528.67"
