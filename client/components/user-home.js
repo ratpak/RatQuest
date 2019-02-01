@@ -13,14 +13,16 @@ class UserHome extends Component {
 
     // getting current state and number of solved problems for rat
     const currentStage = stage.id
-    const ratPosition = problem.solvedProbems[currentStage]
-      ? problem[currentStage].problems.length
+    const ratPosition = problem.solvedProblems[currentStage]
+      ? problem.solvedProblems[currentStage].problems.length
       : 0
     return (
       <Fragment>
         <Navbar email={email} />
         <div id="board-wrapper">
-          <Rat />
+          <div id="rat-board-state">
+            <Rat />
+          </div>
           <div id="board-01">
             <Board />
           </div>

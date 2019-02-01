@@ -219,4 +219,10 @@ form div {
 
 #rat-div {
   position: absolute;
+  /* margin-left: 600; */
+}
+
+#rat-board-state {
+  position: absolute;
+  left: 600px;
 }
