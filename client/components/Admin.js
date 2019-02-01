@@ -53,7 +53,7 @@ class Admin extends React.Component {
           ))
         )}
         <h3> Edit/Disable Problems</h3>
-        {!problems ? (
+        {!problems || !problems.length ? (
           <div>There are no problems</div>
         ) : (
           problems.map(problem => (
