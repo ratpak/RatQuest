@@ -35,7 +35,7 @@ const User = db.define('user', {
   avatarUrl: {
     type: Sequelize.STRING,
     defaultValue:
-      'http://www.cutestpaw.com/wp-content/uploads/2014/09/She-seemed-quite-interested.png'
+      'http://www.strangehistory.net/blog/wp-content/uploads/2015/03/rat.jpg'
   }
 })
 

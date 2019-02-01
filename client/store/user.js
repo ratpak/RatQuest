@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import Axios from 'axios'
 
 /**
  * ACTION TYPES
@@ -30,6 +31,13 @@ export const me = () => async dispatch => {
   }
 }
 
+export const setAvatar = (imgUrl, userId) => {
+  return async function(dispatch) {
+    let {data} = await Axios.put(`api/users/avatar/${userId}`, {imgUrl})
+    dispatch(getUser(data))
+  }
+}
+
 export const auth = (email, password, method) => async dispatch => {
   let res
   try {
@@ -40,7 +48,7 @@ export const auth = (email, password, method) => async dispatch => {
 
   try {
     dispatch(getUser(res.data))
-    history.push('/home')
+    history.push('/avatar')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }
