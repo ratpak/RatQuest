@@ -34,8 +34,7 @@ const User = db.define('user', {
   },
   avatarUrl: {
     type: Sequelize.STRING,
-    defaultValue:
-      'http://www.cutestpaw.com/wp-content/uploads/2014/09/She-seemed-quite-interested.png'
+    defaultValue: 'https://robohash.org/1'
   }
 })
 

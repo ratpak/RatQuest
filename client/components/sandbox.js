@@ -67,7 +67,7 @@ class Sandbox extends React.Component {
   constructor() {
     super()
     this.state = {
-      result: 'lorem ipsum dolor \n lorem ipsum dolor \n lorem ipsum dolor',
+      result: '',
       editor: '',
       open: false,
       stageComplete: false,
@@ -88,6 +88,7 @@ class Sandbox extends React.Component {
   }
 
   async componentDidMount() {
+    await this.props.fetchSolvedProblems(this.props.user.id)
     await this.props.fetchProblem(this.props.user.id)
     this.setState({
       editor: loadFunction(
@@ -105,7 +106,8 @@ class Sandbox extends React.Component {
       editor: loadFunction(
         this.props.currentProblem.funcName,
         this.props.currentProblem.arguments
-      )
+      ),
+      result: ''
     })
   }
   handleHome() {
@@ -124,7 +126,6 @@ class Sandbox extends React.Component {
       theme: e.target.value
     })
   }
-
   handleClose() {
     this.setState({open: false, stageComplete: false, result: ''})
   }
@@ -157,8 +158,9 @@ class Sandbox extends React.Component {
     )
     if (result === 'success') {
       this.props.addSolvedProblem(userId, currentProblem.id)
+      console.log(this.props.solvedProblems, 'SOLVED PROBLEMS')
       if (
-        this.props.solvedProblems[userId].problems.length + 1 ===
+        this.props.solvedProblems[this.props.stage.id].problems.length + 1 ===
         this.props.stage.goal
       ) {
         this.props.nextStage(userId)
@@ -169,7 +171,6 @@ class Sandbox extends React.Component {
     }
     this.setState({result})
   }
-
   handleSelectionChange(e) {
     if (
       e.selectionLead.row <= 1 ||
@@ -188,7 +189,6 @@ class Sandbox extends React.Component {
       if (this.state.readOnly) this.setState({readOnly: false})
     } else if (!this.state.readOnly) this.setState({readOnly: true})
   }
-
   render() {
     let {classes} = this.props
     return (
@@ -210,7 +210,7 @@ class Sandbox extends React.Component {
                   className="editorBox"
                   height="99%"
                   width="100%"
-                  editorProps={{$blockScrolling: false}}
+                  editorProps={{$blockScrolling: Infinity}}
                   fontSize={14}
                   onSelectionChange={this.handleSelectionChange}
                   onCursorChange={this.handleCursorChange}
@@ -292,15 +292,7 @@ class Sandbox extends React.Component {
             <div className="editorRightHalf">
               <Paper className="editorDescription">
                 <h3>Problem description</h3>
-                <p>
-                  {this.props.currentProblem.description} lorem ipsum dolor
-                  lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem
-                  ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum
-                  dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor
-                  lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem
-                  ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum
-                  dolor
-                </p>
+                <p>{this.props.currentProblem.description}</p>
               </Paper>
 
               <Dialog open={this.state.showThemes}>

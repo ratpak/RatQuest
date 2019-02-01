@@ -8,7 +8,7 @@ const testFunction = (func, input, output) => {
     try {
       assert.deepEqual(func(...input[i]), output[i])
     } catch (e) {
-      errorMessages.push(e.message)
+      errorMessages.push(e.message + ` for inputs: ${input[i].join(' ')}`)
     }
   }
   if (!errorMessages.length) result = 'success'

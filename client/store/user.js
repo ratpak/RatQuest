@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import Axios from 'axios'
 
 /**
  * ACTION TYPES
@@ -30,17 +31,27 @@ export const me = () => async dispatch => {
   }
 }
 
+export const setAvatar = (imgUrl, userId) => {
+  return async function(dispatch) {
+    let {data} = await Axios.put(`api/users/avatar/${userId}`, {imgUrl})
+    dispatch(getUser(data))
+  }
+}
+
 export const auth = (email, password, method) => async dispatch => {
   let res
+  let page = 'home'
   try {
     res = await axios.post(`/auth/${method}`, {email, password})
+    if (method === 'signup') page = 'avatar'
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
 
   try {
     dispatch(getUser(res.data))
-    history.push('/home')
+
+    history.push(`/${page}`)
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }
