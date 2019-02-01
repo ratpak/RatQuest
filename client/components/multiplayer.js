@@ -6,6 +6,8 @@ socket.on('connect', function() {
 })
 console.log('hello from mul')
 
+socket.on('send all', string => console.log('received send all', string))
+
 const Multiplayer = props => {
   return (
     <Fragment>
