@@ -1,10 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {deleteUser, fetchUsers, toggleisAdmin} from '../store'
+import {deleteUser, fetchUsers, toggleisAdmin, fetchAllProblems} from '../store'
 
 class Admin extends React.Component {
   componentDidMount() {
     this.props.getUsers()
+    this.props.getProblems()
   }
   handleUserDelete = userId => {
     this.props.deleteUser(userId)
@@ -15,7 +16,9 @@ class Admin extends React.Component {
   }
   render() {
     const users = this.props.users.users
+    const problems = this.props.problems
     console.log('users--------', users)
+    console.log('problem---------', problems)
     const imgStyle = {
       maxWidth: '100px',
       maxHeight: '100px',
@@ -49,20 +52,61 @@ class Admin extends React.Component {
             </div>
           ))
         )}
+        <h3> Edit/Disable Problems</h3>
+        {!problems || !problems.length ? (
+          <div>There are no problems</div>
+        ) : (
+          problems.map(problem => (
+            <div key={problem.id}>
+              <p>
+                {problem.id}. Descripton: {problem.description}
+              </p>
+              <div>Function Name: {problem.funcName} </div>
+              <p>
+                Arguments:{' '}
+                {problem.arguments.map(arg => (
+                  <span key={problem.id + arg}> {arg}, </span>
+                ))}
+              </p>
+              <p>
+                Inputs:{' '}
+                {problem.inputs.map(input => (
+                  <span key={input}>
+                    [{' '}
+                    {input.map(item => (
+                      <span key={input + item}> {item}, </span>
+                    ))}],{' '}
+                  </span>
+                ))}
+              </p>
+              <p>
+                Outputs:
+                {/* {problem.outputs} */}
+                {problem.outputs.map(output => (
+                  <span key={output}> {output}, </span>
+                ))}
+              </p>
+            </div>
+          ))
+        )}
       </div>
     )
   }
 }
 
 const mapStateToProps = state => {
-  return {users: state.users}
+  return {
+    users: state.users,
+    problems: state.problem.allProblems
+  }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     deleteUser: userId => dispatch(deleteUser(userId)),
     toggleisAdmin: userId => dispatch(toggleisAdmin(userId)),
-    getUsers: () => dispatch(fetchUsers())
+    getUsers: () => dispatch(fetchUsers()),
+    getProblems: () => dispatch(fetchAllProblems())
   }
 }
 

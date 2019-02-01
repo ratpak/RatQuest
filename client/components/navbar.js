@@ -4,32 +4,35 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn, email, isAdmin}) => (
-  <div className="navbar">
-    {/* <nav> */}
-    <div className="simple-flex">
-      <div id="avatar" />
-      <div id="nav-info">
-        <h1>Rat Quest</h1>
-        <h4>Welcome, {email}</h4>
+const Navbar = props => {
+  const {handleClick, isLoggedIn, email, isAdmin} = props
+  console.log(props, '<<<navbar')
+  return (
+    <div className="navbar">
+      <div className="simple-flex">
+        <div id="avatar" />
+        <div id="nav-info">
+          <h1>Rat Quest</h1>
+          <h4>Welcome, {email}</h4>
+        </div>
       </div>
+
+      {isAdmin && (
+        <div>
+          <Link to="/admin">Admin</Link>
+        </div>
+      )}
+      {isLoggedIn && (
+        <div>
+          {/* The navbar will show these links after you log in */}
+          <a href="#" onClick={handleClick}>
+            Logout
+          </a>
+        </div>
+      )}
     </div>
-    {isAdmin && (
-      <div>
-        <Link to="/admin">Admin</Link>
-      </div>
-    )}
-    {isLoggedIn && (
-      <div>
-        {/* The navbar will show these links after you log in */}
-        <a href="#" onClick={handleClick}>
-          Logout
-        </a>
-      </div>
-    )}
-    {/* </nav> */}
-  </div>
-)
+  )
+}
 
 /**
  * CONTAINER
@@ -37,7 +40,8 @@ const Navbar = ({handleClick, isLoggedIn, email, isAdmin}) => (
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
-    isAdmin: state.user.admin
+    user: state.user,
+    isAdmin: state.user.isAdmin
   }
 }
 
