@@ -37,7 +37,8 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
-    "@material-ui/core": "^3.9.0",
+    "@material-ui/core": "^3.9.1",
+    "@material-ui/icons": "^3.0.2",
     "axios": "^0.15.3",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^4.1.0",
@@ -45,6 +46,7 @@
     "express-session": "^1.15.1",
     "history": "^4.6.3",
     "lodash": "^4.17.11",
+    "material-ui-icons": "^1.0.0-beta.36",
     "morgan": "^1.9.1",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
