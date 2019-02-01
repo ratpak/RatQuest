@@ -85,6 +85,7 @@ class Admin extends React.Component {
                   <span key={output}> {output}, </span>
                 ))}
               </p>
+              <div>Stage: {problem.stageId}</div>
             </div>
           ))
         )}
