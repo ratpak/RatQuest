@@ -79,6 +79,13 @@ class Admin extends React.Component {
                   </span>
                 ))}
               </p>
+              <p>
+                Outputs:
+                {/* {problem.outputs} */}
+                {problem.outputs.map(output => (
+                  <span key={output}> {output}, </span>
+                ))}
+              </p>
             </div>
           ))
         )}
