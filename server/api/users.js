@@ -68,12 +68,26 @@ router.delete('/:id', async function(req, res, next) {
 // endpoint to get stages associated with user
 router.get('/stages/:userId', async (req, res, next) => {
   try {
-    const stages = await User.findById(req.params.userId, {
+    const user = await User.findById(req.params.userId, {
       include: [{model: Stage}]
     })
-    res.json(stages.stage)
+    res.json(user.stage)
   } catch (err) {
     next(err)
     console.error(err, '<<< users stages error')
+  }
+})
+
+router.post('/stages/:userId', async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.userId, {
+      include: [{model: Stage}]
+    })
+    user.update({
+      stageId: user.stageId + 1
+    })
+    res.json(user.stage)
+  } catch (err) {
+    next(err)
   }
 })

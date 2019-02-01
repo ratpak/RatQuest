@@ -10,6 +10,7 @@ import {
   addSolvedProblem,
   fetchSolvedProblems
 } from '../store/problem'
+import {nextStage} from '../store/stage'
 import {connect} from 'react-redux'
 import GameStage from './game-stage'
 import Dialog from '@material-ui/core/Dialog'
@@ -126,8 +127,9 @@ class Sandbox extends React.Component {
   }
 
   handleClose() {
-    this.setState({open: false, result: ''})
+    this.setState({open: false, stageComplete: false, result: ''})
   }
+
   async handleSuccess() {
     await this.props.fetchProblem(this.props.user.id)
     await this.props.fetchSolvedProblems(this.props.user.id)
@@ -146,21 +148,21 @@ class Sandbox extends React.Component {
   async handleClick() {
     // Grab user input from the code editor stored in state.
     let body = this.state.editor
+    let currentProblem = this.props.currentProblem
+    let userId = this.props.user.id
     let result = await createAndTest(
-      this.props.currentProblem.arguments,
+      currentProblem.arguments,
       body,
-      this.props.currentProblem.inputs,
-      this.props.currentProblem.outputs
+      currentProblem.inputs,
+      currentProblem.outputs
     )
     if (result === 'success') {
-      this.props.addSolvedProblem(
-        this.props.user.id,
-        this.props.currentProblem.id
-      )
+      this.props.addSolvedProblem(userId, currentProblem.id)
       if (
-        this.props.solvedProblems[this.props.user.id].problems.length + 1 ===
+        this.props.solvedProblems[userId].problems.length + 1 ===
         this.props.stage.goal
       ) {
+        this.props.nextStage(userId)
         this.setState({stageComplete: true})
       } else {
         this.setState({open: true})
@@ -386,6 +388,7 @@ const mapDispatch = dispatch => ({
     dispatch(fetchProblem(userId, problemId)),
   addSolvedProblem: (userId, problemId) =>
     dispatch(addSolvedProblem(userId, problemId)),
-  fetchSolvedProblems: userId => dispatch(fetchSolvedProblems(userId))
+  fetchSolvedProblems: userId => dispatch(fetchSolvedProblems(userId)),
+  nextStage: userId => dispatch(nextStage(userId))
 })
 export default connect(mapState, mapDispatch)(withStyles(styles)(Sandbox))
