@@ -5,7 +5,11 @@ import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
 import 'brace/theme/monokai'
 import loadFunction from '../utils/loadFunction'
-import {fetchProblem, addSolvedProblem} from '../store/problem'
+import {
+  fetchProblem,
+  addSolvedProblem,
+  fetchSolvedProblems
+} from '../store/problem'
 import {connect} from 'react-redux'
 import GameStage from './game-stage'
 import Dialog from '@material-ui/core/Dialog'
@@ -78,10 +82,24 @@ class Sandbox extends React.Component {
     this.handleSelectionChange = this.handleSelectionChange.bind(this)
     this.handleCursorChange = this.handleCursorChange.bind(this)
     this.handleHome = this.handleHome.bind(this)
+    this.handleSuccess = this.handleSuccess.bind(this)
+    this.handleSkip = this.handleSkip.bind(this)
   }
 
   async componentDidMount() {
     await this.props.fetchProblem(this.props.user.id)
+    this.setState({
+      editor: loadFunction(
+        this.props.currentProblem.funcName,
+        this.props.currentProblem.arguments
+      )
+    })
+  }
+  async handleSkip() {
+    await this.props.fetchProblem(
+      this.props.user.id,
+      this.props.currentProblem.id
+    )
     this.setState({
       editor: loadFunction(
         this.props.currentProblem.funcName,
@@ -108,6 +126,18 @@ class Sandbox extends React.Component {
 
   handleClose() {
     this.setState({open: false, result: ''})
+  }
+  async handleSuccess() {
+    await this.props.fetchProblem(this.props.user.id)
+    await this.props.fetchSolvedProblems(this.props.user.id)
+    this.setState({
+      open: false,
+      editor: loadFunction(
+        this.props.currentProblem.funcName,
+        this.props.currentProblem.arguments
+      ),
+      result: 'mwahaha'
+    })
   }
   handleChange(e) {
     this.setState({editor: e})
@@ -159,6 +189,7 @@ class Sandbox extends React.Component {
   }
 
   render() {
+    console.log('props', this.props)
     let {classes} = this.props
     return (
       <div className="editorContainerLol">
@@ -251,9 +282,7 @@ class Sandbox extends React.Component {
                       color: 'black',
                       fontWeight: 550
                     }}
-                    onClick={() => {
-                      console.log('add skip thunk here')
-                    }}
+                    onClick={this.handleSkip}
                   >
                     <SkipIcon />
                   </Fab>
@@ -305,7 +334,7 @@ class Sandbox extends React.Component {
                 open={this.state.open}
                 TransitionComponent={Transition}
                 keepMounted
-                onClose={this.handleClose}
+                // onClose={this.handleClose}
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
               >
@@ -313,13 +342,13 @@ class Sandbox extends React.Component {
                   Great Job!!
                 </DialogTitle>
                 <DialogActions>
-                  <Button onClick={this.handleClose} color="primary">
-                    <Link to="/home">Home</Link>
-                  </Button>
-                  <Button onClick={this.handleClose} color="primary">
-                    <Link to={`/sandbox/${this.props.currentProblem.id + 1}`}>
-                      Next Problem
-                    </Link>
+                  {/* <Button onClick={this.handleClose} color="primary"> */}
+                  <Link to="/home">Home</Link>
+                  {/* </Button> */}
+                  <Button onClick={this.handleSuccess} color="primary">
+                    Next Problem
+                    {/* <Link to={`/sandbox/${this.props.currentProblem.id + 1}`}>
+                    </Link> */}
                   </Button>
                 </DialogActions>
               </Dialog>
@@ -362,8 +391,10 @@ const mapState = state => ({
   stage: state.stage
 })
 const mapDispatch = dispatch => ({
-  fetchProblem: id => dispatch(fetchProblem(id)),
+  fetchProblem: (userId, problemId) =>
+    dispatch(fetchProblem(userId, problemId)),
   addSolvedProblem: (userId, problemId) =>
-    dispatch(addSolvedProblem(userId, problemId))
+    dispatch(addSolvedProblem(userId, problemId)),
+  fetchSolvedProblems: userId => dispatch(fetchSolvedProblems(userId))
 })
 export default connect(mapState, mapDispatch)(withStyles(styles)(Sandbox))

@@ -56,7 +56,8 @@ router.get('/:userId', async (req, res, next) => {
   try {
     // const singleProblem = await Problem.findById(req.params.id)
     // res.json(singleProblem)
-
+    console.log('GET', req.query)
+    let {problemId = ''} = req.query
     const user = await User.findById(req.params.userId)
     const solvedProblems = await UserProblems.findAll({
       where: {
@@ -66,10 +67,12 @@ router.get('/:userId', async (req, res, next) => {
     const problems = await Problem.findAll().filter(problem => {
       let notSolved = true
       for (let i = 0; i < solvedProblems.length; i++) {
+        console.log('sldkfjldskf', problemId, problem.id)
         if (
           solvedProblems[i].problemId === problem.id ||
           user.stageId !== problem.stageId ||
-          problem.deleted
+          problem.deleted ||
+          problem.id === parseInt(problemId)
         ) {
           notSolved = false
         }
