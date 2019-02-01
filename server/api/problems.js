@@ -18,7 +18,7 @@ router.get('/solved/:userId', async (req, res, next) => {
         userId: req.params.userId
       }
     })
-    let sortedSolvedProblems = {}
+    let sortedSolvedProblems = {1: {problems: []}}
     for (let i = 0; i < solvedProblems.length; i++) {
       let problem = solvedProblems[i]
       let prob = await Problem.findById(problem.problemId)
