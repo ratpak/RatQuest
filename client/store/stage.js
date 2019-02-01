@@ -24,6 +24,17 @@ export const fetchStages = userId => {
   }
 }
 
+export const nextStage = userId => {
+  return async function(dispatch) {
+    try {
+      const {data} = await axios.post(`/api/users/stages/${userId}`)
+      dispatch(gotStages(data))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
 // REDUCER
 export default function(state = initialStages, action) {
   switch (action.type) {
