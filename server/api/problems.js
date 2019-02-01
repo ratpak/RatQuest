@@ -65,13 +65,15 @@ router.get('/:userId', async (req, res, next) => {
     })
     const problems = await Problem.findAll().filter(problem => {
       let notSolved = true
+      if (
+        user.stageId !== problem.stageId ||
+        problem.deleted ||
+        problem.id === parseInt(problemId)
+      ) {
+        notSolved = false
+      }
       for (let i = 0; i < solvedProblems.length; i++) {
-        if (
-          solvedProblems[i].problemId === problem.id ||
-          user.stageId !== problem.stageId ||
-          problem.deleted ||
-          problem.id === parseInt(problemId)
-        ) {
+        if (solvedProblems[i].problemId === problem.id) {
           notSolved = false
         }
       }
