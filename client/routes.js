@@ -28,6 +28,7 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
+            <Route exact path="/game/:lobbyName" component={Multiplayer} />
             <Route exact path="/avatar" component={AvatarSelect} />
             <Route exact path="/home" component={UserHome} />
             <Route exact path="/sandbox/:problemId" component={Sandbox} />

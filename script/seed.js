@@ -45,10 +45,10 @@ async function seed() {
     Problem.bulkCreate(problemData, {returning: true})
   ])
   const userGames = await Promise.all([
-    UserGames.create({userId: 1, gameId: 2}),
-    UserGames.create({userId: 1, gameId: 3}),
-    UserGames.create({userId: 2, gameId: 1}),
-    UserGames.create({userId: 3, gameId: 1})
+    UserGames.create({userId: 1, gameId: 5}),
+    UserGames.create({userId: 1, gameId: 6}),
+    UserGames.create({userId: 2, gameId: 7}),
+    UserGames.create({userId: 3, gameId: 7})
   ])
   const userProblems = await Promise.all([
     UserProblems.create({userId: 1, problemId: 5}),

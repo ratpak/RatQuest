@@ -6,13 +6,14 @@ import {loadState, saveState} from './sessionStorage'
 import user from './user'
 import problem from './problem'
 import stage from './stage'
+import game from './game'
 
 import users from './admin'
 const throttle = require('lodash').throttle
 
 const debounce = require('lodash').debounce
 
-const reducer = combineReducers({user, problem, stage, users})
+const reducer = combineReducers({user, problem, stage, users, game})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
