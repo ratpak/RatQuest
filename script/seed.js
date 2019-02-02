@@ -1,9 +1,17 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Problem, Stage, UserProblems} = require('../server/db/models')
+const {
+  User,
+  Problem,
+  Stage,
+  UserProblems,
+  UserGames,
+  Game
+} = require('../server/db/models')
 const stageData = require('./stageData')
 const problemData = require('./problemData')
+const gameData = require('./gameData')
 
 async function seed() {
   await db.sync({force: true})
@@ -26,6 +34,9 @@ async function seed() {
     })
   ])
 
+  const games = await Promise.all([
+    Game.bulkCreate(gameData, {returning: true})
+  ])
   const stages = await Promise.all([
     Stage.bulkCreate(stageData, {returning: true})
   ])
@@ -33,7 +44,12 @@ async function seed() {
   const problems = await Promise.all([
     Problem.bulkCreate(problemData, {returning: true})
   ])
-
+  const userGames = await Promise.all([
+    UserGames.create({userId: 1, gameId: 2}),
+    UserGames.create({userId: 1, gameId: 3}),
+    UserGames.create({userId: 2, gameId: 1}),
+    UserGames.create({userId: 3, gameId: 1})
+  ])
   const userProblems = await Promise.all([
     UserProblems.create({userId: 1, problemId: 5}),
     UserProblems.create({userId: 1, problemId: 3}),
@@ -56,6 +72,9 @@ async function seed() {
   console.log(`seeded ${stages.length} stages`)
   console.log(`seeded ${problems.length} problems`)
   console.log(`seeded ${userProblems.length} userProblems`)
+  console.log(`seeded ${userGames.length} userGames`)
+  console.log(`seeded ${games.length} games`)
+
   console.log(`seeded successfully`)
 }
 

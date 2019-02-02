@@ -8,6 +8,9 @@ module.exports = io => {
     socket.on('joined', data => {
       socket.broadcast.emit('joined', data)
     })
+    socket.on('sendback', data => {
+      socket.broadcast.emit('sendback', data)
+    })
     socket.on('disconnect', () => {
       console.log(`Connection ${socket.id} has left the building`)
     })

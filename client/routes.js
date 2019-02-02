@@ -6,6 +6,7 @@ import {Login, Signup, UserHome, Admin, Multiplayer} from './components'
 import {me} from './store'
 import Sandbox from './components/sandbox'
 import AvatarSelect from './components/avatar-select'
+import MultiplayerHome from './components/multiplayerHome'
 
 /**
  * COMPONENT
@@ -31,7 +32,7 @@ class Routes extends Component {
             <Route exact path="/home" component={UserHome} />
             <Route exact path="/sandbox/:problemId" component={Sandbox} />
             <Route exact path="/admin" component={Admin} />
-            <Route exact path="/multiplayer" component={Multiplayer} />
+            <Route exact path="/multiplayer" component={MultiplayerHome} />
             <Route component={UserHome} />
           </Switch>
         )}

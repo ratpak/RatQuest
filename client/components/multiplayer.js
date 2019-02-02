@@ -3,7 +3,7 @@ import socket from '../socket'
 import Axios from 'axios'
 import {connect} from 'react-redux'
 
-socket.on('connect', async function() {
+socket.on('connect', function() {
   console.log('HAHA')
   // console.log('socket yazidi', socket.yazidi)
 })
@@ -11,44 +11,60 @@ socket.on('connect', async function() {
 class Multiplayer extends Component {
   constructor() {
     super()
-    this.state = {me: 0, opponent: 0, loading: true, opponentData: {}}
+    this.state = {loading: true, lobby: {}}
     this.handleClick = this.handleClick.bind(this)
-    socket.on('send all', string => {
-      console.log('how many')
-      this.setState({opponent: this.state.opponent + 1})
-    })
+    // socket.on('send all', string => {
+    //   console.log('how many')
+    //   this.setState({opponent: this.state.opponent + 1})
+    // })
     socket.on('joined', data => {
       console.log('got joined', data)
-      this.setState({opponentData: data})
+      socket.emit('sendback', this.props.user)
+      this.setState({
+        lobby: {...this.state.lobby, [data.email]: data}
+      })
     })
+    socket.on('sendback', data =>
+      this.setState({
+        lobby: {...this.state.lobby, [data.email]: data}
+      })
+    )
   }
   handleClick() {
-    this.setState({me: this.state.me + 1})
+    let me = this.props.user.email
+    //add a DONE emit
+    socket.emit('SEND', 'string')
+
+    this.setState({lobby: {[me]: this.state.lobby[me] + 1}})
   }
   async componentDidMount() {
     const {data} = await Axios.get(`/api/users/${this.props.user.id}`)
-    socket.user = data
-    console.log('socket')
+    data.score = 0
+    console.log('didmount with:', data)
     socket.emit('joined', data)
-    this.setState({loading: false})
+    this.setState({
+      loading: false,
+      lobby: {...this.state.lobby, [data.email]: data}
+    })
     // console.log('data from socket', socket.user)
   }
 
   render() {
-    if (this.state.me >= 10 || this.state.opponent >= 10)
-      return <h1>DONE!@#</h1>
+    // if (this.state.me >= 10 || this.state.opponent >= 10)
+    //   return <h1>DONE!@#</h1>
+    console.log(this.state)
     return (
       <Fragment>
-        <button onClick={this.handleClick}>socket</button>
-        <h1>
-          opponent
-          {this.state.loading ? 'Opponent' : this.state.opponentData.email}:{
-            this.state.opponent
-          }
-        </h1>
-        <h1>
-          {this.state.loading ? 'Me' : socket.user.email}:{this.state.me}
-        </h1>
+        <h1>I am {this.props.user.email}</h1>
+        <button onClick={this.handleClick}>+1</button>
+
+        <br />
+        <h1>Lobby: </h1>
+        {Object.keys(this.state.lobby)
+          ? Object.keys(this.state.lobby).map(key => {
+              return <h2>{this.state.lobby[key].email}</h2>
+            })
+          : null}
       </Fragment>
     )
   }

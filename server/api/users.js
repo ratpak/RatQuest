@@ -1,6 +1,5 @@
 const router = require('express').Router()
 const {User, Stage} = require('../db/models')
-//??
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -19,7 +18,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id)
+    const user = await User.findById(req.params.id, {include: {all: true}})
     res.json(user)
   } catch (e) {
     next(e)
