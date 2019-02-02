@@ -5,48 +5,54 @@ import Navbar from './navbar'
 import HomeStage from './home-stage'
 import Board from './board'
 import Rat from './rat'
-import ratPositionFunc from '../utils/ratPosition'
+// import ratPositionFunc from '../utils/ratPosition'
 // import {TweenLite} from 'gsap/all'
 import {withTheme} from '@material-ui/core/styles'
 
 class UserHome extends Component {
-  constructor() {
-    super()
-    this.state = {
-      boardPosition: '00',
-      ratPosition: {
-        x: '0px',
-        y: '0px',
-        opacity: 0
-      }
-    }
-  }
+  // constructor() {
+  //   super()
+  //   this.state = {
+  //     boardPosition: '00',
+  //     ratPosition: {
+  //       x: '0px',
+  //       y: '0px',
+  //       opacity: 0,
+  //       transform: ''
+  //     }
+  //   }
+  // }
 
-  componentDidMount() {
-    // setup current stage and number of solved problems for rat
-    const currentStage = this.props.stage.id
-    const currStageProgress = this.props.problem.solvedProblems[currentStage]
-      ? this.props.problem.solvedProblems[currentStage].problems.length
-      : 0
+  // componentDidMount() {
+  //   // setup current stage and number of solved problems for rat
+  //   const currentStage = this.props.stage.id
+  //   const currStageProgress = this.props.problem.solvedProblems[currentStage]
+  //     ? this.props.problem.solvedProblems[currentStage].problems.length
+  //     : 0
 
-    // helper function to convert progress to double digit string to get gameboard step element by ID
-    const playerProgressFunc = (curStage, progressWithinStage) => {
-      const progress = progressWithinStage + (curStage - 1) * 5
-      return progress < 10 ? '0' + progress.toString() : progress.toString()
-    }
-    const boardPosition = playerProgressFunc(currentStage, currStageProgress)
-    const ratPosition = ratPositionFunc(boardPosition)
-    // console.log(ratPosition, '<<< ratPosition')
-    this.setState({boardPosition, ratPosition})
-    document.getElementById('rat-board-state').style.left = ratPosition.x
-    document.getElementById('rat-board-state').style.top = ratPosition.y
-    document.getElementById('rat-board-state').style.opacity =
-      ratPosition.opacity
-    document.getElementById('rat-board-state').style.transform =
-      ratPosition.transform
-  }
+  //   // helper function to convert progress to double digit string to get gameboard step element by ID
+  //   const playerProgressFunc = (curStage, progressWithinStage) => {
+  //     const progress = progressWithinStage + (curStage - 1) * 5
+  //     return progress < 10 ? '0' + progress.toString() : progress.toString()
+  //   }
+  //   const boardPosition = playerProgressFunc(currentStage, currStageProgress)
+  //   const ratPosition = ratPositionFunc(boardPosition)
+
+  //   this.setState({boardPosition, ratPosition})
+  //   console.log('home mounted', this.props, this.state, '<<< home state')
+  // }
+
+  // componentDidUpdate () {
+  //   document.getElementById('rat-board-state').style.left = this.state.ratPosition.x
+  //   document.getElementById('rat-board-state').style.top = this.state.ratPosition.y
+  //   document.getElementById('rat-board-state').style.opacity =
+  //     this.state.ratPosition.opacity
+  //   document.getElementById('rat-board-state').style.transform =
+  //     this.state.ratPosition.transform
+  // }
 
   render() {
+    // console.log('home render', this.props, this.state, '<<<home state')
     // props
     const {email, problem, theme} = this.props
     return (
@@ -57,7 +63,8 @@ class UserHome extends Component {
             <Rat />
           </div>
           <div id="board-01">
-            <Board boardPosition={this.state.boardPosition} />
+            {/* <Board boardPosition={this.state.boardPosition} /> */}
+            <Board stage={this.props.stage} problem={this.props.problem} />
           </div>
           <div className="stage" id="stage-box-01">
             <HomeStage stageInHome={1} problem={problem} />

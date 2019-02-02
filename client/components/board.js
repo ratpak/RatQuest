@@ -3,17 +3,58 @@ import React, {Fragment, Component} from 'react'
 class Board extends Component {
   constructor() {
     super()
-    this.step01 = null
-    this.step02 = null
+    this.state = {
+      boardPosition: '00'
+    }
+  }
+  componentDidMount() {
+    const boardPositionElement = document.getElementById(
+      `step-${this.state.boardPosition}`
+    )
+    console.log(boardPositionElement, '<<< board element')
+    boardPositionElement.style.fill = '#ffff99'
+    // boardPositionElement.style.stroke = '#fff250'
+    // boardPositionElement.style.strokeWidth = '2'
   }
 
+  // bug to look into - we go back to board after solve problem - old board state not immediately updated...
+  // might need to place below logic in componentDidMount (prob not) or look at timing of problem thunk firing
   componentDidUpdate() {
-    const boardPosition = document.getElementById(
-      `step-${this.props.boardPosition}`
-    )
-    boardPosition.style.fill = '#ffff99'
-    boardPosition.style.stroke = '#fff250'
-    boardPosition.style.strokeWidth = '2'
+    // setup current stage and number of solved problems board
+    const currentStage = this.props.stage.id
+    // length of solvedProblems = how many problems solved in a stage
+    const currStageProgress = this.props.problem.solvedProblems[currentStage]
+      ? this.props.problem.solvedProblems[currentStage].problems.length
+      : 0
+
+    // helper function to convert progress to double digit string to get gameboard step element by ID
+    if (currStageProgress !== 0) {
+      const playerProgressFunc = (curStage, progressWithinStage) => {
+        const progress = progressWithinStage + (curStage - 1) * 5
+        return progress < 10 ? '0' + progress.toString() : progress.toString()
+      }
+
+      const boardPosition = playerProgressFunc(currentStage, currStageProgress)
+
+      // change old board position back
+      if (this.state.boardPosition !== '00') {
+        const oldBoardPositionElement = document.getElementById(
+          `step-${this.state.boardPosition}`
+        )
+        oldBoardPositionElement.style.fill = '#8d8d8d'
+        oldBoardPositionElement.style.stroke = '#8d8d8d'
+        oldBoardPositionElement.style.strokeWidth = '0'
+        this.setState({boardPosition})
+      }
+      // set new board
+      const boardPositionElement = document.getElementById(
+        `step-${boardPosition}`
+      )
+      console.log(boardPositionElement, '<<< board element')
+      boardPositionElement.style.fill = '#ffff99'
+      boardPositionElement.style.stroke = '#fff250'
+      boardPositionElement.style.strokeWidth = '2'
+    }
   }
 
   render() {
@@ -36,12 +77,6 @@ class Board extends Component {
                 ry="13.83"
                 fill="#8d8d8d"
               />
-              <div
-                id="divstep-01"
-                ref={div => {
-                  this.step01 = div
-                }}
-              />
               <ellipse
                 id="step-02"
                 cx="299.84"
@@ -49,12 +84,6 @@ class Board extends Component {
                 rx="50.87"
                 ry="13.83"
                 fill="#8d8d8d"
-              />
-              <div
-                id="divstep-02"
-                ref={div => {
-                  this.step02 = div
-                }}
               />
               <ellipse
                 id="step-03"
@@ -433,7 +462,8 @@ class Board extends Component {
                 </g>
               </g>
               <polygon
-                id="cage-btm"
+                id="step-00"
+                // id="cage-btm"
                 points="21.19 302.13 26.35 286.2 130.77 286.2 135.32 302.13 21.19 302.13"
                 fill="#828282"
               />
