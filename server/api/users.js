@@ -17,6 +17,15 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/:id', async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id)
+    res.json(user)
+  } catch (e) {
+    next(e)
+  }
+})
+
 // route to edit avatar
 
 router.put('/avatar/:id', async (req, res, next) => {

@@ -1,6 +1,5 @@
 import axios from 'axios'
 import history from '../history'
-import Axios from 'axios'
 
 /**
  * ACTION TYPES
@@ -33,7 +32,7 @@ export const me = () => async dispatch => {
 
 export const setAvatar = (imgUrl, userId) => {
   return async function(dispatch) {
-    let {data} = await Axios.put(`api/users/avatar/${userId}`, {imgUrl})
+    let {data} = await axios.put(`api/users/avatar/${userId}`, {imgUrl})
     dispatch(getUser(data))
   }
 }
