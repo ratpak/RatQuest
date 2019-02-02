@@ -32,7 +32,7 @@ class Routes extends Component {
             <Route exact path="/home" component={UserHome} />
             <Route exact path="/sandbox/:problemId" component={Sandbox} />
             <Route exact path="/admin" component={Admin} />
-            <Route exact path="/multiplayer" component={MultiplayerHome} />
+            <Route exact path="/multiplayer" component={Multiplayer} />
             <Route component={UserHome} />
           </Switch>
         )}
