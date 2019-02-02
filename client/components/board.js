@@ -1,57 +1,22 @@
 import React, {Fragment, Component} from 'react'
 
 class Board extends Component {
-  constructor() {
-    super()
-    this.state = {
-      boardPosition: '00'
-    }
-  }
-
-  // bug when come back to board from go back to home after solve problem from popup
-  // if refresh or go directly back to home from home button on sandbox interface...it's fine..
   componentDidUpdate() {
-    // setup current stage and number of solved problems board
-    const currentStage = this.props.stage.id
-    // length of solvedProblems = how many problems solved in a stage
-    const currStageProgress = this.props.problem.solvedProblems[currentStage]
-      ? this.props.problem.solvedProblems[currentStage].problems.length
-      : 0
-    console.log(currStageProgress, '<<< currStageProgress')
+    // wipe out old board
+    const oldBoardPositionElement = document.getElementById(
+      `step-${this.props.prevBoardPosition}`
+    )
+    oldBoardPositionElement.style.fill = '#8d8d8d'
+    oldBoardPositionElement.style.stroke = '#8d8d8d'
+    oldBoardPositionElement.style.strokeWidth = '0'
 
-    if (currentStage === 1 && currStageProgress === 0) {
-      const newGameBoardPositionElement = document.getElementById(
-        `step-${this.state}`
-      )
-      newGameBoardPositionElement.style.fill = '#ffff99'
-    } else {
-      // helper function to convert progress to double digit string to get gameboard step element by ID
-      const playerProgressFunc = (curStage, progressWithinStage) => {
-        const progress = progressWithinStage + (curStage - 1) * 5
-        return progress < 10 ? '0' + progress.toString() : progress.toString()
-      }
-
-      const boardPosition = playerProgressFunc(currentStage, currStageProgress)
-
-      // change old board position back
-      if (this.state.boardPosition !== '00') {
-        const oldBoardPositionElement = document.getElementById(
-          `step-${this.state.boardPosition}`
-        )
-        oldBoardPositionElement.style.fill = '#8d8d8d'
-        oldBoardPositionElement.style.stroke = '#8d8d8d'
-        oldBoardPositionElement.style.strokeWidth = '0'
-        this.setState({boardPosition})
-      }
-      // set new board
-      const newBoardPositionElement = document.getElementById(
-        `step-${boardPosition}`
-      )
-      // console.log(boardPositionElement, '<<< board element')
-      newBoardPositionElement.style.fill = '#ffff99'
-      newBoardPositionElement.style.stroke = '#fff250'
-      newBoardPositionElement.style.strokeWidth = '2'
-    }
+    // set new board
+    const newBoardPositionElement = document.getElementById(
+      `step-${this.props.boardPosition}`
+    )
+    newBoardPositionElement.style.fill = '#ffff99'
+    newBoardPositionElement.style.stroke = '#fff250'
+    newBoardPositionElement.style.strokeWidth = '2'
   }
 
   render() {

@@ -24,21 +24,11 @@ class UserHome extends Component {
   // }
 
   // componentDidMount() {
-  //   // setup current stage and number of solved problems for rat
-  //   const currentStage = this.props.stage.id
-  //   const currStageProgress = this.props.problem.solvedProblems[currentStage]
-  //     ? this.props.problem.solvedProblems[currentStage].problems.length
-  //     : 0
 
-  //   // helper function to convert progress to double digit string to get gameboard step element by ID
-  //   const playerProgressFunc = (curStage, progressWithinStage) => {
-  //     const progress = progressWithinStage + (curStage - 1) * 5
-  //     return progress < 10 ? '0' + progress.toString() : progress.toString()
-  //   }
   //   const boardPosition = playerProgressFunc(currentStage, currStageProgress)
   //   const ratPosition = ratPositionFunc(boardPosition)
 
-  //   this.setState({boardPosition, ratPosition})
+  //   this.setState({ratPosition})
   //   console.log('home mounted', this.props, this.state, '<<< home state')
   // }
 
@@ -52,27 +42,32 @@ class UserHome extends Component {
   // }
 
   render() {
-    // console.log('home render', this.props, this.state, '<<<home state')
-    // props
-    // setup current stage and number of solved problems board
-    // const currentStage = this.props.stage.id
-    // // length of solvedProblems = how many problems solved in a stage
-    // const currStageProgress = this.props.problem.solvedProblems[currentStage]
-    //   ? this.props.problem.solvedProblems[currentStage].problems.length
-    //   : 0
-    // console.log(currStageProgress, '<<< currStageProgress')
+    // format current stage and number of solved problems to pass to board as props
+    const currentStage = this.props.stage.id
+    const currStageProgress = this.props.problem.solvedProblems[currentStage]
+      ? this.props.problem.solvedProblems[currentStage].problems.length // length of solvedProblems = how many problems solved in a stage
+      : 0
 
-    // // if (currentStage === 1 && currStageProgress === 0) {
-    // //     const newGameBoardPositionElement = document.getElementById(`step-${this.state.boardPosition}`)
-    // //     newGameBoardPositionElement.style.fill = '#ffff99'
-    // //   } else {
-    //     // helper function to convert progress to double digit string to get gameboard step element by ID
-    //   const playerProgressFunc = (curStage, progressWithinStage) => {
-    //     const progress = progressWithinStage + (curStage - 1) * 5
-    //     return progress < 10 ? '0' + progress.toString() : progress.toString()
-    //   }
-    // // }
-    // const boardPosition = playerProgressFunc(currentStage, currStageProgress)
+    // helper func - previous board spot - manipulating svg elements by id via this result
+    const previousPlayerProgressFunc = (curStage, progressWithinStage) => {
+      if (progressWithinStage === 0) return '00'
+      else {
+        const progress = progressWithinStage + (curStage - 1) * 5 - 1
+        return progress < 10 ? '0' + progress.toString() : progress.toString()
+      }
+    }
+
+    // helper func - new board spot - manipulating svg elements by id via this result
+    const playerProgressFunc = (curStage, progressWithinStage) => {
+      const progress = progressWithinStage + (curStage - 1) * 5
+      return progress < 10 ? '0' + progress.toString() : progress.toString()
+    }
+
+    const prevBoardPosition = previousPlayerProgressFunc(
+      currentStage,
+      currStageProgress
+    )
+    const boardPosition = playerProgressFunc(currentStage, currStageProgress)
 
     const {email, problem, theme} = this.props
     return (
@@ -83,11 +78,11 @@ class UserHome extends Component {
             <Rat />
           </div>
           <div id="board-01">
-            {/* <Board boardPosition={this.state.boardPosition} /> */}
             <Board
               stage={this.props.stage}
               problem={this.props.problem}
-              // boardPosition={boardPosition}
+              boardPosition={boardPosition}
+              prevBoardPosition={prevBoardPosition}
             />
           </div>
           <div className="stage" id="stage-box-01">
