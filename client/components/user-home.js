@@ -54,6 +54,26 @@ class UserHome extends Component {
   render() {
     // console.log('home render', this.props, this.state, '<<<home state')
     // props
+    // setup current stage and number of solved problems board
+    // const currentStage = this.props.stage.id
+    // // length of solvedProblems = how many problems solved in a stage
+    // const currStageProgress = this.props.problem.solvedProblems[currentStage]
+    //   ? this.props.problem.solvedProblems[currentStage].problems.length
+    //   : 0
+    // console.log(currStageProgress, '<<< currStageProgress')
+
+    // // if (currentStage === 1 && currStageProgress === 0) {
+    // //     const newGameBoardPositionElement = document.getElementById(`step-${this.state.boardPosition}`)
+    // //     newGameBoardPositionElement.style.fill = '#ffff99'
+    // //   } else {
+    //     // helper function to convert progress to double digit string to get gameboard step element by ID
+    //   const playerProgressFunc = (curStage, progressWithinStage) => {
+    //     const progress = progressWithinStage + (curStage - 1) * 5
+    //     return progress < 10 ? '0' + progress.toString() : progress.toString()
+    //   }
+    // // }
+    // const boardPosition = playerProgressFunc(currentStage, currStageProgress)
+
     const {email, problem, theme} = this.props
     return (
       <Fragment>
@@ -64,7 +84,11 @@ class UserHome extends Component {
           </div>
           <div id="board-01">
             {/* <Board boardPosition={this.state.boardPosition} /> */}
-            <Board stage={this.props.stage} problem={this.props.problem} />
+            <Board
+              stage={this.props.stage}
+              problem={this.props.problem}
+              // boardPosition={boardPosition}
+            />
           </div>
           <div className="stage" id="stage-box-01">
             <HomeStage stageInHome={1} problem={problem} />

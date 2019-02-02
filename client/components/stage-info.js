@@ -9,23 +9,31 @@ const withStageInfo = WrappedComponent => {
     componentDidMount() {
       const userId = this.props.user.id
       this.props.fetchStages(userId)
-      this.props.fetchSolvedProblems(userId)
-      this.props.fetchProblem(userId)
+      if (this.props.stageInHome === this.props.stage.id) {
+        this.props.fetchSolvedProblems(userId)
+        this.props.fetchProblem(userId)
+      }
     }
 
     render() {
       const stageInHome = this.props.stageInHome // info for which stage box (home-stage) is being rendered (1, 2, or 3) on user-home
       const stage = this.props.stage // stage info from db
-      stage.progress = this.props.problem[stage.id]
-        ? this.props.problem[stage.id].problems.length
-        : 0 // add progress property to stage
-      const stageInHomeInfo = {stageInHome, stageId: stage.id} // for stage boxes for non-current levels in home-stage components displayed in user-home
-      const displayInfo =
-        stageInHome === stage.id || !this.props.stageInHome
-          ? stage
-          : stageInHomeInfo
-      // if for stage box (home-stage) for current stage || for game-stage give stage
-      // else its for stage box (home-stage) for non-current stage on user-home and give stageInHomeInfo to set COMPLETE vs LOCKED display
+      let displayInfo
+      if (stageInHome === stage.id || !this.props.stageInHome) {
+        stage.progress = this.props.problem[stage.id]
+          ? this.props.problem[stage.id].problems.length
+          : 0 // add progress property to stage
+        // const stageInHomeInfo = {stageInHome, stageId: stage.id} // for stage boxes for non-current levels in home-stage components displayed in user-home
+        displayInfo = stage
+        // stageInHome === stage.id || !this.props.stageInHome
+        //   ? stage
+        //   : stageInHomeInfo
+        // if for stage box (home-stage) for current stage || for game-stage give stage
+        // else its for stage box (home-stage) for non-current stage on user-home and give stageInHomeInfo to set COMPLETE vs LOCKED display
+      } else {
+        const stageInHomeInfo = {stageInHome, stageId: stage.id} // for stage boxes for non-current levels in home-stage components displayed in user-home
+        displayInfo = stageInHomeInfo
+      }
       displayInfo.userId = this.props.user.id
       return <WrappedComponent displayInfo={displayInfo} />
     }
