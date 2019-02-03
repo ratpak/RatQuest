@@ -10,7 +10,7 @@ class Rat extends Component {
   }
 
   componentDidMount() {
-    this.ratTween = TweenMax.to('.character', 1, {
+    this.ratTween = TweenMax.to('.character', 1.5, {
       repeat: -1,
       backgroundPosition: '-3600px',
       ease: SteppedEase.config(18)
