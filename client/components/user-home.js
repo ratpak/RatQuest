@@ -58,8 +58,9 @@ class UserHome extends Component {
 
     // helper func - previous board spot - manipulating svg elements by id via this result
     const previousPlayerProgressFunc = (curStage, progressWithinStage) => {
-      if (progressWithinStage === 0) return '00'
-      else {
+      if (curStage === 1 && progressWithinStage === 0) {
+        return '00'
+      } else {
         const progress = progressWithinStage + (curStage - 1) * 5 - 1
         return progress < 10 ? '0' + progress.toString() : progress.toString()
       }
@@ -67,11 +68,8 @@ class UserHome extends Component {
 
     // helper func - new board spot - manipulating svg elements by id via this result
     const playerProgressFunc = (curStage, progressWithinStage) => {
-      if (progressWithinStage === 0) return '00'
-      else {
-        const progress = progressWithinStage + (curStage - 1) * 5
-        return progress < 10 ? '0' + progress.toString() : progress.toString()
-      }
+      const progress = progressWithinStage + (curStage - 1) * 5
+      return progress < 10 ? '0' + progress.toString() : progress.toString()
     }
 
     prevBoardPosition = previousPlayerProgressFunc(
@@ -79,10 +77,7 @@ class UserHome extends Component {
       currStageProgress
     )
     boardPosition = playerProgressFunc(currentStage, currStageProgress)
-    // } else {
-    //   boardPosition = null
-    //   prevBoardPosition = null
-    // }
+    console.log(boardPosition)
 
     const {email, problem, theme} = this.props
     return (
