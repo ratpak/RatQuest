@@ -32,22 +32,6 @@ form div {
   display: inline-block;
 }
 
-/* style for putting board in background div elements */
-/* #board-wrapper {
-  position: absolute;
-  left: 50%;
-}
-
-#board-background {
-  position: absolute;
-  left: 25%;
-  background-image: url(images/steps-test-optimized.svg);
-  background-size: 40%;
-  background-repeat: no-repeat;
-  height: 95vh;
-  width: 75vw;
-} */
-
 /* editor page styling */
 
 .editorContainerLol {
@@ -143,7 +127,7 @@ form div {
 
 /*positioning of board and dynamic stage boxes*/
 #board-01 {
-  z-index: 2;
+  /* z-index: 2; */
 }
 
 .stage {
@@ -222,5 +206,9 @@ form div {
   /* opacity: 0; */
   /* left: 100px;
   top: 245px; */
+  z-index: 3;
+}
+
+#scientist-group {
   z-index: 4;
 }

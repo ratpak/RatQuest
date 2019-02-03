@@ -1,5 +1,5 @@
 import React, {Fragment, Component} from 'react'
-import {TweenMax, TimelineLite} from 'gsap/all'
+import {TweenMax} from 'gsap/all'
 
 class Board extends Component {
   constructor() {
@@ -22,31 +22,30 @@ class Board extends Component {
     this.step15 = null
     this.oldStepTween = null
     this.newStepTween = null
-    this.timelineTween = new TimelineLite({paused: true})
+    this.ratGroup = null
+    this.ratGroupTween = null
   }
 
   componentDidUpdate() {
-    if (this.props.boardPosition && this.props.prevBoardPosition) {
-      this.timelineTween
-        .paused(false)
-        .to(this[`step${this.props.boardPosition}`], 1, {fill: '#ffff99'})
-        .from(this[`step${this.props.prevBoardPosition}`], 1, {fill: '#8d8d8d'})
+    if (this.props.boardPosition) {
+      if (this.props.boardPosition !== '00') {
+        this.ratGroupTween = TweenMax.to(this.ratGroup, 0, {
+          opacity: 0
+        })
+      }
+      this.newStepTween = TweenMax.to(
+        this[`step${this.props.boardPosition}`],
+        1,
+        {fill: '#ffff99'}
+      )
     }
-
-    // if (this.props.boardPosition) {
-    //   this.newStepTween = TweenMax.to(
-    //     this[`step${this.props.boardPosition}`],
-    //     1,
-    //     {fill: '#ffff99'}
-    //     )
-    //   }
-    // if(this.props.prevBoardPosition && this.props.prevBoardPosition !== '00') {
-    //   this.oldStepTween = TweenMax.from(
-    //     this[`step${this.props.prevBoardPosition}`],
-    //     1,
-    //     {fill: '#8d8d8d'}
-    //   )
-    // }
+    if (this.props.prevBoardPosition && this.props.prevBoardPosition !== '00') {
+      this.oldStepTween = TweenMax.from(
+        this[`step${this.props.prevBoardPosition}`],
+        1,
+        {fill: '#8d8d8d'}
+      )
+    }
   }
 
   render() {
@@ -659,7 +658,12 @@ class Board extends Component {
                       />
                     </g>
                   </g>
-                  <g id="rat-group">
+                  <g
+                    ref={g => {
+                      this.ratGroup = g
+                    }}
+                    id="rat-group"
+                  >
                     <path
                       id="tail"
                       d="M66.55,281.86c-11.12,2.13-18-.53-20,4.69s12.41,4.91,15.46,4.19,4.41-3,3.57-2.87a15.36,15.36,0,0,1-5,.93c-3.14,0-11.16.12-10.29-1.73,1.19-2.55,1.49-.12,7.81-1.14s14,.28,16.56-1.4"
