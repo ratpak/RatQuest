@@ -1,4 +1,5 @@
 import React, {Fragment, Component} from 'react'
+import withBoardProgress from './board-progress'
 import {TweenMax} from 'gsap/all'
 
 class Board extends Component {
@@ -39,7 +40,7 @@ class Board extends Component {
         {fill: '#ffff99'}
       )
     }
-    if (this.props.prevBoardPosition && this.props.prevBoardPosition !== '00') {
+    if (this.props.prevBoardPosition) {
       this.oldStepTween = TweenMax.from(
         this[`step${this.props.prevBoardPosition}`],
         1,
@@ -1626,4 +1627,4 @@ class Board extends Component {
   }
 }
 
-export default Board
+export default withBoardProgress(Board)

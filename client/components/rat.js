@@ -1,5 +1,5 @@
 import React, {Fragment, Component} from 'react'
-// import ratPositionFunc from '../utils/ratPosition'
+import withBoardProgress from './board-progress'
 import {TweenMax, SteppedEase} from 'gsap/all'
 
 class Rat extends Component {
@@ -69,4 +69,4 @@ class Rat extends Component {
   }
 }
 
-export default Rat
+export default withBoardProgress(Rat)

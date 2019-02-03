@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {fetchStages} from '../store/stage'
-import {fetchSolvedProblems, fetchProblem} from '../store/problem'
+import {fetchSolvedProblems} from '../store/problem'
 import {connect} from 'react-redux'
 import {compose} from 'redux'
 
@@ -10,7 +10,6 @@ const withStageInfo = WrappedComponent => {
       const userId = this.props.user.id
       this.props.fetchStages(userId)
       this.props.fetchSolvedProblems(userId)
-      this.props.fetchProblem(userId)
     }
 
     render() {
@@ -53,9 +52,6 @@ const mapDispatch = dispatch => ({
   },
   fetchSolvedProblems(userId) {
     return dispatch(fetchSolvedProblems(userId))
-  },
-  fetchProblem(userId) {
-    return dispatch(fetchProblem(userId))
   }
 })
 
