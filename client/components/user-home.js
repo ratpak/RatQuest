@@ -5,31 +5,35 @@ import Navbar from './navbar'
 import HomeStage from './home-stage'
 import Board from './board'
 import Rat from './rat'
-// import ratPositionFunc from '../utils/ratPosition'
+import playerProgressFuncUtil from '../utils/playerProgress' // doesn't work if do it this way...
+import ratPositionFunc from '../utils/ratPosition'
 // import {TweenLite} from 'gsap/all'
 import {withTheme} from '@material-ui/core/styles'
 
 class UserHome extends Component {
-  // constructor() {
-  //   super()
-  //   this.state = {
-  //     boardPosition: '00',
-  //     ratPosition: {
-  //       x: '0px',
-  //       y: '0px',
-  //       opacity: 0,
-  //       transform: ''
-  //     }
-  //   }
-  // }
+  constructor() {
+    super()
+    this.state = {
+      ratPosition: {
+        x: '0px',
+        y: '0px',
+        opacity: 0,
+        transform: ''
+      }
+    }
+  }
 
   // componentDidMount() {
+  //   const currentStage = this.props.stage.id
+  //   const currStageProgress = this.props.problem.solvedProblems[currentStage]
+  //     ? this.props.problem.solvedProblems[currentStage].problems.length // length of solvedProblems = how many problems solved in a stage
+  //     : 0
 
-  //   const boardPosition = playerProgressFunc(currentStage, currStageProgress)
+  //   const boardPosition = playerProgressFuncUtil(currentStage, currStageProgress)
   //   const ratPosition = ratPositionFunc(boardPosition)
 
   //   this.setState({ratPosition})
-  //   console.log('home mounted', this.props, this.state, '<<< home state')
+  //   // console.log('home mounted', this.props, this.state, '<<< home state')
   // }
 
   // componentDidUpdate () {
@@ -43,6 +47,10 @@ class UserHome extends Component {
 
   render() {
     // format current stage and number of solved problems to pass to board as props
+    let boardPosition
+    let prevBoardPosition
+
+    // if (this.props.problem.solvedProblems[this.props.stage.id]) {
     const currentStage = this.props.stage.id
     const currStageProgress = this.props.problem.solvedProblems[currentStage]
       ? this.props.problem.solvedProblems[currentStage].problems.length // length of solvedProblems = how many problems solved in a stage
@@ -59,15 +67,22 @@ class UserHome extends Component {
 
     // helper func - new board spot - manipulating svg elements by id via this result
     const playerProgressFunc = (curStage, progressWithinStage) => {
-      const progress = progressWithinStage + (curStage - 1) * 5
-      return progress < 10 ? '0' + progress.toString() : progress.toString()
+      if (progressWithinStage === 0) return '00'
+      else {
+        const progress = progressWithinStage + (curStage - 1) * 5
+        return progress < 10 ? '0' + progress.toString() : progress.toString()
+      }
     }
 
-    const prevBoardPosition = previousPlayerProgressFunc(
+    prevBoardPosition = previousPlayerProgressFunc(
       currentStage,
       currStageProgress
     )
-    const boardPosition = playerProgressFunc(currentStage, currStageProgress)
+    boardPosition = playerProgressFunc(currentStage, currStageProgress)
+    // } else {
+    //   boardPosition = null
+    //   prevBoardPosition = null
+    // }
 
     const {email, problem, theme} = this.props
     return (

@@ -9,10 +9,8 @@ const withStageInfo = WrappedComponent => {
     componentDidMount() {
       const userId = this.props.user.id
       this.props.fetchStages(userId)
-      if (this.props.stageInHome === this.props.stage.id) {
-        this.props.fetchSolvedProblems(userId)
-        this.props.fetchProblem(userId)
-      }
+      this.props.fetchSolvedProblems(userId)
+      this.props.fetchProblem(userId)
     }
 
     render() {
