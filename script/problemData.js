@@ -6,7 +6,7 @@ const problemData = [
     funcName: 'addNums',
     inputs: [['1', '2'], ['3', '5'], ['10', '20']],
     outputs: ['3', '8', '30'],
-    outputType: 'num',
+    outputType: 'number',
     url:
       'https://writingjavascript.org/posts/introduction-to-functions-numbers-in-javascript',
     stageId: 1
@@ -18,7 +18,7 @@ const problemData = [
     arguments: ['str'],
     inputs: [['Yaodi'], ['Jay'], ['Chris'], ['MJ']],
     outputs: ['Hi Yaodi', 'Hi Jay', 'Hi Chris', 'Hi MJ'],
-    outputType: 'str',
+    outputType: 'string',
     url:
       'https://writingjavascript.org/posts/introduction-to-functions-numbers-in-javascript',
     stageId: 1
@@ -30,7 +30,7 @@ const problemData = [
     arguments: ['num1', 'num2', 'num3'],
     inputs: [['8', '2', '1'], ['4', '78', '2']],
     outputs: ['8', '78'],
-    outputType: 'num',
+    outputType: 'number',
     url:
       'https://medium.freecodecamp.org/three-ways-to-repeat-a-string-in-javascript-2a9053b93a2d',
     stageId: 1
@@ -73,12 +73,12 @@ const problemData = [
   },
 
   {
-    description: 'Concat arrays',
+    description: 'Concat arrays. Merge arr2 into arr1.',
     funcName: 'concatArr',
     arguments: ['arr1', 'arr2'],
     inputs: [['1', '2'], ['hello', 'world'], ['1, 2', '3, 4']],
     outputs: ['1, 2', 'hello, world', '1, 2, 3, 4'],
-    outputType: 'arr',
+    outputType: 'array',
     url:
       'https://medium.freecodecamp.org/how-to-reverse-a-string-in-javascript-in-3-different-ways-75e4763c68cb',
     stageId: 2
@@ -89,7 +89,7 @@ const problemData = [
     funcName: 'factorialize',
     arguments: ['num'],
     inputs: [['2'], ['6']],
-    outputType: 'num',
+    outputType: 'number',
     outputs: ['2', '720'],
     url:
       'https://medium.freecodecamp.org/how-to-factorialize-a-number-in-javascript-9263c89a4b38',
@@ -126,17 +126,17 @@ const problemData = [
     arguments: ['str'],
     inputs: [['hello'], ['ratquest']],
     outputType: 'string',
-    outputs: ['olleh', 'tseuqtar'],
+    outputs: ['true', 'false'],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
     stageId: 3
   },
   {
     description:
-      'There exist two zeroes: +0 (or just 0) and -0. Write a function that returns true if the input number is -0 and false otherwise.',
-    funcName: 'isItNegativeZero',
+      'Is it a number. Check to see if the parameter is a type number.',
+    funcName: 'isItNumber',
     arguments: ['num'],
-    inputs: [['-0'], ['0']],
+    inputs: [[4], ['firetruck']],
     outputType: 'boolean',
     outputs: ['true', 'false'],
     url:
@@ -160,9 +160,9 @@ const problemData = [
       'Create a function that takes in an array of numbers and returns a numerial average of those scores.',
     funcName: 'averageScores',
     arguments: ['arr1'],
-    inputs: [['80', '77', '54', '91']],
+    inputs: [[80, 77, 54, 91]],
     outputType: 'number',
-    outputs: ['75.5'],
+    outputs: [75.5],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
     stageId: 3
@@ -174,7 +174,7 @@ const problemData = [
     arguments: ['str'],
     inputs: [['NumBeR'], ['l3ETter']],
     outputType: 'string',
-    outputs: [['nUMbEr'], ['L3etTER']],
+    outputs: ['nUMbEr', 'L3etTER'],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
     stageId: 3
