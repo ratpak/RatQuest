@@ -149,6 +149,7 @@ class Sandbox extends React.Component {
     // Grab user input from the code editor stored in state.
     let body = this.state.editor
     let currentProblem = this.props.currentProblem
+    console.log('TCL: handleClick -> currentProblem', currentProblem)
     let userId = this.props.user.id
     let result = await createAndTest(
       currentProblem.arguments,
