@@ -1,5 +1,5 @@
 import React, {Fragment, Component} from 'react'
-import socket from '../socket'
+// import socket from '../socket'
 import Axios from 'axios'
 import {connect} from 'react-redux'
 import loadFunction from '../utils/loadFunction'
@@ -15,7 +15,13 @@ import HomeIcon from '@material-ui/icons/HomeSharp'
 import ThemeIcon from '@material-ui/icons/ColorLensSharp'
 import SkipIcon from '@material-ui/icons/FastForwardSharp'
 import {Button} from '@material-ui/core'
+import io from 'socket.io-client'
 
+const socket = io(window.location.origin)
+console.log('??????', window.location)
+socket.on('connect', () => {
+  console.log('Connected!', socket)
+})
 // socket.on('connect', function() {
 //   console.log('from multiplayer socket connect')
 // })
@@ -41,6 +47,8 @@ class Multiplayer extends Component {
     this.handleIncrement = this.handleIncrement.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
+
+    console.log('socket>>>>: ', socket)
 
     socket.on('A user has disconnected', () => {
       console.log('received disconnect broadcast')
@@ -73,7 +81,7 @@ class Multiplayer extends Component {
     })
 
     socket.on('A user has won', userEmail => {
-      // socket.emit('Unplug me')
+      socket.emit('Unplug me')
       this.setState({lobby: {}, victor: userEmail})
     })
   }

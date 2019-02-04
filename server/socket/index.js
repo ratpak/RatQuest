@@ -17,15 +17,16 @@ module.exports = io => {
     })
     socket.on('I win', userEmail => {
       socket.broadcast.emit('A user has won', userEmail)
-      // socket.disconnect()
+      socket.disconnect()
     })
     socket.on('Unplug me', () => {
-      // socket.disconnect()
+      socket.disconnect()
     })
 
     socket.on('disconnect', () => {
       socket.broadcast.emit('A user has disconnected')
       console.log(`Connection ${socket.id} has left the building`)
+      socket.open()
     })
   })
 }
