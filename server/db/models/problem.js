@@ -48,7 +48,6 @@ const Problem = db.define('problem', {
                 inputs[j][i] = [inputs[j][i]]
               }
               break
-
             // case 'obj':
             //   return inputs[j].map((input) => {
             //   })
