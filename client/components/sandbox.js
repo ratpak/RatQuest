@@ -34,6 +34,7 @@ import {withStyles} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import DialogActions from '@material-ui/core/DialogActions'
 import {Link} from 'react-router-dom'
+// const marked = require('marked') // react-marked
 
 editorThemes.forEach(theme => require(`brace/theme/${theme}`))
 
@@ -194,12 +195,17 @@ class Sandbox extends React.Component {
   render() {
     let {classes} = this.props
     return (
-      <div className="editorContainerLol">
+      // highest level wrapper - use to set absolute position on page
+      <div className="sandbox-wrapper">
+        {/* flexwrap with column */}
         <div className="biggerWrapper">
           <div className="editorStage">
             <GameStage />
           </div>
+          {/* has editor and nav buttons and description and results and popups */}
+          {/* flex wrap */}
           <div className="editor">
+            {/* ace editor and nav buttons in here */}
             <div className="editorLeftHalf">
               <div className="editorBox">
                 <AceEditor
@@ -291,81 +297,15 @@ class Sandbox extends React.Component {
                 </Tooltip>
               </div>
             </div>
+
+            {/* description in here */}
             <div className="editorRightHalf">
               <Paper className="editorDescription">
                 <h3>Problem description</h3>
                 <p>{this.props.currentProblem.description}</p>
               </Paper>
 
-              <Dialog open={this.state.showThemes}>
-                <DialogTitle>Select a theme</DialogTitle>
-                <DialogContent>
-                  <Select
-                    value={this.state.theme}
-                    onChange={this.handleThemeChange}
-                  >
-                    {editorThemes.map(theme => {
-                      return (
-                        <MenuItem key={Math.random()} value={theme}>
-                          {theme}
-                        </MenuItem>
-                      )
-                    })}
-                  </Select>{' '}
-                  <Tooltip title="Close">
-                    <Fab
-                      size="small"
-                      onClick={() => {
-                        this.setState({showThemes: !this.state.showThemes})
-                      }}
-                    >
-                      <XIcon />
-                    </Fab>
-                  </Tooltip>
-                </DialogContent>
-              </Dialog>
-              <Dialog
-                open={this.state.open}
-                TransitionComponent={Transition}
-                keepMounted
-                // onClose={this.handleClose}
-                aria-labelledby="alert-dialog-slide-title"
-                aria-describedby="alert-dialog-slide-description"
-              >
-                <DialogTitle id="alert-dialog-slide-title">
-                  Great Job!!
-                </DialogTitle>
-                <DialogActions>
-                  <Button onClick={this.handleClose} color="primary">
-                    {/* <Link to="/home">Home</Link>  */}
-                    Home
-                  </Button>
-                  <Button onClick={this.handleSuccess} color="primary">
-                    Next Problem
-                    {/* <Link to={`/sandbox/${this.props.currentProblem.id + 1}`}>
-                    </Link> */}
-                  </Button>
-                </DialogActions>
-              </Dialog>
-              <Dialog
-                open={this.state.stageComplete}
-                TransitionComponent={Transition}
-                keepMounted
-                onClose={this.handleClose}
-                aria-labelledby="alert-dialog-slide-title"
-                aria-describedby="alert-dialog-slide-description"
-              >
-                <DialogTitle id="alert-dialog-slide-title">
-                  Awesome Job! Stage {this.props.user.stageId} Complete!!
-                </DialogTitle>
-                <DialogActions>
-                  <Button onClick={this.handleClose} color="primary">
-                    {/* <Link to="/home">Home</Link> */}
-                    Home
-                  </Button>
-                </DialogActions>
-              </Dialog>
-
+              {/* results in here */}
               <Paper className="editorResult">
                 <h3>Test Results</h3>
                 {this.state.result
@@ -375,6 +315,74 @@ class Sandbox extends React.Component {
             </div>
           </div>
         </div>
+        {/* Pop up for ace theme selector */}
+        <Dialog open={this.state.showThemes}>
+          <DialogTitle>Select a theme</DialogTitle>
+          <DialogContent>
+            <Select value={this.state.theme} onChange={this.handleThemeChange}>
+              {editorThemes.map(theme => {
+                return (
+                  <MenuItem key={Math.random()} value={theme}>
+                    {theme}
+                  </MenuItem>
+                )
+              })}
+            </Select>{' '}
+            <Tooltip title="Close">
+              <Fab
+                size="small"
+                onClick={() => {
+                  this.setState({showThemes: !this.state.showThemes})
+                }}
+              >
+                <XIcon />
+              </Fab>
+            </Tooltip>
+          </DialogContent>
+        </Dialog>
+
+        {/* problem success popup */}
+        <Dialog
+          open={this.state.open}
+          TransitionComponent={Transition}
+          keepMounted
+          // onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">Great Job!!</DialogTitle>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              {/* <Link to="/home">Home</Link>  */}
+              Home
+            </Button>
+            <Button onClick={this.handleSuccess} color="primary">
+              Next Problem
+              {/* <Link to={`/sandbox/${this.props.currentProblem.id + 1}`}>
+                </Link> */}
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* stage complete popup */}
+        <Dialog
+          open={this.state.stageComplete}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">
+            Awesome Job! Stage {this.props.user.stageId} Complete!!
+          </DialogTitle>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              {/* <Link to="/home">Home</Link> */}
+              Home
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     )
   }
