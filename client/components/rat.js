@@ -1,7 +1,7 @@
 import React, {Fragment, Component} from 'react'
 import withBoardProgress from './board-progress'
-import {TweenMax, SteppedEase, TweenLite} from 'gsap/all'
-const plugins = [TweenMax, SteppedEase, TweenLite] // adding to file re possible tree shaking - failing travis build
+import {TweenMax, SteppedEase} from 'gsap/all'
+const plugins = [TweenMax, SteppedEase] // adding to file re possible tree shaking - failing travis build
 
 class Rat extends Component {
   constructor() {
