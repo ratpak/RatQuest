@@ -17,15 +17,6 @@ import SkipIcon from '@material-ui/icons/FastForwardSharp'
 import {Button} from '@material-ui/core'
 import io from 'socket.io-client'
 
-// const socket = io(window.location.origin)
-// console.log('??????', window.location)
-// socket.on('connect', () => {
-//   console.log('Connected!', socket)
-// })
-// socket.on('connect', function() {
-//   console.log('from multiplayer socket connect')
-// })
-
 class Multiplayer extends Component {
   constructor(props) {
     super(props)
@@ -48,14 +39,19 @@ class Multiplayer extends Component {
     this.handleClick = this.handleClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
 
-    console.log('socket>>>>: ', socket)
+    let {lobbyId} = props.match.params
 
-    socket.on('A user has disconnected', () => {
-      console.log('received disconnect broadcast')
+    socket.on('A user has disconnected', socketId => {
+      console.log('a user has disconnected, refresh lobby')
+      let lobby = this.state.lobby
+      for (let key in lobby) {
+        if (lobby[key].socketId === socketId) delete lobby[key]
+      }
+      this.setState({lobby})
     })
 
     // This socket receives other users' score increment
-    socket.on('received increment', user => {
+    socket.on(`received increment ${lobbyId}`, user => {
       this.setState({
         ...this.state,
         lobby: {...this.state.lobby, [user.email]: user}
@@ -63,45 +59,50 @@ class Multiplayer extends Component {
     })
 
     // This socket receives other users' data when they join the lobby
-    socket.on('Another user has joined the lobby', data => {
-      if (props.user.score === undefined) props.user.score = 0
+    socket.on(
+      `Another user has joined the lobby ${lobbyId}`,
+      (data, socketId) => {
+        if (props.user.score === undefined) props.user.score = 0
+        data.socketId = socketId
 
-      // This socket, upon receiving the message that another user has joined, sends its own user's information over to the new user to populate their game state with my info
-      socket.emit('Send my data to new user', props.user, data.email)
-      this.setState({
-        lobby: {...this.state.lobby, [data.email]: data}
-      })
-    })
+        // This socket, upon receiving the message that another user has joined, sends its own user's information over to the new user to populate their game state with my info
+        socket.emit(`Send my data to new user`, props.user, data.email, lobbyId)
+        this.setState({
+          lobby: {...this.state.lobby, [data.email]: data}
+        })
+      }
+    )
 
     // This socket receives other users' information upon joining the lobby
-    socket.on(`Received another user's Data: ${props.user.email}`, data => {
-      console.log(
-        'TCL: Multiplayer -> constructor -> received data socket --> data',
-        data
-      )
+    socket.on(
+      `Received another user's Data: ${props.user.email} ${lobbyId}`,
+      (data, socketId) => {
+        data.socketId = socketId
 
-      this.setState({
-        lobby: {...this.state.lobby, [data.email]: data}
-      })
-    })
+        this.setState({
+          lobby: {...this.state.lobby, [data.email]: data}
+        })
+      }
+    )
 
-    socket.on('A user has won', userEmail => {
+    socket.on(`A user has won ${lobbyId}`, userEmail => {
       props.user.score = 0
       socket.emit('Unplug me')
       this.setState({lobby: {}, victor: userEmail})
     })
   }
   handleIncrement() {
+    let {lobbyId} = this.props.match.params
     let me = this.props.user
     let problems = this.state.problems
     this.props.user.score += 1
     if (this.props.user.score >= 2) {
       this.props.user.score = 0
-      socket.emit('I win', me.email)
+      socket.emit(`I win`, me.email, lobbyId)
       this.setState({lobby: {}, victor: me.email})
     } else {
       // This socket sends your score increment to other users
-      socket.emit('increment', me)
+      socket.emit(`increment`, me, lobbyId)
       this.setState({
         ...this.state,
         lobby: {...this.state.lobby, [me.email]: me},
@@ -119,7 +120,6 @@ class Multiplayer extends Component {
     let score = this.props.user.score
     // Grab user input from the code editor stored in state.
     let body = this.state.sandbox.editor
-    console.log('TCL: handleClick -> body', body)
     let currentProblem = this.state.problems[score]
     let result = await createAndTest(
       currentProblem.arguments,
@@ -127,20 +127,19 @@ class Multiplayer extends Component {
       currentProblem.inputs,
       currentProblem.outputs
     )
-    // console.log('result from handleclick', result)
     if (result === 'success') {
       this.handleIncrement()
     }
   }
   handleChange(e) {
-    console.log(this)
     this.setState({sandbox: {...this.state.sandbox, editor: e}})
   }
   async componentDidMount() {
+    let {lobbyId} = this.props.match.params
     let {data: problems} = await Axios.get('/api/problems')
     const {user} = this.props
     user.score = 0
-    socket.emit('I have joined the lobby', user)
+    socket.emit(`I have joined the lobby`, user, lobbyId)
     this.setState({
       ...this.state,
       loading: false,
@@ -157,7 +156,6 @@ class Multiplayer extends Component {
   }
 
   render() {
-    console.log('TCL: render -> this.state', this.state)
     return !this.state.victor ? (
       <Fragment>
         <h1>I am {this.props.user.email}</h1>
