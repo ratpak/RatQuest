@@ -6,6 +6,7 @@ import {Login, Signup, UserHome, Admin, Multiplayer} from './components'
 import {me} from './store'
 import Sandbox from './components/sandbox'
 import AvatarSelect from './components/avatar-select'
+import MultiplayerHome from './components/multiplayerHome'
 
 /**
  * COMPONENT
