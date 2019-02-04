@@ -128,7 +128,7 @@ class Sandbox extends React.Component {
   }
   handleClose() {
     this.setState({open: false, stageComplete: false, result: ''})
-    this.props.history.push('/home') // MJ trying this
+    this.props.history.push('/home')
   }
 
   async handleSuccess() {

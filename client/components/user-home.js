@@ -1,6 +1,4 @@
 import React, {Fragment} from 'react'
-import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
 import Navbar from './navbar'
 import HomeStage from './home-stage'
 import Board from './board'
@@ -8,10 +6,10 @@ import Rat from './rat'
 import {withTheme} from '@material-ui/core/styles'
 
 const UserHome = props => {
-  const {email, theme} = props
+  const {theme} = props
   return (
     <Fragment>
-      <Navbar email={email} />
+      <Navbar />
       <div id="board-wrapper">
         <div id="rat-board-state">
           <Rat />
@@ -33,20 +31,4 @@ const UserHome = props => {
   )
 }
 
-/**
- * CONTAINER
- */
-const mapState = state => {
-  return {
-    email: state.user.email
-  }
-}
-
-export default connect(mapState)(withTheme()(UserHome))
-
-/**
- * PROP TYPES
- */
-UserHome.propTypes = {
-  email: PropTypes.string
-}
+export default withTheme()(UserHome)

@@ -19,23 +19,22 @@ class Rat extends Component {
 
   componentDidUpdate() {
     const positions = {
-      '00': {x: '70px', y: '344px', opacity: 0}, // done
-      '01': {x: '174px', y: '344px', opacity: 100}, // done
-      '02': {x: '248px', y: '373px', opacity: 100}, // done
-      '03': {x: '342px', y: '400px', opacity: 100}, // done
-      '04': {x: '495px', y: '344px', opacity: 100},
-      // '04': {x: '426px', y: '372px', opacity: 100}, // done
-      '05': {x: '425px', y: '238px', opacity: 100}, //
-      '06': {x: '390px', y: '180px', opacity: 100}, //
-      '07': {x: '190px', y: '275px', opacity: 100, transform: 'scaleX(-1)'},
-      '08': {x: '190px', y: '275px', opacity: 100, transform: 'scaleX(-1)'},
-      '09': {x: '190px', y: '275px', opacity: 100, transform: 'scaleX(-1)'},
-      '10': {x: '190px', y: '275px', opacity: 100, transform: 'scaleX(-1)'},
-      '11': {x: '190px', y: '275px', opacity: 100, transform: 'scaleX(-1)'},
-      '12': {x: '190px', y: '275px', opacity: 100, transform: 'scaleX(-1)'},
-      '13': {x: '190px', y: '275px', opacity: 100, transform: 'scaleX(-1)'},
-      '14': {x: '190px', y: '275px', opacity: 100, transform: 'scaleX(-1)'},
-      '15': {x: '190px', y: '275px', opacity: 100, transform: 'scaleX(-1)'}
+      '00': {x: '70px', y: '344px', opacity: 0},
+      '01': {x: '174px', y: '344px', opacity: 100},
+      '02': {x: '248px', y: '373px', opacity: 100},
+      '03': {x: '342px', y: '400px', opacity: 100},
+      '04': {x: '432px', y: '372px', opacity: 100},
+      '05': {x: '448px', y: '338px', opacity: 100},
+      '06': {x: '438px', y: '282px', opacity: 100, transform: 'scaleX(-1)'},
+      '07': {x: '402px', y: '245px', opacity: 100, transform: 'scaleX(-1)'},
+      '08': {x: '360px', y: '204px', opacity: 100, transform: 'scaleX(-1)'},
+      '09': {x: '386px', y: '165px', opacity: 100, transform: 'scaleX(-1)'},
+      '10': {x: '436px', y: '130px', opacity: 100, transform: 'scaleX(-1)'},
+      '11': {x: '312px', y: '110px', opacity: 100, transform: 'scaleX(-1)'},
+      '12': {x: '213px', y: '93px', opacity: 100, transform: 'scaleX(-1)'},
+      '13': {x: '135px', y: '68px', opacity: 100, transform: 'scaleX(-1)'},
+      '14': {x: '162px', y: '35px', opacity: 100},
+      '15': {x: '233px', y: '10px', opacity: 100}
     }
 
     const ratPositionFunc = function(boardPositionStr) {

@@ -5,18 +5,20 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
 const Navbar = props => {
-  const {handleClick, isLoggedIn, email, isAdmin} = props
+  const {handleClick, isLoggedIn, user} = props
   return (
     <div className="navbar">
       <div className="simple-flex">
-        <div id="avatar" />
+        <div id="avatar">
+          <img src={`${user.avatarUrl}`} />
+        </div>
         <div id="nav-info">
           <h1>Rat Quest</h1>
-          <h4>Welcome, {email}</h4>
+          <h5>Welcome, {user.email}</h5>
         </div>
       </div>
 
-      {isAdmin && (
+      {user.isAdmin && (
         <div>
           <Link to="/admin">Admin</Link>
         </div>
@@ -39,8 +41,7 @@ const Navbar = props => {
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
-    user: state.user,
-    isAdmin: state.user.isAdmin
+    user: state.user
   }
 }
 

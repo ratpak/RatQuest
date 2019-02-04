@@ -7,7 +7,7 @@ import {withStyles} from '@material-ui/core/styles'
 const styles = theme => ({
   button: {
     // margin: theme.spacing.unit,
-    color: 'blue'
+    backgroundColor: '#ffee33'
   },
   input: {
     display: 'none'
@@ -19,27 +19,34 @@ const HomeStage = props => {
   return (
     <Fragment>
       <div className="stage-info">
-        <h3>STAGE</h3>
         {displayInfo.id ? (
-          <Fragment>
+          <div>
+            <h3>STAGE</h3>
             <h1>{displayInfo.id}</h1>
             <p>{displayInfo.name}</p>
             <div className="flex">
-              <h3>{`${displayInfo.progress} /${displayInfo.goal}`}</h3>
-              <Button className={classes.button}>
+              <h3>{`${displayInfo.progress} / ${displayInfo.goal}`}</h3>
+              <Button varient="contained" className={classes.button}>
                 <Link to={`/sandbox/${displayInfo.userId}`}>Play</Link>
               </Button>
             </div>
-          </Fragment>
+          </div>
         ) : (
-          <Fragment>
+          <div
+            id={
+              displayInfo.stageId > displayInfo.stageInHome
+                ? 'complete'
+                : 'locked'
+            }
+          >
+            <h3>STAGE</h3>
             <h1>{displayInfo.stageInHome}</h1>
             <h2>
               {displayInfo.stageId > displayInfo.stageInHome
                 ? 'COMPLETE'
                 : 'LOCKED'}
             </h2>
-          </Fragment>
+          </div>
         )}
       </div>
     </Fragment>
@@ -47,3 +54,4 @@ const HomeStage = props => {
 }
 
 export default withStageInfo(withStyles(styles)(HomeStage))
+// export default withStageInfo(HomeStage)

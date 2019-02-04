@@ -117,6 +117,7 @@ class Board extends Component {
                     rx="50.87"
                     ry="13.83"
                     fill="#8d8d8d"
+                    transform="translate(-50, -8)"
                   />
                   <ellipse
                     ref={ellipse => {
@@ -128,6 +129,7 @@ class Board extends Component {
                     rx="50.87"
                     ry="13.83"
                     fill="#8d8d8d"
+                    transform="translate(-34)"
                   />
                   <ellipse
                     ref={ellipse => {
