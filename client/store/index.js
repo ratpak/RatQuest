@@ -6,9 +6,7 @@ import {loadState, saveState} from './sessionStorage'
 import user from './user'
 import problem from './problem'
 import stage from './stage'
-
 import users from './admin'
-const throttle = require('lodash').throttle
 
 const debounce = require('lodash').debounce
 
