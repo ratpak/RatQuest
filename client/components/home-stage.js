@@ -7,10 +7,13 @@ import {withStyles} from '@material-ui/core/styles'
 const styles = theme => ({
   button: {
     // margin: theme.spacing.unit,
-    backgroundColor: '#ffee33'
-  },
-  input: {
-    display: 'none'
+    // backgroundColor: '#ffee33'
+    background: '#ffee33',
+    color: '#4b4b4b',
+    '&:hover': {
+      background: 'linear-gradient(180deg, #ffee33 30%, #FF8E53 90%)',
+      color: '#fff'
+    }
   }
 })
 
@@ -26,9 +29,15 @@ const HomeStage = props => {
             <p>{displayInfo.name}</p>
             <div className="flex">
               <h3>{`${displayInfo.progress} / ${displayInfo.goal}`}</h3>
-              <Button varient="contained" className={classes.button}>
-                <Link to={`/sandbox/${displayInfo.userId}`}>Play</Link>
-              </Button>
+              <Link to={`/sandbox/${displayInfo.userId}`}>
+                <Button
+                  varient="contained"
+                  className={classes.button}
+                  size="small"
+                >
+                  Play
+                </Button>
+              </Link>
             </div>
           </div>
         ) : (
