@@ -26,6 +26,7 @@ const Navbar = props => {
       {isLoggedIn && (
         <div>
           {/* The navbar will show these links after you log in */}
+          <Link to="/multiplayer">Multiplayer</Link>
           <a href="#" onClick={handleClick}>
             Logout
           </a>

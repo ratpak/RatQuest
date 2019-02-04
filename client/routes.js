@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, Admin} from './components'
+import {Login, Signup, UserHome, Admin, Multiplayer} from './components'
 import {me} from './store'
 import Sandbox from './components/sandbox'
 import AvatarSelect from './components/avatar-select'
@@ -31,6 +31,7 @@ class Routes extends Component {
             <Route exact path="/home" component={UserHome} />
             <Route exact path="/sandbox/:problemId" component={Sandbox} />
             <Route exact path="/admin" component={Admin} />
+            <Route exact path="/multiplayer" component={Multiplayer} />
             <Route component={UserHome} />
           </Switch>
         )}
