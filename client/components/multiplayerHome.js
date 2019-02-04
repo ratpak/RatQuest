@@ -1,18 +1,40 @@
 import React, {Fragment, Component} from 'react'
 import socket from '../socket'
+import {SSL_OP_SSLEAY_080_CLIENT_DH_BUG} from 'constants'
 
 class MultiplayerHome extends Component {
   constructor() {
     super()
-    this.state = {Mocha: [], Chai: [], Express: []}
+    this.state = {
+      Mocha: [],
+      Chai: [],
+      Express: [],
+      Sequelize: [],
+      React: [],
+      Redux: []
+    }
 
     socket.on('Lobby spot taken', (lobbyId, data) => {
       console.log('lobby spot taken', lobbyId, data)
       this.setState({
         ...this.state,
-        [lobbyId]: [...this.state[lobbyId], data.email]
+        [lobbyId]: [...this.state[lobbyId], data]
       })
     })
+
+    socket.on('clear lobby', socketId => {
+      let lobbies = this.state
+      console.log('got to clear lobby', socketId)
+      // eslint-disable-next-line guard-for-in
+      for (let key in lobbies) {
+        lobbies[key] = lobbies[key].filter(data => data.socketId !== socketId)
+      }
+      this.setState(lobbies)
+    })
+  }
+
+  componentDidMount() {
+    socket.emit('entered lobby screen')
   }
 
   handleClick = e => {
@@ -36,6 +58,7 @@ class MultiplayerHome extends Component {
               >
                 {key}
               </button>
+              {lobby.map(data => <h1>{data.email}</h1>)}
             </Fragment>
           )
         })}

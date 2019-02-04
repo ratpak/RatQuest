@@ -24,6 +24,10 @@ module.exports = io => {
       )
     })
 
+    socket.on('entered lobby screen', () => {
+      socket.broadcast.emit('requesting lobby info')
+    })
+
     socket.on('I win', (userEmail, lobbyId) => {
       socket.broadcast.emit(`A user has won ${lobbyId}`, userEmail)
       socket.disconnect()
@@ -33,6 +37,7 @@ module.exports = io => {
     })
 
     socket.on('disconnect', () => {
+      socket.broadcast.emit('clear lobby', socket.id)
       socket.broadcast.emit('A user has disconnected', socket.id)
 
       console.log(`Connection ${socket.id} has left the building`)

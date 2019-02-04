@@ -42,12 +42,15 @@ class Multiplayer extends Component {
     let {lobbyId} = props.match.params
 
     socket.on('A user has disconnected', socketId => {
-      console.log('a user has disconnected, refresh lobby')
       let lobby = this.state.lobby
       for (let key in lobby) {
         if (lobby[key].socketId === socketId) delete lobby[key]
       }
       this.setState({lobby})
+    })
+
+    socket.on('requesting lobby info', () => {
+      socket.emit('I have joined the lobby', props.user, lobbyId)
     })
 
     // This socket receives other users' score increment
@@ -139,6 +142,7 @@ class Multiplayer extends Component {
     let {data: problems} = await Axios.get('/api/problems')
     const {user} = this.props
     user.score = 0
+    user.socketId = socket.id
     socket.emit(`I have joined the lobby`, user, lobbyId)
     this.setState({
       ...this.state,
@@ -156,6 +160,7 @@ class Multiplayer extends Component {
   }
 
   render() {
+    console.log(this.state, 'this state')
     return !this.state.victor ? (
       <Fragment>
         <h1>I am {this.props.user.email}</h1>
