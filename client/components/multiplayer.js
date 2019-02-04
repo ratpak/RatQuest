@@ -42,6 +42,10 @@ class Multiplayer extends Component {
     this.handleClick = this.handleClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
 
+    socket.on('A user has disconnected', () => {
+      console.log('received disconnect broadcast')
+    })
+
     // This socket receives other users' score increment
     socket.on('received increment', user => {
       this.setState({
@@ -69,8 +73,8 @@ class Multiplayer extends Component {
     })
 
     socket.on('A user has won', userEmail => {
-      socket.emit('Unplug me')
-      this.setState({victor: userEmail})
+      // socket.emit('Unplug me')
+      this.setState({lobby: {}, victor: userEmail})
     })
   }
   handleIncrement() {
@@ -79,7 +83,7 @@ class Multiplayer extends Component {
     this.props.user.score += 1
     if (this.props.user.score >= 2) {
       socket.emit('I win', me.email)
-      this.setState({victor: me.email})
+      this.setState({lobby: {}, victor: me.email})
     } else {
       // This socket sends your score increment to other users
       socket.emit('increment', me)
