@@ -12,19 +12,19 @@ class Rat extends Component {
   componentDidMount() {
     this.ratTween = TweenMax.to('.character', 1.5, {
       repeat: -1,
-      backgroundPosition: '-3600px',
+      backgroundPosition: '-1800px',
       ease: SteppedEase.config(18)
     })
   }
 
   componentDidUpdate() {
     const positions = {
-      '00': {x: '25px', y: '250px', opacity: 0},
-      '01': {x: '110px', y: '250px', opacity: 100},
-      '02': {x: '190px', y: '275px', opacity: 100},
-      '03': {x: '290px', y: '300px', opacity: 100}, // real 03
-      // '03': {x: '425px', y: '238px', opacity: 100, transform: 'scaleX(-1)'},
-      '04': {x: '363px', y: '273px', opacity: 100}, //
+      '00': {x: '70px', y: '344px', opacity: 0}, // done
+      '01': {x: '174px', y: '344px', opacity: 100}, // done
+      '02': {x: '248px', y: '373px', opacity: 100}, // done
+      '03': {x: '342px', y: '400px', opacity: 100}, // done
+      '04': {x: '495px', y: '344px', opacity: 100},
+      // '04': {x: '426px', y: '372px', opacity: 100}, // done
       '05': {x: '425px', y: '238px', opacity: 100}, //
       '06': {x: '390px', y: '180px', opacity: 100}, //
       '07': {x: '190px', y: '275px', opacity: 100, transform: 'scaleX(-1)'},
