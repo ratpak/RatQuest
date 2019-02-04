@@ -86,6 +86,7 @@ class Sandbox extends React.Component {
     this.handleHome = this.handleHome.bind(this)
     this.handleSuccess = this.handleSuccess.bind(this)
     this.handleSkip = this.handleSkip.bind(this)
+    this.handleCheat = this.handleCheat.bind(this)
   }
 
   async componentDidMount() {
@@ -147,11 +148,31 @@ class Sandbox extends React.Component {
   handleChange(e) {
     this.setState({editor: e})
   }
+  //for testing only
+  handleCheat() {
+    // let body = this.state.editor
+    let currentProblem = this.props.currentProblem
+    let userId = this.props.user.id
+    this.props.addSolvedProblem(userId, currentProblem.id)
+    console.log(this.props.solvedProblems, 'SOLVED PROBLEMS')
+    if (
+      this.props.solvedProblems[this.props.stage.id].problems.length + 1 ===
+      this.props.stage.goal
+    ) {
+      this.props.nextStage(userId)
+      this.setState({stageComplete: true})
+    } else {
+      this.setState({open: true})
+    }
+
+    this.setState({result: 'success'})
+  }
+  ////
+
   async handleClick() {
     // Grab user input from the code editor stored in state.
     let body = this.state.editor
     let currentProblem = this.props.currentProblem
-    console.log('TCL: handleClick -> currentProblem', currentProblem)
     let userId = this.props.user.id
     let result = await createAndTest(
       currentProblem.arguments,
@@ -208,6 +229,7 @@ class Sandbox extends React.Component {
             {/* ace editor and nav buttons in here */}
             <div className="editorLeftHalf">
               <div className="editorBox">
+                <button onClick={this.handleCheat}>cheat</button>
                 <AceEditor
                   mode="javascript"
                   theme={this.state.theme}
