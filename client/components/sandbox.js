@@ -128,6 +128,7 @@ class Sandbox extends React.Component {
   }
   handleClose() {
     this.setState({open: false, stageComplete: false, result: ''})
+    this.props.history.push('/home')
   }
 
   async handleSuccess() {
@@ -335,9 +336,10 @@ class Sandbox extends React.Component {
                   Great Job!!
                 </DialogTitle>
                 <DialogActions>
-                  {/* <Button onClick={this.handleClose} color="primary"> */}
-                  <Link to="/home">Home</Link>
-                  {/* </Button> */}
+                  <Button onClick={this.handleClose} color="primary">
+                    {/* <Link to="/home">Home</Link>  */}
+                    Home
+                  </Button>
                   <Button onClick={this.handleSuccess} color="primary">
                     Next Problem
                     {/* <Link to={`/sandbox/${this.props.currentProblem.id + 1}`}>
@@ -358,7 +360,8 @@ class Sandbox extends React.Component {
                 </DialogTitle>
                 <DialogActions>
                   <Button onClick={this.handleClose} color="primary">
-                    <Link to="/home">Home</Link>
+                    {/* <Link to="/home">Home</Link> */}
+                    Home
                   </Button>
                 </DialogActions>
               </Dialog>
