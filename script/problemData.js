@@ -124,9 +124,9 @@ const problemData = [
       'Create a function that accepts a string argument, and return the boolean true if the argument is a palindrome (meaning that the string is the same forward as it is backward). Otherwise, return the boolean false.',
     funcName: 'revseredString',
     arguments: ['str'],
-    inputs: [['hello'], ['ratquest']],
-    outputType: 'string',
-    outputs: ['true', 'false'],
+    inputs: [['hello'], ['ratquest'], ['abcba']],
+    outputType: 'boolean',
+    outputs: ['false', 'false', 'true'],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
     stageId: 3
@@ -157,12 +157,12 @@ const problemData = [
   },
   {
     description:
-      'Create a function that takes in an array of numbers and returns a numerial average of those scores.',
-    funcName: 'averageScores',
-    arguments: ['arr1'],
-    inputs: [[80, 77, 54, 91]],
-    outputType: 'number',
-    outputs: [75.5],
+      'Create a function that takes in an array and a number that performs array rotation to the left n number of times',
+    funcName: 'leftRotation',
+    arguments: ['arr, num'],
+    inputs: [['80, 77, 54, 91', '1']],
+    outputType: 'array',
+    outputs: [['77, 54, 91, 80']],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
     stageId: 3
