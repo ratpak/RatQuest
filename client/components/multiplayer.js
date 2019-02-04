@@ -1,5 +1,5 @@
 import React, {Fragment, Component} from 'react'
-// import socket from '../socket'
+import socket from '../socket'
 import Axios from 'axios'
 import {connect} from 'react-redux'
 import loadFunction from '../utils/loadFunction'
@@ -17,11 +17,11 @@ import SkipIcon from '@material-ui/icons/FastForwardSharp'
 import {Button} from '@material-ui/core'
 import io from 'socket.io-client'
 
-const socket = io(window.location.origin)
-console.log('??????', window.location)
-socket.on('connect', () => {
-  console.log('Connected!', socket)
-})
+// const socket = io(window.location.origin)
+// console.log('??????', window.location)
+// socket.on('connect', () => {
+//   console.log('Connected!', socket)
+// })
 // socket.on('connect', function() {
 //   console.log('from multiplayer socket connect')
 // })
@@ -75,12 +75,18 @@ class Multiplayer extends Component {
 
     // This socket receives other users' information upon joining the lobby
     socket.on(`Received another user's Data: ${props.user.email}`, data => {
+      console.log(
+        'TCL: Multiplayer -> constructor -> received data socket --> data',
+        data
+      )
+
       this.setState({
         lobby: {...this.state.lobby, [data.email]: data}
       })
     })
 
     socket.on('A user has won', userEmail => {
+      props.user.score = 0
       socket.emit('Unplug me')
       this.setState({lobby: {}, victor: userEmail})
     })
@@ -90,6 +96,7 @@ class Multiplayer extends Component {
     let problems = this.state.problems
     this.props.user.score += 1
     if (this.props.user.score >= 2) {
+      this.props.user.score = 0
       socket.emit('I win', me.email)
       this.setState({lobby: {}, victor: me.email})
     } else {

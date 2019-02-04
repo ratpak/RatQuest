@@ -26,7 +26,6 @@ module.exports = io => {
     socket.on('disconnect', () => {
       socket.broadcast.emit('A user has disconnected')
       console.log(`Connection ${socket.id} has left the building`)
-      socket.open()
     })
   })
 }
