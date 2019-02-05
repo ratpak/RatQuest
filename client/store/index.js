@@ -33,8 +33,6 @@ export const unsubscribe = store.subscribe(
   1000
 )
 
-unsubscribe()
-
 export default store
 export * from './user'
 export * from './stage'
