@@ -12,7 +12,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
-    mainFields: ['main', 'module'] // main then module
+    mainFields: ['browser', 'main', 'module'] // main then module
   },
   devtool: 'source-map',
   module: {
