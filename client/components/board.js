@@ -28,18 +28,34 @@ class Board extends Component {
   }
 
   componentDidUpdate() {
+    // reset svg board elements if different user logs in on same browser tab
+    for (let i = 1; i < 16; i++) {
+      let step
+      if (i < 10) {
+        step = '0' + i.toString(10)
+      } else {
+        step = i.toString(10)
+      }
+      this.oldStepTween = TweenMax.from(this[`step${step}`], 1, {
+        fill: '#8d8d8d'
+      })
+    }
+
     if (this.props.boardPosition) {
+      // set opacity of cage rate to 0 when solve at least one problem
       if (this.props.boardPosition !== '00') {
         this.ratGroupTween = TweenMax.to(this.ratGroup, 0, {
           opacity: 0
         })
       }
+      // set current board position color
       this.newStepTween = TweenMax.to(
         this[`step${this.props.boardPosition}`],
         1,
         {fill: '#ffff99'}
       )
     }
+    // reset former board position color
     if (this.props.prevBoardPosition) {
       this.oldStepTween = TweenMax.from(
         this[`step${this.props.prevBoardPosition}`],
