@@ -1,2 +1,1 @@
-// declare module 'gsap/TweenMax';
-// declare module 'gsap/all';
+declare module 'gsap/all';
