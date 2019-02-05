@@ -1,6 +1,6 @@
 /* eslint-disable no-new-func */
 /* eslint-disable id-length */
-import React from 'react'
+import React, {Fragment} from 'react'
 import AceEditor from 'react-ace'
 import 'brace/mode/javascript'
 import 'brace/theme/monokai'
@@ -28,12 +28,13 @@ import ClearIcon from '@material-ui/icons/RefreshSharp'
 import HomeIcon from '@material-ui/icons/HomeSharp'
 import ThemeIcon from '@material-ui/icons/ColorLensSharp'
 import SkipIcon from '@material-ui/icons/FastForwardSharp'
-import Paper from '@material-ui/core/Paper'
+// import Paper from '@material-ui/core/Paper'
 import XIcon from '@material-ui/icons/CloseSharp'
 import {withStyles} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import DialogActions from '@material-ui/core/DialogActions'
 import {Link} from 'react-router-dom'
+// const marked = require('marked') // react-marked
 
 editorThemes.forEach(theme => require(`brace/theme/${theme}`))
 
@@ -75,20 +76,9 @@ class Sandbox extends React.Component {
       readOnly: true,
       showThemes: false
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleClick = this.handleClick.bind(this)
-    this.handleClose = this.handleClose.bind(this)
-    this.handleClear = this.handleClear.bind(this)
-    this.handleThemeChange = this.handleThemeChange.bind(this)
-    this.handleSelectionChange = this.handleSelectionChange.bind(this)
-    this.handleCursorChange = this.handleCursorChange.bind(this)
-    this.handleHome = this.handleHome.bind(this)
-    this.handleSuccess = this.handleSuccess.bind(this)
-    this.handleSkip = this.handleSkip.bind(this)
-    this.handleCheat = this.handleCheat.bind(this)
   }
 
-  async componentDidMount() {
+  componentDidMount = async () => {
     await this.props.fetchSolvedProblems(this.props.user.id)
     await this.props.fetchProblem(this.props.user.id)
     this.setState({
@@ -98,7 +88,7 @@ class Sandbox extends React.Component {
       )
     })
   }
-  async handleSkip() {
+  handleSkip = async () => {
     await this.props.fetchProblem(
       this.props.user.id,
       this.props.currentProblem.id
@@ -111,10 +101,10 @@ class Sandbox extends React.Component {
       result: ''
     })
   }
-  handleHome() {
+  handleHome = () => {
     this.props.history.push('/home')
   }
-  handleClear() {
+  handleClear = () => {
     this.setState({
       editor: loadFunction(
         this.props.currentProblem.funcName,
@@ -122,19 +112,19 @@ class Sandbox extends React.Component {
       )
     })
   }
-  handleThemeChange(e) {
+  handleThemeChange = e => {
     this.setState({
       theme: e.target.value
     })
   }
-  handleClose() {
+  handleClose = () => {
     this.setState({open: false, stageComplete: false, result: ''})
     this.props.history.push('/home')
   }
 
-  async handleSuccess() {
-    await this.props.fetchProblem(this.props.user.id)
+  handleSuccess = async () => {
     await this.props.fetchSolvedProblems(this.props.user.id)
+    await this.props.fetchProblem(this.props.user.id)
     this.setState({
       open: false,
       editor: loadFunction(
@@ -144,11 +134,11 @@ class Sandbox extends React.Component {
       result: 'mwahaha'
     })
   }
-  handleChange(e) {
+  handleChange = e => {
     this.setState({editor: e})
   }
   //for testing only
-  handleCheat() {
+  handleCheat = () => {
     // let body = this.state.editor
     let currentProblem = this.props.currentProblem
     let userId = this.props.user.id
@@ -168,7 +158,7 @@ class Sandbox extends React.Component {
   }
   ////
 
-  async handleClick() {
+  handleClick = async () => {
     // Grab user input from the code editor stored in state.
     let body = this.state.editor
     let currentProblem = this.props.currentProblem
@@ -194,7 +184,7 @@ class Sandbox extends React.Component {
     }
     this.setState({result})
   }
-  handleSelectionChange(e) {
+  handleSelectionChange = e => {
     if (
       e.selectionLead.row <= 1 ||
       e.selectionAnchor.row <= 1 ||
@@ -204,7 +194,7 @@ class Sandbox extends React.Component {
       if (!this.state.readOnly) this.setState({readOnly: true})
     } else if (this.state.readOnly) this.setState({readOnly: false})
   }
-  handleCursorChange(e) {
+  handleCursorChange = e => {
     if (
       e.selectionLead.row > 1 &&
       e.selectionLead.row !== e.doc.$lines.length - 1
@@ -215,15 +205,39 @@ class Sandbox extends React.Component {
   render() {
     let {classes} = this.props
     return (
-      <div className="editorContainerLol">
-        <div className="biggerWrapper">
-          <div className="editorStage">
-            <GameStage />
+      // highest level wrapper - use to set absolute position on page
+      <Fragment>
+        {/* flexwrap with column */}
+        <div id="sandbox-global-nav">
+          <Tooltip title="Home">
+            <Fab
+              type="Fab"
+              style={{
+                backgroundColor: '#bbdefb',
+                color: 'black',
+                fontWeight: 550
+              }}
+              onClick={this.handleHome}
+            >
+              <HomeIcon />
+            </Fab>
+          </Tooltip>
+        </div>
+
+        <div id="sandbox-wrapper">
+          <div className="description">
+            <h3>Problem</h3>
+            <p>{this.props.currentProblem.description}</p>
           </div>
+
+          {/* flex wrap for left and right editor sides*/}
           <div className="editor">
+            {/* ace editor and nav buttons in here */}
             <div className="editorLeftHalf">
               <div className="editorBox">
-                <button onClick={this.handleCheat}>cheat</button>
+                <button type="button" onClick={this.handleCheat}>
+                  cheat
+                </button>
                 <AceEditor
                   mode="javascript"
                   theme={this.state.theme}
@@ -233,7 +247,7 @@ class Sandbox extends React.Component {
                   name="ace"
                   className="editorBox"
                   height="99%"
-                  width="100%"
+                  width="99%"
                   editorProps={{$blockScrolling: Infinity}}
                   fontSize={14}
                   onSelectionChange={this.handleSelectionChange}
@@ -244,160 +258,160 @@ class Sandbox extends React.Component {
                 />
               </div>
               <div className="editorTools">
-                <Tooltip title="Reset">
-                  <Fab
-                    type="Fab"
-                    style={{
-                      backgroundColor: '#bbdefb',
-                      color: 'black',
-                      fontWeight: 550
-                    }}
-                    onClick={this.handleClear}
-                  >
-                    <ClearIcon />
-                  </Fab>
-                </Tooltip>
-                <Tooltip title="Submit">
-                  <Fab
-                    type="Fab"
-                    style={{
-                      backgroundColor: '#bbdefb',
-                      color: 'black',
-                      fontWeight: 550
-                    }}
-                    onClick={this.handleClick}
-                  >
-                    <DoneIcon />
-                  </Fab>
-                </Tooltip>
-                <Tooltip title="Home">
-                  <Fab
-                    type="Fab"
-                    style={{
-                      backgroundColor: '#bbdefb',
-                      color: 'black',
-                      fontWeight: 550
-                    }}
-                    onClick={this.handleHome}
-                  >
-                    <HomeIcon />
-                  </Fab>
-                </Tooltip>
-                <Tooltip title="Change Theme">
-                  <Fab
-                    type="Fab"
-                    style={{
-                      backgroundColor: '#bbdefb',
-                      color: 'black',
-                      fontWeight: 550
-                    }}
-                    onClick={() => {
-                      this.setState({showThemes: !this.state.showThemes})
-                    }}
-                  >
-                    <ThemeIcon />
-                  </Fab>
-                </Tooltip>
-                <Tooltip title="Skip Problem">
-                  <Fab
-                    type="Fab"
-                    style={{
-                      backgroundColor: '#bbdefb',
-                      color: 'black',
-                      fontWeight: 550
-                    }}
-                    onClick={this.handleSkip}
-                  >
-                    <SkipIcon />
-                  </Fab>
-                </Tooltip>
-              </div>
-            </div>
-            <div className="editorRightHalf">
-              <Paper className="editorDescription">
-                <h3>Problem description</h3>
-                <p>{this.props.currentProblem.description}</p>
-              </Paper>
-
-              <Dialog open={this.state.showThemes}>
-                <DialogTitle>Select a theme</DialogTitle>
-                <DialogContent>
-                  <Select
-                    value={this.state.theme}
-                    onChange={this.handleThemeChange}
-                  >
-                    {editorThemes.map(theme => {
-                      return (
-                        <MenuItem key={Math.random()} value={theme}>
-                          {theme}
-                        </MenuItem>
-                      )
-                    })}
-                  </Select>{' '}
-                  <Tooltip title="Close">
+                <div>
+                  <Tooltip title="Change Theme">
                     <Fab
-                      size="small"
+                      type="Fab"
+                      style={{
+                        backgroundColor: '#bbdefb',
+                        color: 'black',
+                        fontWeight: 550
+                      }}
                       onClick={() => {
-                        this.setState({showThemes: !this.state.showThemes})
+                        this.setState(prev => ({showThemes: !prev.showThemes}))
                       }}
                     >
-                      <XIcon />
+                      <ThemeIcon />
                     </Fab>
                   </Tooltip>
-                </DialogContent>
-              </Dialog>
-              <Dialog
-                open={this.state.open}
-                TransitionComponent={Transition}
-                keepMounted
-                // onClose={this.handleClose}
-                aria-labelledby="alert-dialog-slide-title"
-                aria-describedby="alert-dialog-slide-description"
-              >
-                <DialogTitle id="alert-dialog-slide-title">
-                  Great Job!!
-                </DialogTitle>
-                <DialogActions>
-                  <Button onClick={this.handleClose} color="primary">
-                    {/* <Link to="/home">Home</Link>  */}
-                    Home
-                  </Button>
-                  <Button onClick={this.handleSuccess} color="primary">
-                    Next Problem
-                    {/* <Link to={`/sandbox/${this.props.currentProblem.id + 1}`}>
-                    </Link> */}
-                  </Button>
-                </DialogActions>
-              </Dialog>
-              <Dialog
-                open={this.state.stageComplete}
-                TransitionComponent={Transition}
-                keepMounted
-                onClose={this.handleClose}
-                aria-labelledby="alert-dialog-slide-title"
-                aria-describedby="alert-dialog-slide-description"
-              >
-                <DialogTitle id="alert-dialog-slide-title">
-                  Awesome Job! Stage {this.props.user.stageId} Complete!!
-                </DialogTitle>
-                <DialogActions>
-                  <Button onClick={this.handleClose} color="primary">
-                    {/* <Link to="/home">Home</Link> */}
-                    Home
-                  </Button>
-                </DialogActions>
-              </Dialog>
+                  <Tooltip title="Skip Problem">
+                    <Fab
+                      type="Fab"
+                      style={{
+                        backgroundColor: '#bbdefb',
+                        color: 'black',
+                        fontWeight: 550,
+                        fontSize: '.75em'
+                      }}
+                      onClick={this.handleSkip}
+                    >
+                      {/* <SkipIcon /> */}
+                      Skip
+                    </Fab>
+                  </Tooltip>
+                  <Tooltip title="Reset">
+                    <Fab
+                      type="Fab"
+                      style={{
+                        backgroundColor: '#bbdefb',
+                        color: 'black',
+                        fontWeight: 550,
+                        fontSize: '.75em'
+                      }}
+                      onClick={this.handleClear}
+                    >
+                      {/* <ClearIcon /> */}
+                      Clear
+                    </Fab>
+                  </Tooltip>
+                </div>
+                <div>
+                  <Tooltip title="Submit">
+                    <Fab
+                      type="Fab"
+                      style={{
+                        backgroundColor: '#ffff99',
+                        color: 'black',
+                        fontWeight: 550,
+                        fontSize: '.75em'
+                      }}
+                      onClick={this.handleClick}
+                    >
+                      {/* <DoneIcon /> */}
+                      Submit
+                    </Fab>
+                  </Tooltip>
+                </div>
+              </div>
+            </div>
 
-              <Paper className="editorResult">
+            {/* results in here */}
+            <div className="editorRightHalf">
+              {/* results in here */}
+              <div className="description" id="test-results">
+                {/* <Paper className="editorResult"> */}
                 <h3>Test Results</h3>
                 {this.state.result
                   .split('\n')
                   .map(thing => <p key={Math.random()}>{thing}</p>)}
-              </Paper>
+                {/* </Paper> */}
+              </div>
+              <div>
+                <GameStage />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+
+        {/* Pop up for ace theme selector */}
+        <Dialog open={this.state.showThemes}>
+          <DialogTitle>Select a theme</DialogTitle>
+          <DialogContent>
+            <Select value={this.state.theme} onChange={this.handleThemeChange}>
+              {editorThemes.map(theme => {
+                return (
+                  <MenuItem key={Math.random()} value={theme}>
+                    {theme}
+                  </MenuItem>
+                )
+              })}
+            </Select>{' '}
+            <Tooltip title="Close">
+              <Fab
+                size="small"
+                onClick={() => {
+                  this.setState(prev => ({showThemes: !prev.showThemes}))
+                }}
+              >
+                <XIcon />
+              </Fab>
+            </Tooltip>
+          </DialogContent>
+        </Dialog>
+
+        {/* problem success popup */}
+        <Dialog
+          open={this.state.open}
+          TransitionComponent={Transition}
+          keepMounted
+          // onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">Great Job!!</DialogTitle>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              {/* <Link to="/home">Home</Link>  */}
+              Home
+            </Button>
+            <Button onClick={this.handleSuccess} color="primary">
+              Next Problem
+              {/* <Link to={`/sandbox/${this.props.currentProblem.id + 1}`}>
+                </Link> */}
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* stage complete popup */}
+        <Dialog
+          open={this.state.stageComplete}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">
+            Awesome Job! Stage {this.props.user.stageId} Complete!!
+          </DialogTitle>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              {/* <Link to="/home">Home</Link> */}
+              Home
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Fragment>
     )
   }
 }
@@ -408,6 +422,7 @@ const mapState = state => ({
   user: state.user,
   stage: state.stage
 })
+
 const mapDispatch = dispatch => ({
   fetchProblem: (userId, problemId) =>
     dispatch(fetchProblem(userId, problemId)),

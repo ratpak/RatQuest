@@ -10,6 +10,7 @@ html {
 
 body {
   font-family: 'Nunito', sans-serif;
+  /* height: 100%; */
 }
 
 a {
@@ -34,58 +35,125 @@ form div {
 
 /* editor page styling */
 
-.editorContainerLol {
-  height: 100%;
-  min-height: 100%;
+#sandbox-global-nav {
+  position: absolute;
+  padding: 1%;
 }
-.biggerWrapper {
-  display: flex;
+
+#sandbox-wrapper {
+  /* display: flex;
   flex-wrap: wrap;
-  flex-direction: column;
+  flex-direction: column; */
+  /* align-items: center; */
+  /* justify-content: center; */
+
+  position: absolute;
+  left: 50%;
+  margin-left: -512px;
+  width: 1024px;
+  top: 50%;
+  height: 100vh;
+  margin-top: -50vh;
+  padding-top: 2%;
 }
+
+.description {
+  background-color: #323232;
+  color: #fff;
+  border-radius: 15px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffff99;
+  padding: 20px;
+  padding-top: 10px;
+}
+
+.description h3 {
+  text-decoration: underline;
+  padding-top: 5px;
+  margin-top: 0px;
+}
+
+.descripton p {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#test-results {
+  min-height: 300px;
+}
+
 .editor {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  align-items: space-around;
-  flex-basis: 80%;
+  align-items: space-between;
+}
+
+.editorLeftHalf {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 60%;
 }
 
 /* class that the react-ace editor is tied to */
 .editorBox {
   flex-basis: 90%;
+  max-height: 500px;
+  min-height: 500px;
 }
+
 .editorTools {
   display: flex;
-  flex-basis: 10%;
-  justify-content: flex-end;
+  justify-content: space-between;
   flex-direction: row;
+  margin: 5px;
 }
-.editorLeftHalf {
-  display: flex;
-  flex-direction: column;
-  flex-basis: 45%;
-}
-.editorStage {
-  /* flex-basis: 45%; */
-  display: flex;
-  justify-content: center;
-  flex-basis: 20%;
-  /* text-align: center; */
-}
-.editorDescription {
-  flex-basis: 45%;
-  font-size: 20pt;
-}
-.editorResult {
-  flex-basis: 45%;
-  font-size: 20pt;
-}
+
 .editorRightHalf {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  flex-basis: 45%;
+  flex-basis: 40%;
+  margin-top: 20px;
+}
+
+/* .editorStage { */
+/* flex-basis: 45%; */
+/* display: flex;
+  justify-content: center;
+  flex-basis: 20%; */
+/* text-align: center; */
+/* } */
+
+.sandbox-stage {
+  margin-left: 5px;
+  margin-top: 10px;
+  background-color: #96cff1;
+  border-radius: 15px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ffff99;
+  padding-left: 20px;
+}
+
+.sandbox-stage h3 {
+  padding-top: 0;
+}
+
+/* sandbox stage progress styles */
+.sandbox-progress-bar {
+  margin-left: 20px;
+}
+
+.sandbox-progress-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
+  background-color: #4b4b4b;
+  margin: 20px;
+}
+
+.sandbox-rat {
+  position: absolute;
 }
 
 /* user-home navbar styles */
