@@ -10,7 +10,9 @@ const Navbar = props => {
     <div className="navbar">
       <div className="simple-flex">
         <div id="avatar">
-          <img src={`${user.avatarUrl}`} />
+          <Link to="/avatar">
+            <img src={`${user.avatarUrl}`} />
+          </Link>
         </div>
         <div id="nav-info">
           <h1>Rat Quest</h1>

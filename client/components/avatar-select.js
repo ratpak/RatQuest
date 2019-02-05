@@ -3,15 +3,22 @@ import {connect} from 'react-redux'
 import {setAvatar} from '../store'
 import {Button} from '@material-ui/core'
 
-let dummyData = [
-  'https://robohash.org/1',
-  'https://robohash.org/2',
-  'https://robohash.org/3',
-  'https://robohash.org/4',
-  'https://robohash.org/5',
-  'https://robohash.org/6',
-  'https://robohash.org/7',
-  'https://robohash.org/8'
+let mouses = [
+  '/images/mouses/basil.png',
+  '/images/mouses/bianca.png',
+  '/images/mouses/bernard.png',
+  '/images/mouses/bojack.png',
+  '/images/mouses/brain.png',
+  '/images/mouses/brisby.png',
+  '/images/mouses/emile.png',
+  '/images/mouses/fievel.png',
+  '/images/mouses/gadget.png',
+  '/images/mouses/jerry.png',
+  '/images/mouses/mighty.png',
+  '/images/mouses/nibbles.png',
+  '/images/mouses/pinky.png',
+  '/images/mouses/ratatouille.png',
+  '/images/mouses/speedy.png'
 ]
 
 class AvatarSelect extends Component {
@@ -24,7 +31,7 @@ class AvatarSelect extends Component {
     return (
       <Fragment>
         <h2>current avatar </h2>
-        <img src={this.props.user.avatarUrl} />
+        <img src={this.props.user.avatarUrl} height="200px" width="200px" />
         <Button
           style={{backgroundColor: 'blue'}}
           onClick={() => {
@@ -34,13 +41,15 @@ class AvatarSelect extends Component {
           Confirm
         </Button>
         <h1>select an avatar</h1>
-        {dummyData.map(imgURL => {
+        {mouses.map(imgURL => {
           return (
             <Fragment key={imgURL}>
               {/* <button onClick={e => this.handleClick(e, imgURL)}>HI</button> */}
               <img
                 src={imgURL}
-                style={{cursor: 'crosshair'}}
+                height="200px"
+                width="200px"
+                style={{cursor: 'pointer'}}
                 onClick={e => this.handleClick(e, imgURL)}
               />
             </Fragment>
