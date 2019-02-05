@@ -23,7 +23,7 @@ const store = createStore(reducer, persistedState, middleware)
 // by loadState clientside upon hard browser refresh
 // wrapping store.subscribe callback in debounce to ensure only write to session storage at most once per second
 // debounce will save only the last update within that second so latest changes captured
-store.subscribe(
+export const unsubscribe = store.subscribe(
   debounce(() => {
     saveState({
       problem: store.getState().problem,
@@ -32,6 +32,8 @@ store.subscribe(
   }),
   1000
 )
+
+unsubscribe()
 
 export default store
 export * from './user'
