@@ -22,22 +22,28 @@ let mouses = [
 ]
 
 class AvatarSelect extends Component {
-  async handleClick(e, imgURL) {
+  constructor(props) {
+    super(props)
+
+    this.state = {url: props.user.avatarUrl}
+  }
+
+  handleClick = (e, imgURL) => {
     console.log('TCL: AvatarSelect -> handleClick -> imgURL', imgURL)
-    await this.props.setAvatar(imgURL, this.props.user.id)
+    this.setState({url: imgURL})
+  }
+  handleSubmit = async () => {
+    await this.props.setAvatar(this.state.url, this.props.user.id)
+    this.props.history.push('/home')
   }
   render() {
     console.log('TCL: AvatarSelect -> render -> this.props', this.props)
     return (
       <Fragment>
         <h2>current avatar </h2>
-        <img src={this.props.user.avatarUrl} height="200px" width="200px" />
-        <Button
-          style={{backgroundColor: 'blue'}}
-          onClick={() => {
-            this.props.history.push('/home')
-          }}
-        >
+        <img src={this.state.url} height="200px" width="200px" />
+        <br />
+        <Button style={{backgroundColor: 'blue'}} onClick={this.handleSubmit}>
           Confirm
         </Button>
         <h1>select an avatar</h1>
