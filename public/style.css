@@ -88,6 +88,21 @@ form div {
   flex-basis: 45%;
 }
 
+/* lobby styles */
+
+.lobbyHome {
+  display: flex;
+  flex-direction: row;
+}
+
+.lobby {
+  display: flex;
+  flex-direction: column;
+}
+.lobbyItem {
+  /* display: flex; */
+}
+
 /* user-home navbar styles */
 .navbar {
   display: flex;
