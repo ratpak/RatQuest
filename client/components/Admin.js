@@ -17,6 +17,7 @@ class Admin extends React.Component {
   render() {
     const users = this.props.users.users
     const problems = this.props.problems
+    let count = 77718177410473
 
     const imgStyle = {
       maxWidth: '100px',
@@ -28,6 +29,12 @@ class Admin extends React.Component {
       <div>
         <h1>Admin page</h1>
         <h3>Edit/Delete Users</h3>
+        <div>
+          <span>Avatar</span>
+          <span>E-Mail</span>
+          <span>Delete</span>
+          <span>Admin</span>
+        </div>
         {!users ? (
           <div>There are no users</div>
         ) : (
@@ -40,7 +47,7 @@ class Admin extends React.Component {
                 type="button"
                 onClick={() => this.handleUserDelete(user.id)}
               >
-                &times;
+                Delete
               </button>
               <button
                 type="button"
@@ -56,35 +63,33 @@ class Admin extends React.Component {
           <div>There are no problems</div>
         ) : (
           problems.map(problem => (
-            <div key={problem.id}>
-              <p>
+            <div key={count++}>
+              <div>
                 {problem.id}. Descripton: {problem.description}
-              </p>
+              </div>
               <div>Function Name: {problem.funcName} </div>
-              <p>
+              <div>
                 Arguments:{' '}
                 {problem.arguments.map(arg => (
-                  <span key={problem.id + arg}> {arg}, </span>
+                  <span key={count++}> {arg}, </span>
                 ))}
-              </p>
-              <p>
+              </div>
+              <div>
                 Inputs:{' '}
                 {problem.inputs.map(input => (
-                  <span key={input}>
-                    [{' '}
-                    {input.map(item => (
-                      <span key={input + item}> {item}, </span>
-                    ))}],{' '}
+                  <span key={count++}>
+                    [ {input.map(item => <span key={count++}> {item}, </span>)}],{' '}
                   </span>
                 ))}
-              </p>
-              <p>
+              </div>
+              <div>
                 Outputs:
                 {/* {problem.outputs} */}
                 {problem.outputs.map(output => (
-                  <span key={output}> {output}, </span>
+                  <span key={count++}> {output}, </span>
                 ))}
-              </p>
+              </div>
+              <div>Stage: {problem.stageId}</div>
             </div>
           ))
         )}
