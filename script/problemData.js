@@ -110,7 +110,7 @@ const problemData = [
   {
     description:
       'Create a function that accepts an array of strings as an argument, and returns an array with the duplicates removed',
-    funcName: 'revseredString',
+    funcName: 'removeDuplicates',
     arguments: ['arr'],
     inputs: [['moon', 'racecar', 'moon', 'timmy']],
     outputType: 'array',
@@ -160,7 +160,7 @@ const problemData = [
       'Create a function that takes in an array and a number that performs array rotation to the left n number of times',
     funcName: 'leftRotation',
     arguments: ['arr, num'],
-    inputs: [['80', '77', '54', '91'], ['1']],
+    inputs: [['80, 77, 54, 91', '1']],
     outputType: 'array',
     outputs: ['77, 54, 91, 80'],
     url:
