@@ -44,22 +44,11 @@ router.get('/solved/:userId', async (req, res, next) => {
     next(err)
   }
 })
-
-router.post('/solved/:userId/:problemId', async (req, res, next) => {
-  try {
-    await UserProblems.create({
-      userId: req.params.userId,
-      problemId: req.params.problemId
-    })
-  } catch (err) {
-    next(err)
-  }
-})
-
 router.get('/:userId', async (req, res, next) => {
   try {
     // const singleProblem = await Problem.findById(req.params.id)
     // res.json(singleProblem)
+    console.log('hit /:userId')
     let {problemId = ''} = req.query
     const user = await User.findById(req.params.userId)
     const solvedProblems = await UserProblems.findAll({
@@ -72,7 +61,7 @@ router.get('/:userId', async (req, res, next) => {
       if (
         user.stageId !== problem.stageId ||
         problem.deleted ||
-        problem.id === parseInt(problemId)
+        problem.id === parseInt(problemId, 10)
       ) {
         notSolved = false
       }
@@ -86,5 +75,18 @@ router.get('/:userId', async (req, res, next) => {
     res.json(problems[Math.round(Math.random() * (problems.length - 1))])
   } catch (e) {
     next(e)
+  }
+})
+
+router.post('/solved/:userId/:problemId', async (req, res, next) => {
+  try {
+    console.log('TCL: req.params', req.params)
+    await UserProblems.create({
+      userId: req.params.userId,
+      problemId: req.params.problemId
+    })
+    res.end()
+  } catch (err) {
+    next(err)
   }
 })

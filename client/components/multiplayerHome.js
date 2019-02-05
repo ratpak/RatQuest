@@ -1,6 +1,5 @@
 import React, {Fragment, Component} from 'react'
 import socket from '../socket'
-import {SSL_OP_SSLEAY_080_CLIENT_DH_BUG} from 'constants'
 
 class MultiplayerHome extends Component {
   constructor() {
@@ -39,8 +38,12 @@ class MultiplayerHome extends Component {
     })
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     socket.emit('entered lobby screen')
+  }
+
+  handleHome = () => {
+    this.props.history.push('home')
   }
 
   handleClick = e => {
@@ -49,9 +52,9 @@ class MultiplayerHome extends Component {
     this.props.history.push(`/multiplayer/${lobbyId}`)
   }
   render() {
-    console.log(this.state, 'from multiplayer home')
     return (
       <Fragment>
+        <button onClick={this.handleHome}>home</button>
         <h1>List of Lobbies</h1>
         {Object.keys(this.state).map(key => {
           let lobby = this.state[key]

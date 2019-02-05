@@ -35,12 +35,7 @@ class Multiplayer extends Component {
         showThemes: false
       }
     }
-    this.handleIncrement = this.handleIncrement.bind(this)
-    this.handleClick = this.handleClick.bind(this)
-    this.handleChange = this.handleChange.bind(this)
-
     let {lobbyId} = props.match.params
-
     socket.on('A user has disconnected', socketId => {
       let lobby = this.state.lobby
       for (let key in lobby) {
@@ -48,11 +43,9 @@ class Multiplayer extends Component {
       }
       this.setState({lobby})
     })
-
     socket.on('requesting lobby info', () => {
       socket.emit('I have joined the lobby', props.user, lobbyId)
     })
-
     // This socket receives other users' score increment
     socket.on(`received increment ${lobbyId}`, user => {
       this.setState({
@@ -60,7 +53,6 @@ class Multiplayer extends Component {
         lobby: {...this.state.lobby, [user.email]: user}
       })
     })
-
     // This socket receives other users' data when they join the lobby
     socket.on(
       `Another user has joined the lobby ${lobbyId}`,
@@ -75,7 +67,6 @@ class Multiplayer extends Component {
         })
       }
     )
-
     // This socket receives other users' information upon joining the lobby
     socket.on(
       `Received another user's Data: ${props.user.email} ${lobbyId}`,
@@ -94,7 +85,7 @@ class Multiplayer extends Component {
       this.setState({lobby: {}, victor: userEmail})
     })
   }
-  handleIncrement() {
+  handleIncrement = () => {
     let {lobbyId} = this.props.match.params
     let me = this.props.user
     let problems = this.state.problems
@@ -119,7 +110,10 @@ class Multiplayer extends Component {
       })
     }
   }
-  async handleClick() {
+  handleBack = () => {
+    this.props.history.push('/multiplayer')
+  }
+  handleClick = async () => {
     let score = this.props.user.score
     // Grab user input from the code editor stored in state.
     let body = this.state.sandbox.editor
@@ -134,10 +128,10 @@ class Multiplayer extends Component {
       this.handleIncrement()
     }
   }
-  handleChange(e) {
+  handleChange = e => {
     this.setState({sandbox: {...this.state.sandbox, editor: e}})
   }
-  async componentDidMount() {
+  componentDidMount = async () => {
     let {lobbyId} = this.props.match.params
     let {data: problems} = await Axios.get('/api/problems')
     const {user} = this.props
@@ -164,7 +158,7 @@ class Multiplayer extends Component {
     return !this.state.victor ? (
       <Fragment>
         <h1>I am {this.props.user.email}</h1>
-        <button onClick={this.handleIncrement}>+1</button>
+        <button onClick={this.handleBack}>back</button>
 
         <br />
         <h1>Lobby: </h1>
