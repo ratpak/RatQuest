@@ -27,6 +27,20 @@ class Board extends Component {
     this.ratGroupTween = null
   }
 
+  componentDidMount() {
+    for (let i = 1; i < 16; i++) {
+      let step
+      if (i < 10) {
+        step = '0' + i.toString(10)
+      } else {
+        step = i.toString(10)
+      }
+      this.oldStepTween = TweenMax.from(this[`step${step}`], 1, {
+        fill: '#8d8d8d'
+      })
+    }
+  }
+
   componentDidUpdate() {
     if (this.props.boardPosition) {
       if (this.props.boardPosition !== '00') {
