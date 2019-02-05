@@ -110,7 +110,7 @@ const problemData = [
   {
     description:
       'Create a function that accepts an array of strings as an argument, and returns an array with the duplicates removed',
-    funcName: 'isPalindrome',
+    funcName: 'revseredString',
     arguments: ['arr'],
     inputs: [['moon', 'racecar', 'moon', 'timmy']],
     outputType: 'array',
@@ -122,7 +122,7 @@ const problemData = [
   {
     description:
       'Create a function that accepts a string argument, and return the boolean true if the argument is a palindrome (meaning that the string is the same forward as it is backward). Otherwise, return the boolean false.',
-    funcName: 'revseredString',
+    funcName: 'isPalindrome',
     arguments: ['str'],
     inputs: [['hello'], ['ratquest'], ['abcba']],
     outputType: 'boolean',
@@ -160,9 +160,9 @@ const problemData = [
       'Create a function that takes in an array and a number that performs array rotation to the left n number of times',
     funcName: 'leftRotation',
     arguments: ['arr, num'],
-    inputs: [['80, 77, 54, 91', '1']],
+    inputs: [['80', '77', '54', '91'], ['1']],
     outputType: 'array',
-    outputs: [['77, 54, 91, 80']],
+    outputs: ['77, 54, 91, 80'],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
     stageId: 3
