@@ -167,9 +167,6 @@ form div {
   display: flex;
   flex-direction: column;
 }
-.lobbyItem {
-  /* display: flex; */
-}
 
 /* user-home navbar styles */
 .navbar {

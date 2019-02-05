@@ -111,6 +111,7 @@ class Multiplayer extends Component {
     }
   }
   handleBack = () => {
+    socket.emit('Unplug me')
     this.props.history.push('/multiplayer')
   }
   handleClick = async () => {
