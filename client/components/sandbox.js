@@ -75,20 +75,9 @@ class Sandbox extends React.Component {
       readOnly: true,
       showThemes: false
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleClick = this.handleClick.bind(this)
-    this.handleClose = this.handleClose.bind(this)
-    this.handleClear = this.handleClear.bind(this)
-    this.handleThemeChange = this.handleThemeChange.bind(this)
-    this.handleSelectionChange = this.handleSelectionChange.bind(this)
-    this.handleCursorChange = this.handleCursorChange.bind(this)
-    this.handleHome = this.handleHome.bind(this)
-    this.handleSuccess = this.handleSuccess.bind(this)
-    this.handleSkip = this.handleSkip.bind(this)
-    this.handleCheat = this.handleCheat.bind(this)
   }
 
-  async componentDidMount() {
+  componentDidMount = async () => {
     await this.props.fetchSolvedProblems(this.props.user.id)
     await this.props.fetchProblem(this.props.user.id)
     this.setState({
@@ -98,7 +87,7 @@ class Sandbox extends React.Component {
       )
     })
   }
-  async handleSkip() {
+  handleSkip = async () => {
     await this.props.fetchProblem(
       this.props.user.id,
       this.props.currentProblem.id
@@ -111,10 +100,10 @@ class Sandbox extends React.Component {
       result: ''
     })
   }
-  handleHome() {
+  handleHome = () => {
     this.props.history.push('/home')
   }
-  handleClear() {
+  handleClear = () => {
     this.setState({
       editor: loadFunction(
         this.props.currentProblem.funcName,
@@ -122,19 +111,19 @@ class Sandbox extends React.Component {
       )
     })
   }
-  handleThemeChange(e) {
+  handleThemeChange = e => {
     this.setState({
       theme: e.target.value
     })
   }
-  handleClose() {
+  handleClose = () => {
     this.setState({open: false, stageComplete: false, result: ''})
     this.props.history.push('/home')
   }
 
-  async handleSuccess() {
-    await this.props.fetchProblem(this.props.user.id)
+  handleSuccess = async () => {
     await this.props.fetchSolvedProblems(this.props.user.id)
+    await this.props.fetchProblem(this.props.user.id)
     this.setState({
       open: false,
       editor: loadFunction(
@@ -144,11 +133,11 @@ class Sandbox extends React.Component {
       result: 'mwahaha'
     })
   }
-  handleChange(e) {
+  handleChange = e => {
     this.setState({editor: e})
   }
   //for testing only
-  handleCheat() {
+  handleCheat = () => {
     // let body = this.state.editor
     let currentProblem = this.props.currentProblem
     let userId = this.props.user.id
@@ -168,7 +157,7 @@ class Sandbox extends React.Component {
   }
   ////
 
-  async handleClick() {
+  handleClick = async () => {
     // Grab user input from the code editor stored in state.
     let body = this.state.editor
     let currentProblem = this.props.currentProblem
@@ -194,7 +183,7 @@ class Sandbox extends React.Component {
     }
     this.setState({result})
   }
-  handleSelectionChange(e) {
+  handleSelectionChange = e => {
     if (
       e.selectionLead.row <= 1 ||
       e.selectionAnchor.row <= 1 ||
@@ -204,7 +193,7 @@ class Sandbox extends React.Component {
       if (!this.state.readOnly) this.setState({readOnly: true})
     } else if (this.state.readOnly) this.setState({readOnly: false})
   }
-  handleCursorChange(e) {
+  handleCursorChange = e => {
     if (
       e.selectionLead.row > 1 &&
       e.selectionLead.row !== e.doc.$lines.length - 1
