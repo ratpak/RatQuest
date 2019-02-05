@@ -4,6 +4,7 @@ import axios from 'axios'
 const GET_ALL_USERS = 'GET_ALL_USERS'
 const DELETE_USER = 'DELETE_USER'
 const TOGGLE_USER = 'TOGGLE_USER'
+const TOGGLE_PROBLEM = 'TOGGLE_PROBLEM'
 
 //action creators
 export const requestAllUsers = users => ({
@@ -14,6 +15,11 @@ export const requestAllUsers = users => ({
 export const deleteOneUser = userId => ({
   type: DELETE_USER,
   userId
+})
+
+export const toggleProblem = problemId => ({
+  type: TOGGLE_PROBLEM,
+  problemId
 })
 
 //thunks
@@ -37,6 +43,13 @@ export const toggleisAdmin = userId => {
   return async dispatch => {
     await axios.put(`/api/users/${userId}`)
     dispatch(fetchUsers())
+  }
+}
+
+export const toggleIsProblemActive = problemId => {
+  return async dispatch => {
+    await axios.put(`/api/problems/deactivate/${problemId}`)
+    dispatch(toggleProblem())
   }
 }
 
