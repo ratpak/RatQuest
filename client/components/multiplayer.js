@@ -134,6 +134,7 @@ class Multiplayer extends Component {
     this.setState({sandbox: {...this.state.sandbox, editor: e}})
   }
   componentDidMount = async () => {
+    socket.open()
     let {lobbyId} = this.props.match.params
     let {data: problems} = await Axios.get('/api/problems')
     const {user} = this.props
@@ -156,6 +157,7 @@ class Multiplayer extends Component {
   }
 
   render() {
+    console.log('TCL: render -> socket', socket)
     console.log(this.state, 'this state')
     return !this.state.victor ? (
       <Fragment>

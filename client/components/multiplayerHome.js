@@ -1,5 +1,5 @@
 import React, {Fragment, Component} from 'react'
-import socket from '../socket'
+import lobbySocket from '../lobbySocket'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import JoinIcon from '@material-ui/icons/ForwardSharp'
@@ -44,7 +44,7 @@ class MultiplayerHome extends Component {
       Redux: []
     }
 
-    socket.on('Lobby spot taken', (lobbyId, data) => {
+    lobbySocket.on('Lobby spot taken', (lobbyId, data) => {
       console.log('lobby spot taken', lobbyId, data)
       let something = true
       for (let i = 0; i < this.state[lobbyId].length; i++) {
@@ -58,7 +58,7 @@ class MultiplayerHome extends Component {
         })
     })
 
-    socket.on('clear lobby', socketId => {
+    lobbySocket.on('clear lobby', socketId => {
       let lobbies = this.state
       console.log('got to clear lobby', socketId)
       // eslint-disable-next-line guard-for-in
@@ -70,7 +70,7 @@ class MultiplayerHome extends Component {
   }
 
   componentDidMount = () => {
-    socket.emit('entered lobby screen')
+    lobbySocket.emit('entered lobby screen')
   }
 
   handleHome = () => {
