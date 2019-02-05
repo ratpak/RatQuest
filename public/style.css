@@ -10,7 +10,7 @@ html {
 
 body {
   font-family: 'Nunito', sans-serif;
-  /* height: 100%; */
+  color: #808080;
 }
 
 a {
@@ -28,10 +28,10 @@ nav a {
   margin: 1em;
 } */
 
-form div {
+/* form div {
   margin: 1em;
   display: inline-block;
-}
+} */
 
 /* editor page styling */
 
@@ -313,4 +313,46 @@ form div {
 
 #scientist-group {
   z-index: 4;
+}
+
+/* style for login page */
+#login-wapper {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+}
+
+#login-box {
+  margin-top: 25vh;
+  background-color: #fff;
+  border-radius: 15px;
+  min-height: 300px;
+  min-width: 300px;
+}
+
+#login-box form {
+  margin-top: 30px;
+}
+
+#login-box #flex-for-login-box {
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+#login-box .links {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+#links-container {
+  margin-top: 30px;
+}
+
+#error-space {
+  margin-top: 10px;
+  min-height: 25px;
+  min-width: 200px;
+  color: red;
 }

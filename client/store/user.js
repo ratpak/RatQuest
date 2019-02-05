@@ -1,6 +1,6 @@
 import axios from 'axios'
 import history from '../history'
-import store from './index'
+import {unsubscribe} from './index'
 
 /**
  * ACTION TYPES
@@ -50,7 +50,6 @@ export const auth = (email, password, method) => async dispatch => {
 
   try {
     dispatch(getUser(res.data))
-
     history.push(`/${page}`)
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
@@ -62,7 +61,7 @@ export const logout = () => async dispatch => {
     await axios.post('/auth/logout')
     dispatch(removeUser())
     history.push('/login')
-    store.unsubscribe()
+    unsubscribe()
   } catch (err) {
     console.error(err)
   }
