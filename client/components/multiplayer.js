@@ -41,6 +41,7 @@ class Multiplayer extends Component {
       for (let key in lobby) {
         if (lobby[key].socketId === socketId) delete lobby[key]
       }
+      console.log('old lobby')
       this.setState({lobby})
     })
     socket.on('requesting lobby info', () => {
@@ -111,6 +112,7 @@ class Multiplayer extends Component {
     }
   }
   handleBack = () => {
+    socket.emit('Unplug me')
     this.props.history.push('/multiplayer')
   }
   handleClick = async () => {

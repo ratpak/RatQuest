@@ -36,11 +36,11 @@ class MultiplayerHome extends Component {
   constructor() {
     super()
     this.state = {
-      Mocha: dummyData,
+      Mocha: [],
       Chai: [],
       Express: [],
       Sequelize: [],
-      React: dummyData,
+      React: [],
       Redux: []
     }
 
@@ -77,8 +77,8 @@ class MultiplayerHome extends Component {
     this.props.history.push('/home')
   }
   handleClick = e => {
-    console.log(e.target.value)
-    let lobbyId = e.target.value
+    console.log(e)
+    let lobbyId = e
     this.props.history.push(`/multiplayer/${lobbyId}`)
   }
   render() {
@@ -99,7 +99,7 @@ class MultiplayerHome extends Component {
                   <Fragment key={key}>
                     <ListItem>
                       {/* <h1>{key}</h1> */}
-                      <Button value={key} onClick={this.handleClick}>
+                      <Button onClick={() => this.handleClick(key)}>
                         <b>{key}</b>
                         <JoinIcon />
                         {/* <ListItem
