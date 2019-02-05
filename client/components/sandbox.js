@@ -402,7 +402,7 @@ class Sandbox extends React.Component {
           aria-describedby="alert-dialog-slide-description"
         >
           <DialogTitle id="alert-dialog-slide-title">
-            Awesome Job! Stage {this.props.user.stageId} Complete!!
+            Awesome Job! Stage {this.props.stage.id} Complete!!
           </DialogTitle>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">

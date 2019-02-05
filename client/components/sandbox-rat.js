@@ -1,5 +1,5 @@
 import React, {Fragment, Component} from 'react'
-import {TweenMax, SteppedEase} from 'gsap/all'
+import {TweenMax, SteppedEase} from 'gsap'
 
 class SandboxRat extends Component {
   constructor() {

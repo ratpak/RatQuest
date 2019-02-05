@@ -1,6 +1,6 @@
 import React, {Fragment, Component} from 'react'
 import withBoardProgress from './board-progress'
-import {TweenMax} from 'gsap/all'
+import {TweenMax} from 'gsap'
 
 class Board extends Component {
   constructor() {
