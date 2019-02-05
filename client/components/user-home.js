@@ -1,18 +1,22 @@
 import React, {Fragment} from 'react'
+import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
 import Navbar from './navbar'
 import HomeStage from './home-stage'
 import Board from './board'
 import Rat from './rat'
-import {withTheme} from '@material-ui/core/styles'
+// import {withTheme} from '@material-ui/core/styles'
 
 const UserHome = props => {
-  const {theme} = props
+  const {user} = props
   return (
     <Fragment>
       <Navbar />
       <div id="board-wrapper">
         <div id="rat-board-state">
-          <Rat />
+          <Link to={`/sandbox/${user.id}`}>
+            <Rat />
+          </Link>
         </div>
         <div id="board-01">
           <Board />
@@ -31,4 +35,8 @@ const UserHome = props => {
   )
 }
 
-export default withTheme()(UserHome)
+const mapState = state => ({
+  user: state.user
+})
+
+export default connect(mapState)(UserHome)
