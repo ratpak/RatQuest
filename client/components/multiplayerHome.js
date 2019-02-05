@@ -16,10 +16,16 @@ class MultiplayerHome extends Component {
 
     socket.on('Lobby spot taken', (lobbyId, data) => {
       console.log('lobby spot taken', lobbyId, data)
-      this.setState({
-        ...this.state,
-        [lobbyId]: [...this.state[lobbyId], data]
-      })
+      let something = true
+      for (let i = 0; i < this.state[lobbyId].length; i++) {
+        if (this.state[lobbyId][i].email === data.email) something = false
+      }
+
+      if (something)
+        this.setState({
+          ...this.state,
+          [lobbyId]: [...this.state[lobbyId], data]
+        })
     })
 
     socket.on('clear lobby', socketId => {
