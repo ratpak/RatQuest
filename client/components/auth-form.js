@@ -3,40 +3,68 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
-import {withTheme} from '@material-ui/core/styles'
+import {withTheme, withStyles} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Input from '@material-ui/core/Input'
 
-/**
- * COMPONENT
- */
-const AuthForm = props => {
-  const {name, displayName, handleSubmit, error} = props
+const styles = theme => ({
+  button: {
+    background: theme.palette.secondary.main,
+    // color: '#fff',
+    color: theme.palette.secondary.contrastText,
+    '&:hover': {
+      background: 'linear-gradient(180deg, #ffee33 30%, #FF8E53 90%)',
+      color: '#fff'
+    },
+    boxShadow: theme.shadows[3]
+  }
+})
 
+const AuthForm = props => {
+  const {name, displayName, handleSubmit, error, classes, theme} = props
+  console.log(props, '<<< auth form props')
   return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <Input name="email" type="text" color="secondary" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <Input name="password" type="password" />
-        </div>
-        <div>
-          <Button type="submit" color="primary">
-            {displayName}
-          </Button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-      {/* <a href="/auth/google">{displayName} with Google</a> */}
-      <Link to="/signup">Sign Up</Link>
+    <div id="login-wapper">
+      <div id="login-box" style={{boxShadow: theme.shadows[3]}}>
+        <form onSubmit={handleSubmit} name={name}>
+          <div className="simple-flex" id="flex-for-login-box">
+            <div>
+              <label htmlFor="email">
+                <small>Email</small>
+              </label>
+              <Input name="email" type="text" color="secondary" />
+            </div>
+            <div>
+              <label htmlFor="password">
+                <small>Password</small>
+              </label>
+              <Input name="password" type="password" />
+            </div>
+            <div id="error-space">
+              {error && error.response && <div> {error.response.data} </div>}
+            </div>
+            <div id="links-container" className="simple-flex">
+              <div className="links">
+                {props.match.path === '/login' ? (
+                  <Link to="/signup">Sign Up</Link>
+                ) : (
+                  <Link to="/login">Login</Link>
+                )}
+              </div>
+              <div className="links">
+                <Button
+                  type="submit"
+                  varient="contained"
+                  className={classes.button}
+                >
+                  {displayName}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </form>
+        {/* <a href="/auth/google">{displayName} with Google</a> */}
+      </div>
     </div>
   )
 }
@@ -76,8 +104,13 @@ const mapDispatch = dispatch => {
   }
 }
 
-export const Login = connect(mapLogin, mapDispatch)(withTheme()(AuthForm))
-export const Signup = connect(mapSignup, mapDispatch)(withTheme()(AuthForm))
+export const Login = connect(mapLogin, mapDispatch)(
+  withTheme()(withStyles(styles)(AuthForm))
+)
+
+export const Signup = connect(mapSignup, mapDispatch)(
+  withTheme()(withStyles(styles)(AuthForm))
+)
 
 /**
  * PROP TYPES
