@@ -422,6 +422,7 @@ const mapState = state => ({
   user: state.user,
   stage: state.stage
 })
+
 const mapDispatch = dispatch => ({
   fetchProblem: (userId, problemId) =>
     dispatch(fetchProblem(userId, problemId)),
