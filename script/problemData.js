@@ -13,7 +13,7 @@ const problemData = [
   },
   {
     description:
-      'Create a function that accepts a string argument (a name, ex: "Oliver"), and returns the personalized greeting "Hi Oliver." Of a name is present.',
+      'Create a function that accepts a string argument (a name, ex: "Oliver"), and returns the personalized greeting "Hi Oliver" Of a name is present.',
     funcName: 'sayHi',
     arguments: ['str'],
     inputs: [['Yaodi'], ['Jay'], ['Chris'], ['MJ']],
@@ -73,7 +73,7 @@ const problemData = [
   },
 
   {
-    description: 'Concat arrays',
+    description: 'Concat arrays. Merge arr2 into arr1.',
     funcName: 'concatArr',
     arguments: ['arr1', 'arr2'],
     inputs: [['1', '2'], ['hello', 'world'], ['1, 2', '3, 4']],
@@ -109,12 +109,12 @@ const problemData = [
   },
   {
     description:
-      'Create a function that accepts a string argument, and return the boolean true if the argument is a palindrome (meaning that the string is the same forward as it is backward). Otherwise, return the boolean false.',
-    funcName: 'isPalindrome',
-    arguments: ['str'],
-    inputs: [['moon'], ['racecar']],
-    outputType: 'boolean',
-    outputs: ['false', 'true'],
+      'Create a function that accepts an array of strings as an argument, and returns an array with the duplicates removed',
+    funcName: 'removeDuplicates',
+    arguments: ['arr'],
+    inputs: [['moon', 'racecar', 'moon', 'timmy']],
+    outputType: 'array',
+    outputs: ['moon', 'racecar', 'timmy'],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
     stageId: 2
@@ -122,7 +122,7 @@ const problemData = [
   {
     description:
       'Create a function that accepts a string argument, and return the boolean true if the argument is a palindrome (meaning that the string is the same forward as it is backward). Otherwise, return the boolean false.',
-    funcName: 'revseredString',
+    funcName: 'isPalindrome',
     arguments: ['str'],
     inputs: [['hello'], ['ratquest'], ['abcba']],
     outputType: 'boolean',
@@ -133,10 +133,10 @@ const problemData = [
   },
   {
     description:
-      'There exist two zeroes: +0 (or just 0) and -0. Write a function that returns true if the input number is -0 and false otherwise.',
-    funcName: 'isItNegativeZero',
+      'Is it a number. Check to see if the parameter is a type number.',
+    funcName: 'isItNumber',
     arguments: ['num'],
-    inputs: [['-0'], ['0']],
+    inputs: [[4], ['firetruck']],
     outputType: 'boolean',
     outputs: ['true', 'false'],
     url:
@@ -162,7 +162,7 @@ const problemData = [
     arguments: ['arr, num'],
     inputs: [['80, 77, 54, 91', '1']],
     outputType: 'array',
-    outputs: [['77, 54, 91, 80']],
+    outputs: ['77, 54, 91, 80'],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
     stageId: 3
@@ -174,7 +174,7 @@ const problemData = [
     arguments: ['str'],
     inputs: [['NumBeR'], ['l3ETter']],
     outputType: 'string',
-    outputs: [['nUMbEr'], ['L3etTER']],
+    outputs: ['nUMbEr', 'L3etTER'],
     url:
       'https://medium.freecodecamp.org/two-ways-to-check-for-palindromes-in-javascript-64fea8191fd7',
     stageId: 3
