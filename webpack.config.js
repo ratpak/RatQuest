@@ -11,7 +11,8 @@ module.exports = {
     filename: './public/bundle.js'
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    mainFields: ['main', 'module'] // main then module
   },
   devtool: 'source-map',
   module: {
