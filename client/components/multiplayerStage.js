@@ -1,6 +1,6 @@
 import React, {Fragment, Component} from 'react'
-import SandboxRat from './sandbox-rat'
 import {TweenMax} from 'gsap'
+import MsandboxRat from './msandbox-rat'
 
 class MultiStage extends Component {
   constructor() {
@@ -55,14 +55,14 @@ class MultiStage extends Component {
                 this.sandboxRatDiv = div
               }}
             >
-              <SandboxRat />
+              <MsandboxRat />
             </div>
             <div className="simple-flex sandbox-progress-bar">
-              <div className="sandbox-progress-circle">1</div>
+              {/* <div className="sandbox-progress-circle">1</div>
               <div className="sandbox-progress-circle">2</div>
               <div className="sandbox-progress-circle">3</div>
               <div className="sandbox-progress-circle">4</div>
-              <div className="sandbox-progress-circle">5</div>
+              <div className="sandbox-progress-circle">5</div> */}
             </div>
           </div>
         </div>
