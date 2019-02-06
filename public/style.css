@@ -20,6 +20,34 @@ a {
 label {
   display: block;
 }
+<<<<<<< HEAD
+||||||| merged common ancestors
+/* 
+not using nav currently */
+/* 
+nav a {
+  display: inline-block;
+  margin: 1em;
+} */
+
+/* form div {
+  margin: 1em;
+  display: inline-block;
+} */
+=======
+/*
+not using nav currently */
+/*
+nav a {
+  display: inline-block;
+  margin: 1em;
+} */
+
+/* form div {
+  margin: 1em;
+  display: inline-block;
+} */
+>>>>>>> master
 
 /* lobby styiling */
 
@@ -208,6 +236,12 @@ label {
   align-items: center;
 }
 
+.simple-flex-problems {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 #nav-info {
   padding-left: 20px;
 }
@@ -358,4 +392,40 @@ label {
   min-height: 25px;
   min-width: 200px;
   color: red;
+}
+
+#adminCenter {
+  text-align: center;
+}
+
+#userWrapper {
+  background-image: url('https://cdn.pixabay.com/photo/2017/08/27/23/11/background-2687925_1280.jpg');
+}
+
+.userCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* background-color: #; */
+  max-width: 200px;
+  margin: 20px;
+  padding: 30px;
+  border-radius: 40px;
+  border: 2px solid grey;
+  background-color: #ffe786;
+}
+
+.problemCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  min-width: 350px;
+  margin: 20px;
+  padding: 30px;
+  border-radius: 40px;
+  border: 2px solid grey;
+  background-color: #ffe786;
+  color: black;
 }
