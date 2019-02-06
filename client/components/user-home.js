@@ -5,7 +5,6 @@ import Navbar from './navbar'
 import HomeStage from './home-stage'
 import Board from './board'
 import Rat from './rat'
-// import {withTheme} from '@material-ui/core/styles'
 
 const UserHome = props => {
   const {user} = props

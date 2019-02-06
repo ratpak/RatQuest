@@ -6,14 +6,13 @@ import {withStyles} from '@material-ui/core/styles'
 
 const styles = theme => ({
   button: {
-    // margin: theme.spacing.unit,
-    // backgroundColor: '#ffee33'
-    background: '#ffee33',
-    color: '#4b4b4b',
+    background: theme.palette.secondary.main,
+    color: theme.palette.secondary.contrastText,
     '&:hover': {
       background: 'linear-gradient(180deg, #ffee33 30%, #FF8E53 90%)',
       color: '#fff'
-    }
+    },
+    boxShadow: theme.shadows[3]
   }
 })
 
@@ -63,4 +62,3 @@ const HomeStage = props => {
 }
 
 export default withStageInfo(withStyles(styles)(HomeStage))
-// export default withStageInfo(HomeStage)
