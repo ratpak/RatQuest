@@ -33,6 +33,13 @@ label {
 
 /* editor page styling */
 
+#demo-btn {
+  /* background: #D6EFFC; */
+  background: linear-gradient(#d6effc, #cbeafb);
+  color: #cbeafb;
+  border-width: 0;
+}
+
 #sandbox-global-nav {
   position: absolute;
   padding: 1%;
@@ -448,4 +455,14 @@ label {
   border: 2px solid grey;
   background-color: #ffe786;
   color: black;
+}
+
+.mj-nav-left-pad {
+  /* position: absolute; */
+  padding: 1%;
+}
+
+.mj-left-pad {
+  padding-left: 50px;
+  padding-right: 50px;
 }
