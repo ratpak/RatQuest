@@ -214,6 +214,37 @@ label {
   flex-wrap: wrap;
 }
 
+.multiwrap {
+}
+
+.meditor {
+  /* background-color: red; */
+  display: flex;
+  flex-direction: row;
+  /* flex-wrap: wrap; */
+  justify-content: space-between;
+  /* align-items: space-between; */
+}
+.meditorRightHalf {
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  flex-basis: 45%;
+  flex-wrap: wrap;
+}
+.mRightRight {
+}
+.ratsRight {
+  /* background-color: blue; */
+}
+.meditorLeftHalf {
+  /* background-color: red; */
+
+  display: flex;
+  flex-direction: column;
+  flex-basis: 40%;
+}
+
 #nav-info {
   padding-left: 20px;
 }
