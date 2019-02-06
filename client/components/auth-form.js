@@ -43,7 +43,7 @@ const AuthForm = props => {
             </div>
             <div id="links-container" className="simple-flex">
               <div className="links">
-                {props.match.path === '/login' ? (
+                {props.match.path === '/login' || props.match.path === '/' ? (
                   <Link to="/signup">Sign Up</Link>
                 ) : (
                   <Link to="/login">Login</Link>
