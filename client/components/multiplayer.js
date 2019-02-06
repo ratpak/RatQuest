@@ -16,6 +16,9 @@ import ThemeIcon from '@material-ui/icons/ColorLensSharp'
 import SkipIcon from '@material-ui/icons/FastForwardSharp'
 import {Button} from '@material-ui/core'
 import io from 'socket.io-client'
+import SandboxRat from './sandbox-rat'
+import gameStage from './game-stage'
+import MultiStage from './multiplayerStage'
 
 class Multiplayer extends Component {
   constructor(props) {
@@ -91,7 +94,7 @@ class Multiplayer extends Component {
     let me = this.props.user
     let problems = this.state.problems
     this.props.user.score += 1
-    if (this.props.user.score >= 2) {
+    if (this.props.user.score >= 5) {
       this.props.user.score = 0
       socket.emit(`I win`, me.email, lobbyId)
       this.setState({lobby: {}, victor: me.email})
@@ -157,57 +160,90 @@ class Multiplayer extends Component {
   }
 
   render() {
-    console.log('TCL: render -> socket', socket)
     console.log(this.state, 'this state')
+
     return !this.state.victor ? (
       <Fragment>
-        <h1>I am {this.props.user.email}</h1>
-        <button onClick={this.handleBack}>back</button>
-
+        {/* <button onClick={this.handleBack}>back</button> */}
         <br />
-        <h1>Lobby: </h1>
-        {Object.keys(this.state.lobby)
-          ? Object.keys(this.state.lobby).map(key => {
-              return (
-                <h2 key={key}>
-                  {this.state.lobby[key].email}:{this.state.lobby[key].score}
-                </h2>
-              )
-            })
-          : null}
+        <button onClick={this.handleIncrement}>cheat</button>
+        {/* <h1>I am {this.props.user.email}</h1> */}
 
-        <AceEditor
-          mode="javascript"
-          theme={this.state.sandbox.theme}
-          value={this.state.sandbox.editor}
-          // onPaste={this.handlePaste}
-          onChange={this.handleChange}
-          name="ace"
-          // className="editorBox"
-          height="60vh"
-          width="50vw"
-          editorProps={{$blockScrolling: Infinity}}
-          fontSize={14}
-          // onSelectionChange={this.handleSelectionChange}
-          // onCursorChange={this.handleCursorChange}
-          showPrintMargin={false}
-          wrapEnabled={true}
-          // readOnly={this.state.sandbox.readOnly}
-        />
-        <Tooltip title="Submit">
-          <Button
-            type="Button"
-            style={{
-              backgroundColor: 'blue',
-              color: 'black',
-              fontWeight: 550
-            }}
-            onClick={this.handleClick}
-          >
-            Submit
-            <DoneIcon />
-          </Button>
-        </Tooltip>
+        <div className="multiwrap">
+          <div className="description">
+            <h3>Problem</h3>
+            {console.log(
+              'MWAHAHAHAHAH',
+              this.state.problems,
+              this.props.user.score
+            )}
+            {this.state.problems.length ? (
+              // <h1>loaded</h1>
+              <p>{this.state.problems[this.props.user.score].description}</p>
+            ) : (
+              <h1>loading</h1>
+            )}
+          </div>
+          <br />
+          <div className="meditor">
+            <div className="meditorLeftHalf">
+              <AceEditor
+                mode="javascript"
+                theme={this.state.sandbox.theme}
+                value={this.state.sandbox.editor}
+                // onPaste={this.handlePaste}
+                onChange={this.handleChange}
+                name="ace"
+                // className="editorBox"
+                height="70vh"
+                width="50vw"
+                editorProps={{$blockScrolling: Infinity}}
+                fontSize={14}
+                // onSelectionChange={this.handleSelectionChange}
+                // onCursorChange={this.handleCursorChange}
+                showPrintMargin={false}
+                wrapEnabled={true}
+                // readOnly={this.state.sandbox.readOnly}
+              />
+            </div>
+            <div className="meditorRightHalf">
+              {/* <h1>Lobby: </h1> */}
+
+              {Object.keys(this.state.lobby)
+                ? Object.keys(this.state.lobby).map(key => {
+                    console.log('this.state score', this.state.lobby[key].score)
+                    return (
+                      <Fragment key={key}>
+                        <div className="ratsRight">
+                          <h2 key={key}>{this.state.lobby[key].email}</h2>
+                          <MultiStage
+                            displayInfo={{
+                              progress: this.state.lobby[key].score,
+                              goal: 5
+                            }}
+                          />
+                        </div>
+                      </Fragment>
+                    )
+                  })
+                : null}
+            </div>
+          </div>
+          <Tooltip title="Submit">
+            <Button
+              type="Button"
+              style={{
+                backgroundColor: 'blue',
+                color: 'black',
+                fontWeight: 550
+              }}
+              onClick={this.handleClick}
+            >
+              Submit
+              <DoneIcon />
+            </Button>
+          </Tooltip>
+        </div>
       </Fragment>
     ) : (
       <Fragment>
