@@ -23,45 +23,48 @@ const AuthForm = props => {
   const {name, displayName, handleSubmit, error, classes, theme} = props
   return (
     <div id="login-wapper">
-      <div id="login-box" style={{boxShadow: theme.shadows[3]}}>
-        <form onSubmit={handleSubmit} name={name}>
-          <div className="simple-flex" id="flex-for-login-box">
-            <div>
-              <label htmlFor="email">
-                <small>Email</small>
-              </label>
-              <Input name="email" type="text" color="secondary" />
-            </div>
-            <div>
-              <label htmlFor="password">
-                <small>Password</small>
-              </label>
-              <Input name="password" type="password" />
-            </div>
-            <div id="error-space">
-              {error && error.response && <div> {error.response.data} </div>}
-            </div>
-            <div id="links-container" className="simple-flex">
-              <div className="links">
-                {props.match.path === '/login' || props.match.path === '/' ? (
-                  <Link to="/signup">Sign Up</Link>
-                ) : (
-                  <Link to="/login">Login</Link>
-                )}
+      <div id="rat">
+        <h1>Rat Quest</h1>
+        <div id="login-box" style={{boxShadow: theme.shadows[3]}}>
+          <form onSubmit={handleSubmit} name={name}>
+            <div className="simple-flex" id="flex-for-login-box">
+              <div>
+                <label htmlFor="email">
+                  <small>Email</small>
+                </label>
+                <Input name="email" type="text" color="secondary" />
               </div>
-              <div className="links">
-                <Button
-                  type="submit"
-                  varient="contained"
-                  className={classes.button}
-                >
-                  {displayName}
-                </Button>
+              <div>
+                <label htmlFor="password">
+                  <small>Password</small>
+                </label>
+                <Input name="password" type="password" />
+              </div>
+              <div id="error-space">
+                {error && error.response && <div> {error.response.data} </div>}
+              </div>
+              <div id="links-container" className="simple-flex">
+                <div className="links">
+                  {props.match.path === '/login' || props.match.path === '/' ? (
+                    <Link to="/signup">Sign Up</Link>
+                  ) : (
+                    <Link to="/login">{`<- Login`}</Link>
+                  )}
+                </div>
+                <div className="links">
+                  <Button
+                    type="submit"
+                    varient="contained"
+                    className={classes.button}
+                  >
+                    {displayName}
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
-        </form>
-        {/* <a href="/auth/google">{displayName} with Google</a> */}
+          </form>
+          {/* <a href="/auth/google">{displayName} with Google</a> */}
+        </div>
       </div>
     </div>
   )
