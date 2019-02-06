@@ -4,7 +4,7 @@ import withStageInfo from './stage-info'
 
 const GameStage = props => {
   const displayInfo = props.displayInfo
-
+  console.log(props, '<<< game-stage props')
   return (
     <Fragment>
       <div className="sandbox-stage">

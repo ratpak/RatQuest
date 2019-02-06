@@ -3,9 +3,24 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import Button from '@material-ui/core/Button'
+import {withTheme, withStyles} from '@material-ui/core/styles'
+
+const styles = theme => ({
+  button: {
+    // margin: theme.spacing.unit,
+    // background: '#bbdefb',
+    background: theme.palette.primary.main,
+    color: theme.palette.secondary.contrastText,
+    boxShadow: theme.shadows[3],
+    '&:hover': {
+      background: theme.palette.secondary.main
+    }
+  }
+})
 
 const Navbar = props => {
-  const {handleClick, isLoggedIn, user} = props
+  const {handleClick, isLoggedIn, user, classes} = props
   return (
     <div className="navbar">
       <div className="simple-flex">
@@ -18,25 +33,39 @@ const Navbar = props => {
         </div>
       </div>
 
-      {user.isAdmin && (
-        <div>
-          <Link to="/admin">Admin</Link>
-        </div>
-      )}
+      {/* The navbar will show these links after you log in */}
       {isLoggedIn && (
         <Fragment>
           <div className="simple-flex">
-            <div>
-              <Link to="/home">Single Player</Link>
+            <div className="nav-game-links">
+              <Link to="/home">
+                <Button varient="contained" className={classes.button}>
+                  Rat Home
+                </Button>
+              </Link>
             </div>
-            <div>
-              <Link to="/multiplayer">Multi Rat Race</Link>
+            <div className="nav-game-links">
+              <Link to="/multiplayer">
+                <Button varient="contained" className={classes.button}>
+                  Multi Rat Race
+                </Button>
+              </Link>
             </div>
+            {user.isAdmin && (
+              <div className="nav-game-links">
+                <Link to="/admin">
+                  <Button varient="contained" className={classes.button}>
+                    Admin
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
           <div>
-            {/* The navbar will show these links after you log in */}
             <a href="#" onClick={handleClick}>
-              Logout
+              <Button varient="contained" className={classes.button}>
+                Logout
+              </Button>
             </a>
           </div>
         </Fragment>
@@ -63,7 +92,9 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(
+  withTheme()(withStyles(styles)(Navbar))
+)
 
 /**
  * PROP TYPES

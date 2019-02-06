@@ -21,20 +21,15 @@ import createAndTest from '../utils/createAndTest'
 import editorThemes from '../utils/editorThemes'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
-import DoneIcon from '@material-ui/icons/Done'
 import Fab from '@material-ui/core/Fab'
 import Tooltip from '@material-ui/core/Tooltip'
-import ClearIcon from '@material-ui/icons/RefreshSharp'
 import HomeIcon from '@material-ui/icons/HomeSharp'
 import ThemeIcon from '@material-ui/icons/ColorLensSharp'
-import SkipIcon from '@material-ui/icons/FastForwardSharp'
-// import Paper from '@material-ui/core/Paper'
 import XIcon from '@material-ui/icons/CloseSharp'
 import {withStyles} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import DialogActions from '@material-ui/core/DialogActions'
 import {Link} from 'react-router-dom'
-// const marked = require('marked') // react-marked
 
 editorThemes.forEach(theme => require(`brace/theme/${theme}`))
 
@@ -137,6 +132,7 @@ class Sandbox extends React.Component {
   handleChange = e => {
     this.setState({editor: e})
   }
+
   //for testing only
   handleCheat = () => {
     // let body = this.state.editor
@@ -156,7 +152,6 @@ class Sandbox extends React.Component {
 
     this.setState({result: 'success'})
   }
-  ////
 
   handleClick = async () => {
     // Grab user input from the code editor stored in state.
@@ -205,9 +200,8 @@ class Sandbox extends React.Component {
   render() {
     let {classes} = this.props
     return (
-      // highest level wrapper - use to set absolute position on page
       <Fragment>
-        {/* flexwrap with column */}
+        {/* wrapper for nav - home link */}
         <div id="sandbox-global-nav">
           <Tooltip title="Home">
             <Fab
@@ -224,6 +218,7 @@ class Sandbox extends React.Component {
           </Tooltip>
         </div>
 
+        {/* wrapper for page outside of nav */}
         <div id="sandbox-wrapper">
           <div className="description">
             <h3>Problem</h3>
@@ -285,7 +280,6 @@ class Sandbox extends React.Component {
                       }}
                       onClick={this.handleSkip}
                     >
-                      {/* <SkipIcon /> */}
                       Skip
                     </Fab>
                   </Tooltip>
@@ -300,7 +294,6 @@ class Sandbox extends React.Component {
                       }}
                       onClick={this.handleClear}
                     >
-                      {/* <ClearIcon /> */}
                       Clear
                     </Fab>
                   </Tooltip>
@@ -317,7 +310,6 @@ class Sandbox extends React.Component {
                       }}
                       onClick={this.handleClick}
                     >
-                      {/* <DoneIcon /> */}
                       Submit
                     </Fab>
                   </Tooltip>
@@ -325,19 +317,16 @@ class Sandbox extends React.Component {
               </div>
             </div>
 
-            {/* results in here */}
+            {/* results and progress within stage in here */}
             <div className="editorRightHalf">
-              {/* results in here */}
               <div className="description" id="test-results">
-                {/* <Paper className="editorResult"> */}
                 <h3>Test Results</h3>
                 {this.state.result
                   .split('\n')
                   .map(thing => <p key={Math.random()}>{thing}</p>)}
-                {/* </Paper> */}
               </div>
               <div>
-                <GameStage />
+                <GameStage solvedProblems={this.solvedProblems} />
               </div>
             </div>
           </div>

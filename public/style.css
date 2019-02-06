@@ -41,12 +41,6 @@ nav a {
 }
 
 #sandbox-wrapper {
-  /* display: flex;
-  flex-wrap: wrap;
-  flex-direction: column; */
-  /* align-items: center; */
-  /* justify-content: center; */
-
   position: absolute;
   left: 50%;
   margin-left: -512px;
@@ -116,15 +110,8 @@ nav a {
   margin-top: 20px;
 }
 
-/* .editorStage { */
-/* flex-basis: 45%; */
-/* display: flex;
-  justify-content: center;
-  flex-basis: 20%; */
-/* text-align: center; */
-/* } */
-
 .sandbox-stage {
+  min-height: 160px;
   margin-left: 5px;
   margin-top: 10px;
   background-color: #96cff1;
@@ -133,6 +120,7 @@ nav a {
   border-width: 1px;
   border-color: #ffff99;
   padding-left: 20px;
+  padding-right: 0px;
 }
 
 .sandbox-stage h3 {
@@ -141,7 +129,8 @@ nav a {
 
 /* sandbox stage progress styles */
 .sandbox-progress-bar {
-  margin-left: 20px;
+  padding-left: 40px;
+  padding-right: 5px;
 }
 
 .sandbox-progress-circle {
@@ -149,11 +138,16 @@ nav a {
   height: 30px;
   border-radius: 100px;
   background-color: #4b4b4b;
-  margin: 20px;
+  margin: 18px;
 }
 
 .sandbox-rat {
-  position: absolute;
+  position: relative;
+  display: inline-block;
+  /* padding: 0;
+  margin: 0;
+  bottom: 115px;
+  left: 620px; */
 }
 
 /* user-home navbar styles */
@@ -203,17 +197,18 @@ nav a {
   padding-left: 20px;
 }
 
+.nav-game-links {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 /* style for putting board elements in as pure svg in comoponents */
 /* user-home - board */
 #board-wrapper {
   position: absolute;
-  margin-left: 205px;
+  left: 50%;
+  margin-left: -500px;
   max-height: 600px;
-}
-
-/*positioning of board and dynamic stage boxes*/
-#board-01 {
-  /* z-index: 2; */
 }
 
 .stage {
@@ -284,10 +279,6 @@ nav a {
   padding-top: 0;
 }
 
-/* #current{
-  color: #ffff99;
-} */
-
 #complete {
   color: #ffff99;
 }
@@ -305,9 +296,6 @@ nav a {
 
 #rat-board-state {
   position: absolute;
-  /* opacity: 0; */
-  /* left: 100px;
-  top: 245px; */
   z-index: 3;
 }
 

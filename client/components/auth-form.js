@@ -10,7 +10,6 @@ import Input from '@material-ui/core/Input'
 const styles = theme => ({
   button: {
     background: theme.palette.secondary.main,
-    // color: '#fff',
     color: theme.palette.secondary.contrastText,
     '&:hover': {
       background: 'linear-gradient(180deg, #ffee33 30%, #FF8E53 90%)',
@@ -22,7 +21,6 @@ const styles = theme => ({
 
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error, classes, theme} = props
-  console.log(props, '<<< auth form props')
   return (
     <div id="login-wapper">
       <div id="login-box" style={{boxShadow: theme.shadows[3]}}>
