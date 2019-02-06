@@ -1,8 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {deleteUser, fetchUsers, toggleisAdmin, fetchAllProblems} from '../store'
+import {Link} from 'react-router-dom'
 import Button from '@material-ui/core/Button'
-import Card from '@material-ui/core/Card'
 
 class Admin extends React.Component {
   componentDidMount() {
@@ -36,6 +36,9 @@ class Admin extends React.Component {
     return (
       <div>
         <h1 id="adminCenter">Admin page</h1>
+        <Link id="adminCenter" to={`/home}`}>
+          Home
+        </Link>
         <h3>Edit/Delete Users</h3>
 
         {!users || users.length === 0 ? (
