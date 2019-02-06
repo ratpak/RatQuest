@@ -21,6 +21,16 @@ label {
   display: block;
 }
 
+/* lobby styiling */
+
+.lobbyHome {
+  display: flex;
+}
+.lobby {
+  display: flex;
+  flex-basis: 50%;
+}
+
 /* editor page styling */
 
 #sandbox-global-nav {

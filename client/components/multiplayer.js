@@ -41,6 +41,7 @@ class Multiplayer extends Component {
       for (let key in lobby) {
         if (lobby[key].socketId === socketId) delete lobby[key]
       }
+      console.log('old lobby')
       this.setState({lobby})
     })
     socket.on('requesting lobby info', () => {
@@ -111,6 +112,7 @@ class Multiplayer extends Component {
     }
   }
   handleBack = () => {
+    socket.emit('Unplug me')
     this.props.history.push('/multiplayer')
   }
   handleClick = async () => {
@@ -132,6 +134,7 @@ class Multiplayer extends Component {
     this.setState({sandbox: {...this.state.sandbox, editor: e}})
   }
   componentDidMount = async () => {
+    socket.open()
     let {lobbyId} = this.props.match.params
     let {data: problems} = await Axios.get('/api/problems')
     const {user} = this.props
@@ -154,6 +157,7 @@ class Multiplayer extends Component {
   }
 
   render() {
+    console.log('TCL: render -> socket', socket)
     console.log(this.state, 'this state')
     return !this.state.victor ? (
       <Fragment>

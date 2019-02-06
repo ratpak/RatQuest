@@ -1,5 +1,10 @@
 import React, {Fragment, Component} from 'react'
-import socket from '../socket'
+import lobbySocket from '../lobbySocket'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import JoinIcon from '@material-ui/icons/ForwardSharp'
+import {Button, Fab} from '@material-ui/core'
+import HomeIcon from '@material-ui/icons/HomeSharp'
 
 let dummyData = [
   {
@@ -19,28 +24,18 @@ let dummyData = [
     email: 'user@user.com',
     isAdmin: false,
     avatarUrl: 'https://robohash.org/3'
-  },
-  {
-    id: 4,
-    email: 'test',
-    isAdmin: false,
-    avatarUrl: 'https://robohash.org/5'
   }
+  // {
+  //   id: 4,
+  //   email: 'test',
+  //   isAdmin: false,
+  //   avatarUrl: 'https://robohash.org/5'
+  // }
 ]
-let dummyLobby =
-  'https://www.thelobby.lv/wp-content/uploads/2017/07/lobby_logo_large.png'
 class MultiplayerHome extends Component {
   constructor() {
     super()
     this.state = {
-      Show: {
-        Mocha: false,
-        Chai: false,
-        Express: false,
-        Sequelize: false,
-        React: false,
-        Redux: false
-      },
       Mocha: [],
       Chai: [],
       Express: [],
@@ -49,13 +44,11 @@ class MultiplayerHome extends Component {
       Redux: []
     }
 
-    socket.on('Lobby spot taken', (lobbyId, data) => {
+    lobbySocket.on('Lobby spot taken', (lobbyId, data) => {
       console.log('lobby spot taken', lobbyId, data)
       let something = true
-      let lobbies = this.state
-      delete lobbies.Show
-      for (let i = 0; i < lobbies; i++) {
-        if (lobbies[lobbyId][i].email === data.email) something = false
+      for (let i = 0; i < this.state[lobbyId].length; i++) {
+        if (this.state[lobbyId][i].email === data.email) something = false
       }
 
       if (something)
@@ -65,9 +58,8 @@ class MultiplayerHome extends Component {
         })
     })
 
-    socket.on('clear lobby', socketId => {
+    lobbySocket.on('clear lobby', socketId => {
       let lobbies = this.state
-      delete lobbies.Show
       console.log('got to clear lobby', socketId)
       // eslint-disable-next-line guard-for-in
       for (let key in lobbies) {
@@ -78,64 +70,84 @@ class MultiplayerHome extends Component {
   }
 
   componentDidMount = () => {
-    socket.emit('entered lobby screen')
+    lobbySocket.emit('entered lobby screen')
   }
 
   handleHome = () => {
-    this.props.history.push('home')
-  }
-  handleShow = e => {
-    let lobby = e.target.id
-
-    this.setState({
-      ...this.state,
-      Show: {...this.state.Show, [lobby]: !this.state.Show[lobby]}
-    })
+    this.props.history.push('/home')
   }
   handleClick = e => {
-    console.log(e.target.id)
-    let lobbyId = e.target.id
+    console.log(e)
+    let lobbyId = e
     this.props.history.push(`/multiplayer/${lobbyId}`)
   }
   render() {
     console.log('TCL: MultiplayerHome -> render -> this.state', this.state)
     return (
       <Fragment>
-        <button type="button" onClick={this.handleHome}>
-          home
-        </button>
+        <Fab onClick={this.handleHome}>
+          <HomeIcon />
+        </Fab>
+
+        <h1>List of Lobbies</h1>
         <div className="lobbyHome">
-          <h1>List of Lobbies</h1>
-          {Object.keys(this.state)
-            .filter(key => key !== 'Show')
-            .map(key => {
-              let lobby = this.state[key]
-              return (
-                <Fragment key={key}>
-                  <div className="lobby" key={key}>
-                    {key}
-                    <img
+          {Object.keys(this.state).map(key => {
+            let lobby = this.state[key]
+            return (
+              <div className="lobby" key={key}>
+                <List key={key}>
+                  <Fragment key={key}>
+                    <ListItem>
+                      {/* <h1>{key}</h1> */}
+                      <Button onClick={() => this.handleClick(key)}>
+                        <b>{key}</b>
+                        <JoinIcon />
+                        {/* <ListItem
+                    button
+                    type="button"
+                    id={key}
+                    // src={dummyLobby}
+                    src="https://robohash.org/1"
+                    // onClick={this.handleClick}
+                    onClick={this.handleShow}
+                    disabled={lobby.length >= 4}
+                  >
+                    <h1>join</h1>
+                  </ListItem> */}
+                      </Button>
+                    </ListItem>
+                    {/* <ListItem
+                      button
+                      type="button"
                       id={key}
                       // src={dummyLobby}
                       src="https://robohash.org/1"
                       // onClick={this.handleClick}
                       onClick={this.handleShow}
                       disabled={lobby.length >= 4}
-                    />
-                    {this.state.Show[key]
-                      ? lobby.map(data => (
-                          <Fragment key={data.email}>
-                            <div className="lobbyItem">
-                              <img src={data.avatarUrl} />
-                              <p>{data.email}</p>
-                            </div>
-                          </Fragment>
-                        ))
-                      : null}
-                  </div>
-                </Fragment>
-              )
-            })}
+                    >
+                      <b>join</b>
+                    </ListItem> */}
+
+                    {lobby.length === 0 ? (
+                      <ListItem>
+                        <i>empty</i>
+                      </ListItem>
+                    ) : (
+                      lobby.map(data => (
+                        <Fragment key={data.email}>
+                          {/* <img src={data.avatarUrl} /> */}
+                          <ListItem>
+                            <div>{data.email}</div>
+                          </ListItem>
+                        </Fragment>
+                      ))
+                    )}
+                  </Fragment>
+                </List>
+              </div>
+            )
+          })}
         </div>
       </Fragment>
     )
