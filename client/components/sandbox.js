@@ -289,7 +289,7 @@ class Sandbox extends React.Component {
                 </div>
               </div>
               <div>
-                <button type="button" onClick={this.handleCheat}>
+                <button id="demo-btn" type="button" onClick={this.handleCheat}>
                   cheat/demo
                 </button>
               </div>

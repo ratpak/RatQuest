@@ -34,7 +34,7 @@ class Admin extends React.Component {
     }
 
     return (
-      <div>
+      <div className="mj-left-pad">
         <h1 id="adminCenter">Admin page</h1>
         <Link id="adminCenter" to={`/home}`}>
           Home

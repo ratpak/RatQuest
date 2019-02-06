@@ -19,6 +19,19 @@ import io from 'socket.io-client'
 import SandboxRat from './sandbox-rat'
 import gameStage from './game-stage'
 import MultiStage from './multiplayerStage'
+import {withStyles} from '@material-ui/core/styles'
+
+const styles = theme => ({
+  button: {
+    background: theme.palette.secondary.main,
+    color: theme.palette.secondary.contrastText,
+    '&:hover': {
+      background: 'linear-gradient(180deg, #ffee33 30%, #FF8E53 90%)',
+      color: '#fff'
+    },
+    boxShadow: theme.shadows[3]
+  }
+})
 
 class Multiplayer extends Component {
   constructor(props) {
@@ -161,15 +174,15 @@ class Multiplayer extends Component {
 
   render() {
     console.log(this.state, 'this state')
-
+    const {classes} = this.props
     return !this.state.victor ? (
       <Fragment>
-        {/* <button onClick={this.handleBack}>back</button> */}
+        <button onClick={this.handleBack}>back</button>
         <br />
         <button onClick={this.handleIncrement}>cheat</button>
         {/* <h1>I am {this.props.user.email}</h1> */}
 
-        <div className="multiwrap">
+        <div className="multiwrap mj-left-pad">
           <div className="description">
             <h3>Problem</h3>
             {console.log(
@@ -232,11 +245,12 @@ class Multiplayer extends Component {
           <Tooltip title="Submit">
             <Button
               type="Button"
-              style={{
-                backgroundColor: 'blue',
-                color: 'black',
-                fontWeight: 550
-              }}
+              className={classes.button}
+              // style={{
+              //   backgroundColor: 'blue',
+              //   color: 'black',
+              //   fontWeight: 550
+              // }}
               onClick={this.handleClick}
             >
               Submit
@@ -260,4 +274,4 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(Multiplayer)
+export default connect(mapState)(withStyles(styles)(Multiplayer))

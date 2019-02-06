@@ -85,38 +85,27 @@ class MultiplayerHome extends Component {
     console.log('TCL: MultiplayerHome -> render -> this.state', this.state)
     return (
       <Fragment>
-        <Fab onClick={this.handleHome}>
-          <HomeIcon />
-        </Fab>
+        <div className="mj-nav-left-pad">
+          <Fab onClick={this.handleHome}>
+            <HomeIcon />
+          </Fab>
+        </div>
 
-        <h1>List of Lobbies</h1>
-        <div className="lobbyHome">
-          {Object.keys(this.state).map(key => {
-            let lobby = this.state[key]
-            return (
-              <div className="lobby" key={key}>
-                <List key={key}>
-                  <Fragment key={key}>
-                    <ListItem>
-                      {/* <h1>{key}</h1> */}
-                      <Button onClick={() => this.handleClick(key)}>
-                        <b>{key}</b>
-                        <JoinIcon />
-                        {/* <ListItem
-                    button
-                    type="button"
-                    id={key}
-                    // src={dummyLobby}
-                    src="https://robohash.org/1"
-                    // onClick={this.handleClick}
-                    onClick={this.handleShow}
-                    disabled={lobby.length >= 4}
-                  >
-                    <h1>join</h1>
-                  </ListItem> */}
-                      </Button>
-                    </ListItem>
-                    {/* <ListItem
+        <div className="mj-left-pad">
+          <h1>List of Lobbies</h1>
+          <div className="lobbyHome">
+            {Object.keys(this.state).map(key => {
+              let lobby = this.state[key]
+              return (
+                <div className="lobby" key={key}>
+                  <List key={key}>
+                    <Fragment key={key}>
+                      <ListItem>
+                        {/* <h1>{key}</h1> */}
+                        <Button onClick={() => this.handleClick(key)}>
+                          <b>{key}</b>
+                          <JoinIcon />
+                          {/* <ListItem
                       button
                       type="button"
                       id={key}
@@ -126,28 +115,43 @@ class MultiplayerHome extends Component {
                       onClick={this.handleShow}
                       disabled={lobby.length >= 4}
                     >
-                      <b>join</b>
+                      <h1>join</h1>
                     </ListItem> */}
-
-                    {lobby.length === 0 ? (
-                      <ListItem>
-                        <i>empty</i>
+                        </Button>
                       </ListItem>
-                    ) : (
-                      lobby.map(data => (
-                        <Fragment key={data.email}>
-                          {/* <img src={data.avatarUrl} /> */}
-                          <ListItem>
-                            <div>{data.email}</div>
-                          </ListItem>
-                        </Fragment>
-                      ))
-                    )}
-                  </Fragment>
-                </List>
-              </div>
-            )
-          })}
+                      {/* <ListItem
+                        button
+                        type="button"
+                        id={key}
+                        // src={dummyLobby}
+                        src="https://robohash.org/1"
+                        // onClick={this.handleClick}
+                        onClick={this.handleShow}
+                        disabled={lobby.length >= 4}
+                      >
+                        <b>join</b>
+                      </ListItem> */}
+
+                      {lobby.length === 0 ? (
+                        <ListItem>
+                          <i>empty</i>
+                        </ListItem>
+                      ) : (
+                        lobby.map(data => (
+                          <Fragment key={data.email}>
+                            {/* <img src={data.avatarUrl} /> */}
+                            <ListItem>
+                              <div>{data.email}</div>
+                            </ListItem>
+                          </Fragment>
+                        ))
+                      )}
+                    </Fragment>
+                  </List>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </Fragment>
     )
