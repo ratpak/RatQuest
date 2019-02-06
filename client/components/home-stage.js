@@ -63,4 +63,3 @@ const HomeStage = props => {
 }
 
 export default withStageInfo(withStyles(styles)(HomeStage))
-// export default withStageInfo(HomeStage)
