@@ -6,7 +6,6 @@ import {withStyles} from '@material-ui/core/styles'
 
 const styles = theme => ({
   button: {
-    // margin: theme.spacing.unit,
     background: theme.palette.secondary.main,
     color: theme.palette.secondary.contrastText,
     '&:hover': {

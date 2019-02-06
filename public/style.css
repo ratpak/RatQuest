@@ -20,18 +20,6 @@ a {
 label {
   display: block;
 }
-/* 
-not using nav currently */
-/* 
-nav a {
-  display: inline-block;
-  margin: 1em;
-} */
-
-/* form div {
-  margin: 1em;
-  display: inline-block;
-} */
 
 /* editor page styling */
 
@@ -87,6 +75,7 @@ nav a {
   display: flex;
   flex-direction: column;
   flex-basis: 60%;
+  margin-top: 20px;
 }
 
 /* class that the react-ace editor is tied to */
@@ -144,17 +133,25 @@ nav a {
   width: 28px;
   height: 28px;
   border-radius: 100px;
-  background-color: #ffff99;
-  margin-left: 5px;
+  background-color: #96cff1;
+  border-style: solid;
+  border-color: #fff;
+  border-width: 1px;
+  margin-left: 1px;
   margin-right: 28px;
   padding-top: 2px;
   text-align: center;
   font-size: 1em;
+  color: #323232;
 }
 
 .sandbox-rat {
   position: relative;
   padding-bottom: 30px;
+}
+
+.sandbox-stage .progress-glow {
+  color: #ffff99;
 }
 
 /* user-home navbar styles */
@@ -193,6 +190,7 @@ nav a {
 #avatar img {
   width: 75px;
   height: 75px;
+  object-fit: contain;
 }
 
 .simple-flex {

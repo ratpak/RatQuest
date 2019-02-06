@@ -37,28 +37,6 @@ function Transition(props) {
   return <Slide direction="up" {...props} />
 }
 
-const styles = theme => ({
-  // root: {
-  //   flexGrow: 1
-  // },
-  // paper: {
-  //   // padding: 0,
-  //   textAlign: 'center',
-  //   backgroundColor: 'skyblue'
-  //   // color: theme.palette.text.secondary,
-  // },
-  // ace: {
-  //   textAlign: 'left',
-  //   height: '50vw',
-  //   width: '50vw'
-  //   // border: '5px'
-  // }
-  // // control: {
-  // //   // padding: theme.spacing.unit * 2
-  // //   padding: '10px'
-  // // }
-})
-
 class Sandbox extends React.Component {
   constructor() {
     super()
@@ -133,13 +111,12 @@ class Sandbox extends React.Component {
     this.setState({editor: e})
   }
 
-  //for testing only
+  //for testing and demo only
   handleCheat = () => {
     // let body = this.state.editor
     let currentProblem = this.props.currentProblem
     let userId = this.props.user.id
     this.props.addSolvedProblem(userId, currentProblem.id)
-    console.log(this.props.solvedProblems, 'SOLVED PROBLEMS')
     if (
       this.props.solvedProblems[this.props.stage.id].problems.length + 1 ===
       this.props.stage.goal
@@ -198,7 +175,6 @@ class Sandbox extends React.Component {
     } else if (!this.state.readOnly) this.setState({readOnly: true})
   }
   render() {
-    let {classes} = this.props
     return (
       <Fragment>
         {/* wrapper for nav - home link */}
@@ -230,9 +206,6 @@ class Sandbox extends React.Component {
             {/* ace editor and nav buttons in here */}
             <div className="editorLeftHalf">
               <div className="editorBox">
-                <button type="button" onClick={this.handleCheat}>
-                  cheat
-                </button>
                 <AceEditor
                   mode="javascript"
                   theme={this.state.theme}
@@ -314,6 +287,11 @@ class Sandbox extends React.Component {
                     </Fab>
                   </Tooltip>
                 </div>
+              </div>
+              <div>
+                <button type="button" onClick={this.handleCheat}>
+                  cheat/demo
+                </button>
               </div>
             </div>
 
@@ -420,4 +398,5 @@ const mapDispatch = dispatch => ({
   fetchSolvedProblems: userId => dispatch(fetchSolvedProblems(userId)),
   nextStage: userId => dispatch(nextStage(userId))
 })
-export default connect(mapState, mapDispatch)(withStyles(styles)(Sandbox))
+
+export default connect(mapState, mapDispatch)(Sandbox)

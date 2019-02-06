@@ -42,10 +42,10 @@ class Board extends Component {
     }
 
     if (this.props.boardPosition) {
-      // set opacity of cage rate to 0 when solve at least one problem
-      if (this.props.boardPosition !== '00') {
+      // opacity of cage rate 0 unless postion === 00
+      if (this.props.boardPosition === '00') {
         this.ratGroupTween = TweenMax.to(this.ratGroup, 0, {
-          opacity: 0
+          opacity: 100
         })
       }
       // set current board position color
@@ -682,6 +682,7 @@ class Board extends Component {
                       this.ratGroup = g
                     }}
                     id="rat-group"
+                    opacity="0"
                   >
                     <path
                       id="tail"

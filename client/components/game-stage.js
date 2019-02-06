@@ -41,7 +41,11 @@ class GameStage extends Component {
         <div className="sandbox-stage">
           <div className="simple-flex">
             <h3>{`Stage ${displayInfo.id}: ${displayInfo.name}`}</h3>
-            <h3>{`${displayInfo.progress}/${displayInfo.goal}`}</h3>
+            <h3>
+              <span className="progress-glow">{`${displayInfo.progress}`}</span>
+              {` /`}
+              <span className="progress-glow">{`${displayInfo.goal}`}</span>
+            </h3>
           </div>
           <div className="simple-flex">
             <div
