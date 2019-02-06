@@ -16,6 +16,9 @@ import ThemeIcon from '@material-ui/icons/ColorLensSharp'
 import SkipIcon from '@material-ui/icons/FastForwardSharp'
 import {Button} from '@material-ui/core'
 import io from 'socket.io-client'
+import SandboxRat from './sandbox-rat'
+import gameStage from './game-stage'
+import MultiStage from './multiplayerStage'
 
 class Multiplayer extends Component {
   constructor(props) {
@@ -91,7 +94,7 @@ class Multiplayer extends Component {
     let me = this.props.user
     let problems = this.state.problems
     this.props.user.score += 1
-    if (this.props.user.score >= 2) {
+    if (this.props.user.score >= 5) {
       this.props.user.score = 0
       socket.emit(`I win`, me.email, lobbyId)
       this.setState({lobby: {}, victor: me.email})
@@ -161,6 +164,7 @@ class Multiplayer extends Component {
     console.log(this.state, 'this state')
     return !this.state.victor ? (
       <Fragment>
+        <button onClick={this.handleIncrement}>cheat</button>
         <h1>I am {this.props.user.email}</h1>
         <button onClick={this.handleBack}>back</button>
 
@@ -168,10 +172,17 @@ class Multiplayer extends Component {
         <h1>Lobby: </h1>
         {Object.keys(this.state.lobby)
           ? Object.keys(this.state.lobby).map(key => {
+              console.log('this.state score', this.state.lobby[key].score)
               return (
-                <h2 key={key}>
-                  {this.state.lobby[key].email}:{this.state.lobby[key].score}
-                </h2>
+                <Fragment key={key}>
+                  <h2 key={key}>{this.state.lobby[key].email}</h2>
+                  <MultiStage
+                    displayInfo={{
+                      progress: this.state.lobby[key].score,
+                      goal: 5
+                    }}
+                  />
+                </Fragment>
               )
             })
           : null}
