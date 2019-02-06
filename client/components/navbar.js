@@ -6,6 +6,7 @@ import {logout} from '../store'
 import Instructions from './instructions'
 import Button from '@material-ui/core/Button'
 import {withTheme, withStyles} from '@material-ui/core/styles'
+import Music from './music'
 
 const styles = theme => ({
   button: {
@@ -85,6 +86,7 @@ class Navbar extends Component {
                   </div>
                 )}
               </div>
+              <Music classes={classes} />
               <div>
                 <a href="#" onClick={handleClick}>
                   <Button varient="contained" className={classes.button}>
