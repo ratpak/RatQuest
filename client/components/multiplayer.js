@@ -177,9 +177,9 @@ class Multiplayer extends Component {
     const {classes} = this.props
     return !this.state.victor ? (
       <Fragment>
-        <button onClick={this.handleBack}>back</button>
+        {/* <button onClick={this.handleBack}>back</button>
         <br />
-        <button onClick={this.handleIncrement}>cheat</button>
+        <button onClick={this.handleIncrement}>cheat</button> */}
         {/* <h1>I am {this.props.user.email}</h1> */}
 
         <div className="multiwrap mj-left-pad">

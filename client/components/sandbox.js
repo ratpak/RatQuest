@@ -288,11 +288,11 @@ class Sandbox extends React.Component {
                   </Tooltip>
                 </div>
               </div>
-              <div>
+              {/* <div>
                 <button id="demo-btn" type="button" onClick={this.handleCheat}>
                   cheat/demo
                 </button>
-              </div>
+              </div> */}
             </div>
 
             {/* results and progress within stage in here */}
